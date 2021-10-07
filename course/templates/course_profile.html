@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Profile</title>
+    <style>
+        body{
+            background-color: rgb(112, 22, 112);
+        }
+        #profile{
+            color: rgb(112, 22, 112);
+            font-weight: bold;
+            font-size: 200%;
+        }
+        p, img, h2{
+            padding-left: 30%;
+        }
+        img{
+            width: 50%;
+            height: 20%;
+        }
+        .container{
+            background-color: white;
+            margin-left: 250px;
+            width: 600px;
+            /* padding: 100px; */
+            font-size: 20px;
+            border-radius: 30px;
+            margin-right: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <p id="profile">PROFILE</p>
+        <img src="{{course.profile.url}}">
+    <p>{{course.course_profile}}</p>    
+    <p>{{course.course_name}}</p>
+    <p>{{course.course_trainer}}</p>
+    <p>{{course.course_code}}</p>
+    <p>{{course.course_duration}}</p>
+</div>
+</body>
+</html>

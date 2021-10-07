@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Trainer Profile</title>
+</head>
+<body>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Profile</title>
+    <style>
+        body{
+            background-color: rgb(112, 22, 112);
+        }
+        #profile{
+            color: white;
+            font-weight: bold;
+            font-size: 200%;
+            padding-left: 44%;
+        }
+        p, img, h2{
+            padding-left: 30%;
+        }
+        img{
+            margin-top: 10%;
+            width: 50%;
+            height: 20%;
+        }
+        .container{
+            background-color: white;
+            margin-left: 300px;
+            width: 600px;
+            /* padding: 100px; */
+            font-size: 20px;
+            border-radius: 30px;
+            margin-right: 250px;
+        }
+    </style>
+</head>
+<body>
+    <p id="profile">PROFILE</p>
+    <div class="container">
+
+    {% if trainer.profile %}
+    <img src="{{trainer.profile.url}}">
+    {% endif %}
+    <h2>{{trainer.full_name}}</h2>
+    <p>{{trainer.age}} years old</p>
+    <p>{{trainer.email_address}}</p>
+    <p>{{trainer.phone_number}}</p>
+    <p>{{trainer.salary}}</p>
+    <p>{{trainer.nationality}}</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Profile</title>
+    <style>
+        body{
+            background-color: rgb(112, 22, 112);
+        }
+        #profile{
+            color: white;
+            font-weight: bold;
+            font-size: 200%;
+        }
+        p, img, h2{
+            padding-left: 30%;
+        }
+        img{
+            width: 50%;
+            height: 20%;
+        }
+        .container{
+            background-color: white;
+            margin-left: 250px;
+            width: 600px;
+            /* padding: 100px; */
+            font-size: 20px;
+            border-radius: 30px;
+            margin-right: 250px;
+        }
+    </style>
+</head>
+<body>
+    <p id="profile">PROFILE</p>
+
+    <div class="container">
+    {% if student.profile %}
+    <img src="{{student.profile.url}}">
+    {% endif %}
+    <h2>{{student.full_name}}</h2>
+    <p>{{student.age}} years old</p>
+    <p>{{student.date_of_birth}}</p>
+    <p>{{student.national_id}}</p>
+
+</div>
+</body>
+</html>
