@@ -1,1 +1,1 @@
-web: gunicorn schoolsystem.utils
+web: gunicorn schoolsystem.wsgi
