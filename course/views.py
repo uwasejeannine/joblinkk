@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.shortcuts import redirect, render
 from .forms import CourseForm
 from django.shortcuts import render
 from .models import Course
