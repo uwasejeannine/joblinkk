@@ -4,6 +4,7 @@ from django.shortcuts import render
 from .models import Student
 
 
+
 def register_student(request):
     if request.method=="POST":
         form = StudentRegistrationForm(request.POST,request.FILES)

@@ -1,4 +1,3 @@
-from django.conf.urls import url
 from django.urls import path
 from .views import edit_trainer, register_trainer, trainer_list, trainer_profile
 

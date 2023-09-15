@@ -1,5 +1,4 @@
 
-from django.conf.urls import url
 from django.urls import path
 from .views import course_form, course_list, course_profile, edit_course
 

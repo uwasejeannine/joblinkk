@@ -6,6 +6,7 @@ from trainer.models import Trainer
 from course.models import Course
 from calendary.models import Event
 
+
 class StudentViewSet(viewsets.ModelViewSet):
     queryset=Student.objects.all()
     serializer_class= StudentSerializer

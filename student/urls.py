@@ -1,4 +1,3 @@
-from django.conf.urls import url
 from django.urls import path
 from .views import edit_student, register_student, student_list, student_profile
 
