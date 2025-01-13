@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core',
     'calendary',
     'rest_framework',
+    'django_heroku'
 
     
     
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
 
@@ -132,6 +134,11 @@ STATICFILE_DIR=[
 ]
 MEDIA_URL= '/images/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'static/images/')
+
+STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
