@@ -108,3 +108,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+# Add this if not present
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
