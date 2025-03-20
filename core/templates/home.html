@@ -1,432 +1,69 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee and Employer Information</title>
-    <style>
-    /* Resetting default margin, padding, and box sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+{% extends 'base.html' %}
 
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: rgb(255, 255, 255);
-    color: #424242;
-}
+{% block content %}
 
-nav {
-    background-color: rgb(193, 233, 245);
-    padding: 40px 0;
-}
-
-nav ul {
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-nav li {
-    margin: 0;
-}
-
-nav a {
-    color: rgb(10, 10, 10);
-    text-decoration: none;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease;
-}
-
-nav a:hover {
-color:rgb(233, 153, 153)
-    border-radius: 5px;
-  
-    font-size: 24px;
-}
-
-
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-    nav a {
-        padding: 10px;
-        width: 100%;
-        text-align: center;
-    }
-/* Sticky navbar styles */
-.sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color:  rgb(193, 233, 245);
-    z-index: 1000;
-}
-
-.sticky + .content {
-    padding-top: 70px; /* adjust to prevent overlap */
-}
-
-.hero {
-    position: relative;
-    height: 700px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    overflow: hidden;
-    font-size: 2.2em;
-    
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    animation: slideShow 10s infinite;
-    z-index: -1;
-}
-
-@keyframes slideShow {
-    0%, 33% { background-image: url('{% static "images/nature.jpg"%}'); opacity: 1; }
-    34%, 66% { background-image: url('{% static "images/popo.png" %}'); opacity: 1; }
-    67%, 100% { background-image: url('{% static "images/tanzania.webp" %}'); opacity: 1; }
-}
-
-
-.hero h1, .hero p, .hero button {
-    position: relative;
-    z-index: 1;
-    color:black;
-}
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-    background-color: #007BFF; /* Blue color */
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.2s;
-    text-align: center;
-}
-
-.button:hover {
-    background-color: #0056b3; /* Darker blue */
-    transform: scale(1.05);
-}
-
-.button:active {
-    background-color: #003f7f; /* Even darker blue */
-    transform: scale(0.95);
-}
-
-
-@media (max-width: 768px) {
-    .hero {
-        height: 400px;
-    }
-}
-
-
-section {
-    padding: 40px;
-}
-
-.about, .services,  .employees {
-    margin-bottom: 40px;
-}
-.employers {
-    
-    margin-bottom: 40px;
-    background-color: rgb(193, 233, 245);
-    border-radius: 10px;
-}
-.employers h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-    color: #f6f7f5;
-    
-}
-.about h2, .services h2, .employees h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-    color: #3498db;
-    
-}
-
-.services p, .employers p, .employees p {
-    gap: 20px;
-    flex: 1px;
-    font-size: 1.5rem;
-    margin-bottom: 50px;
-    text-align: center;
-    font-size: 20px;
-}
-
-.cards {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 30px;
-}
-
-.card {
-    background-color: rgb(255, 255, 255);
-    padding: 50px;
-    text-align: center;
-    box-shadow: 0 10px 10px 0px blue;
-    margin-bottom: 20px;
-    width: 30%;
-    border: none;
-}
-
-.card h3 {
-    color: #3498db;
-    margin-bottom: 10px;
-}
-
-.card p {
-    margin-bottom: 15px;
-}
-
-.cta {
-    background-color: #2c3e50;
-    padding: 20px;
-    color: white;
-    text-align: center;
-    margin: 20px 0;
-}
-
-.cta h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-
-
-footer {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
-    font-family: Arial, sans-serif;
-  }
-  
-  footer div {
-    flex: 1;
-    padding: 10px;
-  }
-  
-  footer h1 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: rgb(239, 255, 9);
-  }
-  
-  footer h3, footer h2 {
-    font-size: 1em;
-    margin: 5px 0;
-  }
-  
-  footer p {
-    font-size: 0.9em;
-    margin-top: 15px;
-    text-align: right;
-  }
-  
-  .contact-info h3, .visit-info h2 {
-    color:white;
-  }
-  
-  .social-media ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .social-media li {
-    margin: 5px 0;
-  }
-  
-  .social-media a {
-    color: white;
-    text-decoration: none;
-    
-  }
-  
-  .social-media a:hover {
-    text-decoration: underline;
-    font-size: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    footer {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    footer div {
-      text-align: center;
-      padding: 10px 0;
-    }
-  }
-  
-</style>
-</head>
-<body>
-
-    <!-- Navigation -->
-    <nav id="navbar">
-        <ul>
-        <li><a href="">AHABANZA</a></li>
-        <li><a href="">ABAKOZI</a></li>
-        <li><a href="">ABAKORESHA</a></li>
-        <li><a href="">REBA UMUKOZI</a></li>
-        <li><a href="">REBA ABAKORESHA</a></li>
-        <li><a href="">IBYO DUKORA</a></li>
-        <li><a href="">AMATANGAZO</a></li>
-        <li><a href="">DUHAMAGARE</a></li>
-        </ul>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero">
-        <div>
-            <a href="" class="button">TANGIRA NONAHA</a>
-        </div>
+<nav>
+    <ul>
+        <li><a href="{% url 'home' %}">AHABANZA</a></li>
+        <li><a href="{% url 'submit_employee' %}">ABAKOZI</a></li>
+        <li><a href="{% url 'submit_employer' %}">ABAKORESHA</a></li>
+        <li><a href="{% url 'view_employees' %}">REBA UMUKOZI</a></li>
+        <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
+        <li><a href="{% url 'about' %}">IBYO DUKORA</a></li>
+    </ul>
+    <div>
+        <h1> ABAKORESHA </h1>
+        <h3> AHABANZA // ABAKORESHA</h3> 
     </div>
-    
-    <!-- Services Section -->
-    <section class="services">
-        <h2>Serivisi Zacu</h2>
-        <div class="cards">
-            <div class="card">
-                <h3>Akazi </h3>
-                <img src="{% static 'images/image3.jfif' %}" alt="Sample Image" style="width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
-                <p>Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye..</p>
-            </div>
-            <div class="card">
-                <h3>Gukora CV (Resume)</h3>
-                <img src="{% static 'images/image4.jfif' %}" alt="Sample Image" style="width: 100%; height: auto; margin-bottom: 19px;  border-radius: 10px;">
-                <p>Ukeneye ubufasha ku mwirondoro wawe? Abahanga bacu bashobora kugufasha gukora umwirondoro ushimishije uzatuma ubona akazi..</p>
-            </div>
-            <div class="card">
-                <h3>Ikiganiro cy'akazi</h3>
-                <img src="{% static 'images/download3.jfif' %}" alt="Sample Image" style="width: 100%; height: 70%; margin-bottom: 23px;  border-radius: 10px;">
-                <p>Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza..</p>
-            </div>
-        </div>
-    </section>
+</nav>
 
-    <!-- Employer Information Section -->
-    <section class="employers">
-        <h2>Abakoresha</h2>
-        <p>Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi.<br> Serivisi zacu: Dufasha abakoresha kubona impano z'abakozi bashoboye kandi bahuje n'umuco w'ikigo cyabo n'intego<br> zabo.</p>
-        <div class="cards">
-            <div class="card">
-                <h3>Tangaza Amatangazo y'Imirimo.</h3>
-                <p>Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi..</p>
-            </div>
-            <div class="card">
-                <h3>Gusuzuma Abakandida.</h3>
-                <p>Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.</p>
-            </div>
-            <div class="card">
-                <h3>Ibisubizo by'Ubukoresha Bihinduka.</h3>
-                <p>Niba ukeneye abakozi b'igihe cyose, ab'igihe gito, cyangwa abakozi b'amasezerano, dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.</p>
-            </div>
-        </div>
-    </section>
+<section class="card-container">
+    <div class="card">
+        <img src="{% static 'images/charli.jpeg' %}" alt="Sample Image">
+    </div>
+    <div class="card">
+        <h1>Ibyo ukeneye nk’umukoresha.</h1>
+        <h2>Shyigikira abakozi bawe n'ibisubizo by'ubukoresha bihuye n'ibikenewe by'ikigo cyawe</h2>
+        <p> 
+        Sura serivisi zoroheje z'ubukoresha zateguwe kugira ngo zigufashe kubona impano zihambaye zihuje n'icyerekezo cy'ikigo cyawe...
+        </p>
+    </div>
+</section>
 
-    <!-- Employee Information Section -->
-    <section class="employees">
-        <h2>Abakozi</h2>
-        <p>Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe. Sura. <br>Ibyo amahirwe, usabe akazi, tangira umwuga wawe, kandi ugerageze kugera ku byo wizeye ubu natwe.</p>
-        <div class="cards">
-            <div class="card">
-                <h3>Shakisha Imyanya y'Aakazi</h3>
-                <img src="{% static 'images/download2.jfif' %}" alt="Sample Image" style="width: 100%; height: auto; margin-bottom: 20px;  border-radius: 10px;">
-                <p>Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.</p>
-                <a href="" class="button">Shakisha</a>
-            </div>
-            <div class="card">
-                <h3>Tanga Umwirondoro Wawe</h3>
-                <img src="{% static 'images/images4.jfif' %}" alt="Sample Image" style="width: 100%; height: 60%; margin-bottom: 50px; border-radius: 10px;">
-                <p>Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka..</p>
-                <a href="" class="button">Tanga</a>
-            </div>
-            <div class="card">
-                <h3>Inama ku Mwuga</h3>
-                <img src="{% static 'images/download.jfif' %}" alt="Sample Image" style="width: 100%; height: auto; margin-bottom: 23px; border-radius: 10px;">
-                <p>Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe..</p>
-                <a href="" class="button">Inama</a>
-            </div>
-        </div>
-    </section>
+<div class="container">
+    <h1>Tanga Amakuru y’Umukoresha</h1>
 
-    <!-- Footer -->
-    <footer>
-        <div class="contact-info">
-          <h1>Nimero</h1>
-          <h3>Phone:+250793487065</h3>
-          <h3>Email: murenzicharles24@gmail.com</h3>
-          <p>&copy; {% now "Y" %} JobLink - All Rights Reserved</p>
-        </div>
-        
-        <div class="social-media">
-          <h1>Imbuga Nkoranyambaga</h1>
-          <ul>
-            <li><a href="https://youtube.com/@murenzicharles?si=U-CoZVC1GvvwipHf" target="_blank">YouTube</a></li>
-            <li><a href="https://www.instagram.com/murenzi893/profilecard/?igsh=Ym14ZDk5aG15ODdv" target="_blank">Instagram</a></li>
-          </ul>
-        </div>
-        
-        <div class="visit-info">
-          <h1>Dusure</h1>
-          <h2>Kigali, Rwanda</h2>
-        </div>
-      </footer>
-      
-    <script>
-        // JavaScript to handle sticky navbar
-        window.onscroll = function() {stickyNavbar()};
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
-        // Get the navbar
-        var navbar = document.getElementById("navbar");
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div>
 
-        // Get the offset position of the navbar
-        var sticky = navbar.offsetTop;
+<footer>
+    <div class="contact-info">
+        <h1>Nimero</h1>
+        <h3>Phone:+250793487065</h3>
+        <h3>Email: murenzicharles24@gmail.com</h3>
+        <p>&copy; 2024 JobLink - All Rights Reserved</p>
+    </div>
+    <div class="social-media">
+        <h1>Imbuga Nkoranyambaga</h1>
+        <ul>
+            <li><a href="https://youtube.com/@murenzicharles" target="_blank">YouTube</a></li>
+            <li><a href="https://www.instagram.com/murenzi893" target="_blank">Instagram</a></li>
+        </ul>
+    </div>
+    <div class="visit-info">
+        <h1>Dusure</h1>
+        <h2>Kigali, Rwanda</h2>
+    </div>
+</footer>
 
-        // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position.
-        function stickyNavbar() {
-            if (window.pageYOffset >= sticky) {
-                navbar.classList.add("sticky");
-            } else {
-                navbar.classList.remove("sticky");
-            }
-        }
-    </script>
-    
-</body>
-</html>
+{% endblock %}
