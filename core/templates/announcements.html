@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amatangazo</title>
+    <head>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+   background-color: white;
+    
+    color: #333;
+}
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url('{% static "images/nature.jpg"%}') no-repeat center center/cover;
+    padding: 50px 0px;
+    color: white;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #f0a500;
+    
+    border-radius: 5px;
+  
+    font-size: 20px;
+}
+
+nav div {
+    text-align: center;
+    margin-top: 15px;
+}
+
+nav div h1 {
+    font-size: 2em;
+    color: white;
+    margin-bottom: 5px;
+}
+
+nav div h3 {
+    font-size: 1.5em;
+    color: #ccc;
+    font-weight: normal;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }}
+</style>
+</head>
+<body>
+        <!-- Navigation -->
+        <nav id="navbar">
+            <ul>
+                <li><a href="{% url 'home' %}">AHABANZA</a></li>
+                <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
+                <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
+                <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
+                <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
+                <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
+                <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
+            </ul>
+        </nav>
+        <div>
+            <h1>Amatangazo Y'Akazi</h1>
+             <h3> AHABANZA //Amatangazo</h3> 
+         </div>
+</body>
+</html>
