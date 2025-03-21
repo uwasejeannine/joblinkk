@@ -48,11 +48,10 @@
 
         nav a:hover {
             color: #f0a500;
-            
             border-radius: 5px;
-          
             font-size: 20px;
         }
+        
         nav div {
             text-align: center;
             margin-top: 15px;
@@ -112,6 +111,7 @@
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+        
         .rating-display {
             color: #f5a623;
             font-size: 1rem;
@@ -147,18 +147,16 @@
     </style>
 </head>
 <body>
-    <nav>
-        <nav id="navbar">
-            <ul>
-                <li><a href="{% url 'home' %}">AHABANZA</a></li>
-                <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
-                <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
-                <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
-                <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
-                <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
-                <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
-            </ul>
-        </nav>
+    <nav id="navbar">
+        <ul>
+            <li><a href="{% url 'home' %}">AHABANZA</a></li>
+            <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
+            <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
+            <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
+            <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
+            <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
+            <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
+        </ul>
         <div>
             <h1>Imirimo Iri Kuboneka</h1>
             <h3>AHABANZA // AKAZI</h3> 
@@ -192,9 +190,12 @@
                     <td>{{ employer.job_description }}</td>
                     <td>{{ employer.job_requirements }}</td>
                     <td>{{ employer.location }}</td>
-                    <td class="rating-display">{% if employer.rating %}{{ employer.rating }}{% else %}-{% endif %}</td>
                     <td class="rating-display">
-                        {% for i in ""|ljust:employer.rating %}★{% endfor %}
+                        {% if employer.rating %}
+                            {% for i in ""|ljust:employer.rating %}★{% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}
                     </td>
                     <td>
                         <a href="{% url 'edit_employer' employer.id %}" class="btn edit-btn">Edit</a>
@@ -227,13 +228,12 @@
 
         function deleteEmployer(id) {
             if (confirm("Are you sure you want to delete this entry?")) {
-                fetch("", {
+                fetch(`/delete-employer/${id}/`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Content-Type": "application/json",
                         "X-CSRFToken": getCookie('csrftoken')
                     },
-                    body: `id=${id}`,
                 })
                 .then(response => response.json())
                 .then(data => {

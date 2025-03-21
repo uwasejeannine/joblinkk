@@ -335,16 +335,16 @@
     </style>
 </head>
 <body>
-        <nav id="navbar">
-            <ul>
-                <li><a href="{% url 'home' %}">AHABANZA</a></li>
-                <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
-                <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
-                <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
-                <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
-                <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
-                <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
-            </ul>
+    <nav id="navbar">
+        <ul>
+            <li><a href="{% url 'home' %}">AHABANZA</a></li>
+            <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
+            <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
+            <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
+            <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
+            <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
+            <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
+        </ul>
         <div>
             <h1>ABAKOZI</h1>
             <h3>AHABANZA // ABAKOZI</h3> 
@@ -369,17 +369,17 @@
             <div class="card">
                 <h3>Shakisha Akazi</h3>
                 <p>Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.</p>
-                <img src="images/nature.jpg" alt="Shakisha Akazi">
+                <img src="{% static 'images/nature.jpg' %}" alt="Shakisha Akazi">
             </div>
             <div class="card">
                 <h3>Tanga Umwirondoro Wawe</h3>
                 <p>Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka.</p>
-                <img src="images/nature.jpg" alt="Tanga Umwirondoro">
+                <img src="{% static 'images/nature.jpg' %}" alt="Tanga Umwirondoro">
             </div>
             <div class="card">
                 <h3>Inama ku Mwuga</h3>
                 <p>Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe.</p>
-                <img src="images/nature.jpg" alt="Inama ku Mwuga">
+                <img src="{% static 'images/nature.jpg' %}" alt="Inama ku Mwuga">
                 <a href="#" class="button">Inama</a>
             </div>
         </div>
@@ -387,27 +387,33 @@
         <section>
             <div class="form-box">
                 <h3>Tanga Amakuru y'Umukozi</h3>
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     
-                    <label for="employee-name">AMAZINA</label>
-                    <input type="text" id="employee-name" name="employee_name" placeholder="Enter full name" required>
-
-                    <label for="employee-email">Email</label>
-                    <input type="email" id="employee-email" name="employee_email" placeholder="Enter email" required>
-
-                    <label for="employee-phone">NUMERO</label>
-                    <input type="text" id="employee-phone" name="employee_phone" placeholder="Enter phone number" required>
-
-                    <label for="employee-position">UMWANYA USHAKA</label>
-                    <input type="text" id="employee-position" name="employee_position" placeholder="Enter position" required>
-
-                    <label for="employee-experience">Experience (MUNYAKA)</label>
-                    <input type="number" id="employee-experience" name="employee_experience" placeholder="Enter years of experience" required>
-
-                    <label for="employee-resume">RESUME/CV</label>
-                    <input type="file" id="employee-resume" name="employee_resume" required>
-
+                    <label for="id_name">AMAZINA</label>
+                    {{ form.name }}
+                    {{ form.name.errors }}
+                    
+                    <label for="id_email">Email</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                    
+                    <label for="id_phone">NUMERO</label>
+                    {{ form.phone }}
+                    {{ form.phone.errors }}
+                    
+                    <label for="id_position">UMWANYA USHAKA</label>
+                    {{ form.position }}
+                    {{ form.position.errors }}
+                    
+                    <label for="id_experience">Experience (MUNYAKA)</label>
+                    {{ form.experience }}
+                    {{ form.experience.errors }}
+                    
+                    <label for="id_resume">RESUME/CV</label>
+                    {{ form.resume }}
+                    {{ form.resume.errors }}
+                    
                     <button type="submit">INJIZA</button>
                 </form>
             </div>
