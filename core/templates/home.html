@@ -4,298 +4,787 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee and Employer Information</title>
+    <title>JobLink - Find Your Perfect Career Match</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-    /* Resetting default margin, padding, and box sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        :root {
+            --primary-color: #119fa5;
+            --secondary-color: #ef8f20;
+            --accent-color: #0d7176;
+            --dark-primary: #194e4f;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+            --light-bg: #f9f9f9;
+            --border-radius: 30px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: rgb(255, 255, 255);
-    color: #424242;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-nav {
-    background-color: rgb(193, 233, 245);
-    padding: 40px 0;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
 
-nav ul {
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
+        /* Improved Navbar */
+        #navbar {
+            background: linear-gradient(to right, #119fa5, #0d7176);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
 
-nav li {
-    margin: 0;
-}
+        #navbar.sticky {
+            padding: 10px 0;
+        }
 
-nav a {
-    color: rgb(10, 10, 10);
-    text-decoration: none;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease;
-}
+        #navbar ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
 
-nav a:hover {
-color:rgb(233, 153, 153)
-    border-radius: 5px;
-  
-    font-size: 24px;
-}
+        #navbar ul li {
+            margin: 0 5px;
+        }
 
+        #navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: var(--transition);
+            display: block;
+        }
 
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-    nav a {
-        padding: 10px;
-        width: 100%;
-        text-align: center;
-    }
-/* Sticky navbar styles */
-.sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color:  rgb(193, 233, 245);
-    z-index: 1000;
-}
+        #navbar ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
 
-.sticky + .content {
-    padding-top: 70px; /* adjust to prevent overlap */
-}
+        #login-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
-.hero {
-    position: relative;
-    height: 700px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    overflow: hidden;
-    font-size: 2.2em;
-    
-}
+        #login-btn:hover {
+            background-color: #d97c18;
+            transform: translateY(-50%) scale(1.05);
+        }
 
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    animation: slideShow 10s infinite;
-    z-index: -1;
-}
+        /* Hero Section with improved transparency */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            overflow: hidden;
+            margin-top: 0;
+        }
 
-@keyframes slideShow {
-    0%, 33% { background-image: url('{% static "images/nature.jpg"%}'); opacity: 1; }
-    34%, 66% { background-image: url('{% static "images/nature.jpg" %}'); opacity: 1; }
-    67%, 100% { background-image: url('{% static "images/nature.jpg" %}'); opacity: 1; }
-}
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{% static "images/nature.jpg"%}');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            animation: zoomEffect 20s infinite alternate;
+        }
 
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.627);
+            z-index: -1;
+        }
 
-.hero h1, .hero p, .hero button {
-    position: relative;
-    z-index: 1;
-    color:black;
-}
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-    background-color: #007BFF; /* Blue color */
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.2s;
-    text-align: center;
-}
+        @keyframes zoomEffect {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
 
-.button:hover {
-    background-color: #0056b3; /* Darker blue */
-    transform: scale(1.05);
-}
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            z-index: 1;
+            padding: 40px;
+            border-radius: 10px;
+        }
 
-.button:active {
-    background-color: #003f7f; /* Even darker blue */
-    transform: scale(0.95);
-}
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
 
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
 
-@media (max-width: 768px) {
-    .hero {
-        height: 400px;
-    }
-}
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
 
+        .button {
+            display: inline-block;
+            padding: 14px 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
 
-section {
-    padding: 40px;
-}
+        .button:hover {
+            background-color: #d97c18;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
 
-.about, .services,  .employees {
-    margin-bottom: 40px;
-}
-.employers {
-    
-    margin-bottom: 40px;
-    background-color: rgb(193, 233, 245);
-    border-radius: 10px;
-}
-.employers h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-    color: #f6f7f5;
-    
-}
-.about h2, .services h2, .employees h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-    color:rgb(171, 194, 209);
-    
-}
+        .button-outline {
+            background-color: transparent;
+            border: 2px solid white;
+        }
 
-.services p, .employers p, .employees p {
-    gap: 20px;
-    flex: 1px;
-    font-size: 1.5rem;
-    margin-bottom: 50px;
-    text-align: center;
-    font-size: 20px;
-}
+        .button-outline:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
 
-.cards {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 30px;
-}
+        /* Sections */
+        section {
+            padding: 100px 20px;
+        }
 
-.card {
-    background-color: rgb(255, 255, 255);
-    padding: 50px;
-    text-align: center;
-    box-shadow: 0 10px 10px 0px blue;
-    margin-bottom: 20px;
-    width: 30%;
-    border: none;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.card h3 {
-    color:rgb(171, 194, 209);
-    margin-bottom: 10px;
-}
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
 
-.card p {
-    margin-bottom: 15px;
-}
+        .section-header h2 {
+            font-size: 2.8rem;
+            color: var(--dark-primary);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
 
-.cta {
-    background-color: #2c3e50;
-    padding: 20px;
-    color: white;
-    text-align: center;
-    margin: 20px 0;
-}
+        .section-header h2:after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+        }
 
-.cta h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
+        .section-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 20px auto 0;
+        }
 
+        /* Feature Boxes Section */
+        .feature-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
 
+        .feature-box {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
 
-footer {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
-    font-family: Arial, sans-serif;
-  }
-  
-  footer div {
-    flex: 1;
-    padding: 10px;
-  }
-  
-  footer h1 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: rgb(239, 255, 9);
-  }
-  
-  footer h3, footer h2 {
-    font-size: 1em;
-    margin: 5px 0;
-  }
-  
-  footer p {
-    font-size: 0.9em;
-    margin-top: 15px;
-    text-align: right;
-  }
-  
-  .contact-info h3, .visit-info h2 {
-    color:white;
-  }
-  
-  .social-media ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .social-media li {
-    margin: 5px 0;
-  }
-  
-  .social-media a {
-    color: white;
-    text-decoration: none;
-    
-  }
-  
-  .social-media a:hover {
-    text-decoration: underline;
-    font-size: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    footer {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    footer div {
-      text-align: center;
-      padding: 10px 0;
-    }
-  }
-  
-</style>
+        .feature-box:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(17, 159, 165, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-box:hover .feature-icon {
+            background-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .feature-title {
+            font-size: 1.6rem;
+            color: var(--dark-primary);
+            margin: 0;
+        }
+
+        .feature-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .feature-image {
+            height: 200px;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .feature-image::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .feature-box:hover .feature-image img {
+            transform: scale(1.1);
+        }
+
+        /* Services Section */
+        .services {
+            background-color: var(--light-bg);
+        }
+
+        /* Employers Section */
+        .employers {
+            background: linear-gradient(to right, #119fa5, #0d7176);
+            color: white;
+            position: relative;
+        }
+
+        .employers::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,160L48,170.7C96,181,192,203,288,202.7C384,203,480,181,576,186.7C672,192,768,224,864,240C960,256,1056,256,1152,234.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+        }
+
+        .employers .section-header h2 {
+            color: white;
+        }
+
+        .employers .section-header p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .employers .feature-box {
+            background-color: white;
+        }
+
+        .employers .feature-title {
+            color: var(--dark-primary);
+        }
+
+        .employers .feature-description {
+            color: #666;
+        }
+
+        .employers .button {
+            background-color: var(--secondary-color);
+        }
+
+        /* Employees Section */
+        .employees {
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .employees::before {
+            content: '';
+            position: absolute;
+            top: -150px;
+            right: -150px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: rgba(17, 159, 165, 0.05);
+            z-index: 0;
+        }
+
+        .employees::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: rgba(239, 143, 32, 0.05);
+            z-index: 0;
+        }
+
+        /* Statistics Section */
+        .statistics {
+            background-color: var(--light-bg);
+            text-align: center;
+        }
+
+        .stat-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .stat-item {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            padding: 40px 30px;
+            width: 250px;
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .stat-count {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark-primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-color: var(--light-bg);
+            padding: 80px 0;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--dark-primary);
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .section-subtitle {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .contact-card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .contact-title {
+            font-size: 1.3rem;
+            color: var(--dark-primary);
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, #119fa5, #0d7176);
+            color: #ddd;
+            padding: 80px 20px 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .footer-column h3:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .footer-contact-item i {
+            color: var(--secondary-color);
+            margin-right: 15px;
+            margin-top: 5px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            font-size: 1.05rem;
+        }
+
+        .footer-links a i {
+            margin-right: 10px;
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 8px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .footer-social a {
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            #navbar ul {
+                justify-content: center;
+            }
+            
+            #login-btn {
+                position: static;
+                margin-top: 15px;
+                transform: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #navbar ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .hero {
+                height: auto;
+                padding: 120px 20px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .button {
+                width: 100%;
+                text-align: center;
+            }
+            
+            section {
+                padding: 60px 20px;
+            }
+            
+            .feature-box {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .stat-item {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content {
+                padding: 25px;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-header p {
+                font-size: 1rem;
+            }
+            
+            .feature-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .feature-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .feature-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
     <!-- Navigation -->
     <nav id="navbar">
         <ul>
@@ -307,128 +796,290 @@ footer {
             <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
             <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
         </ul>
+        <button id="login-btn">LOGIN</button>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with improved transparency -->
     <div class="hero">
-        <div>
-            <a href="{% url 'worker' %}" class="button">TANGIRA NONAHA</a>
+        <div class="hero-content">
+            <h1>Shakisha Akazi cyangwa <span style="color: #d97c18;">Abakozi Babereye</span></h1>
+            <p>JobLink irimo guhindura byimbitse uko abantu bashaka akazi n'uko abakoresha bashaka impano zitandukanye. Turakoresha uburyo bunoze kandi bukoresha ikoranabuhanga kugira ngo dufashe buri wese kubona icyo akeneye mu buryo bwihuse kandi bunoze.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'worker' %}" class="button">TANGIRA NONAHA</a>
+                <a href="{% url 'what_we_do' %}" class="button button-outline">IBYO DUKORA</a>
+            </div>
         </div>
     </div>
     
     <!-- Services Section -->
     <section class="services">
-        <h2>Serivisi Zacu</h2>
-        <div class="cards">
-            <div class="card">
-                <h3>Akazi </h3>
-                <img src="{% static 'images/nature.jpg' %}" alt="Sample Image" style="width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
-                <p>Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye..</p>
+        <div class="container">
+            <div class="section-header">
+                <h2>Serivisi Zacu</h2>
+                <p>Dutanga serivisi z'ubwoko bwose zo gufasha abakozi n'abakoresha guhura n'imyanya n'abakozi b'inyabutatu.</p>
             </div>
-            <div class="card">
-                <h3>Gukora CV (Resume)</h3>
-                <img src="{% static 'images/nature.jpg' %}" alt="Sample Image" style="width: 100%; height: auto; margin-bottom: 19px;  border-radius: 10px;">
-                <p>Ukeneye ubufasha ku mwirondoro wawe? Abahanga bacu bashobora kugufasha gukora umwirondoro ushimishije uzatuma ubona akazi..</p>
-            </div>
-            <div class="card">
-                <h3>Ikiganiro cy'akazi</h3>
-                <img src="{% static 'images/nature.jpg' %}" alt="Sample Image" style="width: 100%; height: 70%; margin-bottom: 23px;  border-radius: 10px;">
-                <p>Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza..</p>
+            <div class="feature-boxes">
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="feature-title">Akazi</h3>
+                    </div>
+                    <p class="feature-description">Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye.</p>
+                    <a href="{% url 'view_employers' %}" class="button">Reba Akazi</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Gukora CV (Resume)</h3>
+                    </div>
+                    <p class="feature-description">Turagufasha  gukora umwirondoro ushimishije uzatuma ubona akazi.</p>
+                    <a href="{% url 'worker' %}" class="button">Tangira Nonaha</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="feature-title">Ikiganiro cy'akazi</h3>
+                    </div>
+                    <p class="feature-description">Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza.</p>
+                    <a href="{% url 'what_we_do' %}" class="button">Iga Birenzeho</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Employer Information Section -->
     <section class="employers">
-        <h2>Abakoresha</h2>
-        <p>Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi.<br> Serivisi zacu: Dufasha abakoresha kubona impano z'abakozi bashoboye kandi bahuje n'umuco w'ikigo cyabo n'intego<br> zabo.</p>
-        <div class="cards">
-            <div class="card">
-                <h3>Tangaza Amatangazo y'Imirimo.</h3>
-                <p>Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi..</p>
+        <div class="container">
+            <div class="section-header">
+                <h2>Abakoresha</h2>
+                <p>Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi. Dufasha abakoresha kubona impano z'abakozi bashoboye kandi bahuje n'umuco w'ikigo cyabo n'intego zabo.</p>
             </div>
-            <div class="card">
-                <h3>Gusuzuma Abakandida.</h3>
-                <p>Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.</p>
-            </div>
-            <div class="card">
-                <h3>Ibisubizo by'Ubukoresha Bihinduka.</h3>
-                <p>Niba ukeneye abakozi b'igihe cyose, ab'igihe gito, cyangwa abakozi b'amasezerano, dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.</p>
+            <div class="feature-boxes">
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3 class="feature-title">Tangaza Amatangazo y'Imirimo</h3>
+                    </div>
+                    <p class="feature-description">Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi.</p>
+                    <a href="{% url 'employer' %}" class="button">Tangaza Ubu</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h3 class="feature-title">Gusuzuma Abakandida</h3>
+                    </div>
+                    <p class="feature-description">Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.</p>
+                    <a href="{% url 'employer' %}" class="button">Menya Birenzeho</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="feature-title">Ibisubizo by'Ubukoresha Bihinduka</h3>
+                    </div>
+                    <p class="feature-description">Niba ukeneye abakozi b'igihe cyose, ab'igihe gito, cyangwa abakozi b'amasezerano, dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.</p>
+                    <a href="{% url 'employer' %}" class="button">Tangira Nonaha</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Employee Information Section -->
     <section class="employees">
-        <h2>Abakozi</h2>
-        <p>Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe. Sura. <br>Ibyo amahirwe, usabe akazi, tangira umwuga wawe, kandi ugerageze kugera ku byo wizeye ubu natwe.</p>
-        <div class="cards">
-            <div class="card">
-                <h3>Shakisha Imyanya y'Aakazi</h3>
-                <img src="{% static 'images/nature.jpg' %}" alt="Sample Image" style="width: 100%; height: auto; margin-bottom: 20px;  border-radius: 10px;">
-                <p>Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.</p>
-                <a href="{% url 'view_employers' %}" class="button">Shakisha</a>
+        <div class="container">
+            <div class="section-header">
+                <h2>Abakozi</h2>
+                <p>Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe. Sura ibyo amahirwe, usabe akazi, tangira umwuga wawe, kandi ugerageze kugera ku byo wizeye ubu natwe.</p>
             </div>
-            <div class="card">
-                <h3>Tanga Umwirondoro Wawe</h3>
-                <img src="{% static 'images/nature.jpg' %}" alt="Sample Image" style="width: 100%; height: 60%; margin-bottom: 50px; border-radius: 10px;">
-                <p>Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka..</p>
-                <a href="{% url 'worker' %}" class="button">Tanga</a>
-            </div>
-            <div class="card">
-                <h3>Inama ku Mwuga</h3>
-                <img src="{% static 'images/nature.jpg' %}" alt="Sample Image" style="width: 100%; height: auto; margin-bottom: 23px; border-radius: 10px;">
-                <p>Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe..</p>
-                <a href="{% url 'what_we_do' %}" class="button">Inama</a>
+            <div class="feature-boxes">
+                <div class="feature-box">
+                    <div class="feature-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Job Search">
+                    </div>
+                    <div class="feature-header">
+                        <h3 class="feature-title">Shakisha Imyanya y'Akazi</h3>
+                    </div>
+                    <p class="feature-description">Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.</p>
+                    <a href="{% url 'view_employers' %}"<a href="{% url 'view_employers' %}" class="button">Shakisha</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Profile Upload">
+                    </div>
+                    <div class="feature-header">
+                        <h3 class="feature-title">Tanga Umwirondoro Wawe</h3>
+                    </div>
+                    <p class="feature-description">Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka.</p>
+                    <a href="{% url 'worker' %}" class="button">Tanga</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Career Advice">
+                    </div>
+                    <div class="feature-header">
+                        <h3 class="feature-title">Inama ku Mwuga</h3>
+                    </div>
+                    <p class="feature-description">Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe.</p>
+                    <a href="{% url 'what_we_do' %}" class="button">Inama</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Display Counts from Context -->
+    <!-- Statistics Section -->
     <section class="statistics">
-        <div class="cards">
-            <div class="card">
-                <h3>Abakozi</h3>
-                <p class="count">{{ students }}</p>
+        <div class="container">
+            <div class="section-header">
+                <h2>Imibare Yacu</h2>
+                <p>Imibare ijyanye n'icyo dukora n'uko dukorana n'abantu</p>
             </div>
-            <div class="card">
-                <h3>Abahugura</h3>
-                <p class="count">{{ trainers }}</p>
+            <div class="stat-container">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-count">1,200+</div>
+                    <div class="stat-label">Abakozi</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="stat-count">50+</div>
+                    <div class="stat-label">Abahugura</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-count">75+</div>
+                    <div class="stat-label">Amasomo</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-count">120+</div>
+                    <div class="stat-label">Ibikorwa</div>
+                </div>
             </div>
-            <div class="card">
-                <h3>Amasomo</h3>
-                <p class="count">{{ courses }}</p>
-            </div>
-            <div class="card">
-                <h3>Ibikorwa</h3>
-                <p class="count">{{ events }}</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <h2 class="section-title">Twandikire</h2>
+            <p class="section-subtitle">Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.</p>
+            <div class="contact-grid">
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="contact-title">Telefoni</h3>
+                    <p class="contact-info">+250793487065</p>
+                </div>
+                <div class="contact-card fade-in delay-1">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="contact-title">Imeyili</h3>
+                    <p class="contact-info">murenzicharles24@gmail.com</p>
+                </div>
+                <div class="contact-card fade-in delay-2">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="contact-title">Ahantu</h3>
+                    <p class="contact-info">Kigali, Rwanda</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="contact-info">
-          <h1>Nimero</h1>
-          <h3>Phone:+250793487065</h3>
-          <h3>Email: murenzicharles24@gmail.com</h3>
-          <p>&copy; {% now "Y" %} JobLink - All Rights Reserved</p>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Kutwiga</h3>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <p>+250793487065</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <p>murenzicharles24@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <p>Kigali, Rwanda</p>
+                        </div>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Ahukulile</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> AHABANZA</a></li>
+                        <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> ABAKOZI</a></li>
+                        <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> ABAKORESHA</a></li>
+                        <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> REBA UMUKOZI</a></li>
+                        <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> REBA ABAKORESHA</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Serivisi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gushaka Abakozi</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhugura Abakozi</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhuza Impano</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gusuzuma Abakandida</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Kwamamaza Akazi</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Ibindi</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> IBYO DUKORA</a></li>
+                        <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> AMATANGAZO</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Politiki yo Kubungabunga Amakuru</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Amabwiriza</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; {% now "Y" %} JobLink - All Rights Reserved</p>
+            </div>
         </div>
-        
-        <div class="social-media">
-          <h1>Imbuga Nkoranyambaga</h1>
-          <ul>
-            <li><a href="https://youtube.com/@murenzicharles?si=U-CoZVC1GvvwipHf" target="_blank">YouTube</a></li>
-            <li><a href="https://www.instagram.com/murenzi893/profilecard/?igsh=Ym14ZDk5aG15ODdv" target="_blank">Instagram</a></li>
-          </ul>
-        </div>
-        
-        <div class="visit-info">
-          <h1>Dusure</h1>
-          <h2>Kigali, Rwanda</h2>
-        </div>
-      </footer>
-      
+    </footer>
+    
     <script>
         // JavaScript to handle sticky navbar
         window.onscroll = function() {stickyNavbar()};
@@ -446,7 +1097,81 @@ footer {
                 navbar.classList.remove("sticky");
             }
         }
+
+        // Animation for feature boxes on scroll
+        document.addEventListener("DOMContentLoaded", function() {
+            const boxes = document.querySelectorAll('.feature-box');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            boxes.forEach(box => {
+                box.style.opacity = 0;
+                box.style.transform = 'translateY(50px)';
+                box.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(box);
+            });
+        });
+
+        // Counter animation for statistics
+        document.addEventListener("DOMContentLoaded", function() {
+            const counters = document.querySelectorAll('.stat-count');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const countTo = parseInt(target.innerText.replace(/\D/g,''));
+                        
+                        let count = 0;
+                        const updateCount = () => {
+                            const increment = countTo / 100;
+                            if(count < countTo) {
+                                count += increment;
+                                target.innerText = Math.ceil(count) + "+";
+                                setTimeout(updateCount, 20);
+                            } else {
+                                target.innerText = countTo + "+";
+                            }
+                        };
+                        
+                        updateCount();
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+        });
+
+        // Animation for contact cards (fade-in effect)
+        document.addEventListener("DOMContentLoaded", function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // Login button functionality
+        document.getElementById("login-btn").addEventListener("click", function() {
+            alert("Login functionality will be implemented here");
+        });
     </script>
-    
 </body>
 </html>

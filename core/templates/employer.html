@@ -2,334 +2,1268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>JobLink - Register as an Employer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobLink - ABAKORESHA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: white;
-            color: #333;
+        :root {
+            --primary-color: #119fa5;
+            --secondary-color: #ef8f20;
+            --accent-color: #0d7176;
+            --dark-primary: #194e4f;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+            --light-bg: #f9f9f9;
+            --border-radius: 30px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
-        /* Basic Reset */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Navigation Bar */
-        nav {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: url('{% static "images/nature.jpg"%}') no-repeat center center/cover;
-            padding: 50px 0px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--secondary-color);
             color: white;
+            padding: 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 20px;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info i {
+            margin-right: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            color: var(--dark-primary);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(to right, #119fa5, #0d7176);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
         }
 
         nav ul {
-            list-style: none;
             display: flex;
+            list-style: none;
             gap: 20px;
-            justify-content: center;
         }
 
         nav ul li a {
             color: white;
             text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: var(--transition);
         }
 
         nav ul li a:hover {
-            color: #f0a500;
-            border-radius: 5px;
-            font-size: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        nav div {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        nav div h1 {
-            font-size: 2em;
+        .nav-button {
+            background-color: var(--secondary-color);
             color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-button:hover {
+            background-color: #d97c18;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/nature.jpg"%}');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero-title span {
+            color: var(--secondary-color);
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .primary-button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .primary-button:hover {
+            background-color: #d97c18;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .outline-button {
+            background-color: transparent;
+            color: white;
+            padding: 12px 25px;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .outline-button:hover {
+            background-color: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Feature Cards */
+        .features-section {
+            padding: 50px 0;
+            background-color: #f9f9f9;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark-primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            width: 260px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            color: white;
+            font-size: 28px;
+        }
+
+        .feature-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .feature-content h3 {
+            color: var(--dark-primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .feature-content p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 80px 0;
+        }
+
+        .about-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            gap: 40px;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .about-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-content h2 {
+            font-size: 2.2rem;
+            color: var(--dark-primary);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .about-content h2 span {
+            color: var(--secondary-color);
+        }
+
+        .about-content h2:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .about-feature i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .services-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            width: 350px;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+
+        .service-content {
+            padding: 20px;
+        }
+
+        .service-content h3 {
+            color: var(--dark-primary);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .service-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .read-more i {
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            color: var(--secondary-color);
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(rgba(17, 159, 165, 0.9), rgba(13, 113, 118, 0.9)), url('{% static "images/nature.jpg"%}');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 0;
+            color: white;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            width: 220px;
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 30px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
             margin-bottom: 5px;
         }
 
-        nav div h3 {
-            font-size: 1.5em;
-            color: #ccc;
-            font-weight: normal;
+        .stat-label {
+            font-size: 1.2rem;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-
-        .card-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .card {
-            width: 45%;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+        /* Call to Action */
+        .cta-section {
+            padding: 80px 0;
             text-align: center;
+            background-color: white;
         }
 
-        .card img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .card h1 {
-            margin-bottom: 15px;
-            color: brown;
-            font-size: 1.8em;
-        }
-        .card h2 {
-            margin-bottom: 15px;
-            color: black;
-            font-size: 1.4em; 
-        }
-
-        .card p {
-            color: black;
-            line-height: 1.7;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
+        .cta-container h2 {
+            font-size: 2.5rem;
+            color: var(--dark-primary);
             margin-bottom: 20px;
         }
+
+        .cta-container p {
+            margin-bottom: 30px;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        /* Form Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalfade 0.3s;
+        }
+
+        @keyframes modalfade {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: #000;
+        }
+
+        .modal-title {
+            color: var(--dark-primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
         }
-        input[type="text"], input[type="email"], textarea {
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: var(--transition);
         }
-        button {
-            background-color: #3498db;
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(17, 159, 165, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background-color: var(--primary-color);
             color: white;
-            padding: 10px 15px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
         }
-        button:hover {
-            background-color: #2980b9;
+
+        .submit-button:hover {
+            background-color: var(--dark-primary);
+            transform: translateY(-3px);
         }
-        .message {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-            
+
+        /* Footer */
         footer {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            padding: 20px;
-            background-color: #333;
-            color: #fff;
-            font-family: Arial, sans-serif;
-        }
-
-        footer div {
-            flex: 1;
-            padding: 10px;
-        }
-
-        footer h1 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: #ffcc00;
-        }
-
-        footer h3, footer h2 {
-            font-size: 1em;
-            margin: 5px 0;
-        }
-
-        footer p {
-            font-size: 0.9em;
-            margin-top: 15px;
-            text-align: right;
-        }
-
-        .contact-info h3, .visit-info h2 {
+            background: linear-gradient(to right, #119fa5, #0d7176);
             color: #ddd;
+            padding: 60px 0 20px;
         }
 
-        .social-media ul {
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .footer-contact-item i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        .footer-links {
             list-style: none;
-            padding: 0;
         }
 
-        .social-media li {
-            margin: 5px 0;
+        .footer-links li {
+            margin-bottom: 10px;
         }
 
-        .social-media a {
-            color: #ffcc00;
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a i {
+            margin-right: 8px;
+            font-size: 12px;
+            color: var(--secondary-color);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
             text-decoration: none;
         }
 
-        .social-media a:hover {
-            text-decoration: underline;
+        .footer-social a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .about-container {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                margin-bottom: 30px;
+            }
         }
 
         @media (max-width: 768px) {
-            footer {
+            .top-bar-content,
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
+            
+            .stat-item {
+                width: 45%;
+            }
+        }
 
-            footer div {
-                text-align: center;
-                padding: 10px 0;
+        @media (max-width: 576px) {
+            .feature-card,
+            .service-card {
+                width: 100%;
+            }
+            
+            .stat-item {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <nav id="navbar">
-        <ul>
-            <li><a href="{% url 'home' %}">AHABANZA</a></li>
-            <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
-            <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
-            <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
-            <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
-            <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
-            <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
-        </ul>
-        <div>
-            <h1>ABAKORESHA</h1>
-            <h3>AHABANZA // ABAKORESHA</h3> 
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">AHABANZA</a></li>
+                    <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
+                    <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
+                    <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
+                    <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
+                    <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
+                    <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
+                </ul>
+            </nav>
+            <a href="#" class="nav-button" id="openFormButton">login</a>
         </div>
-    </nav>
+    </header>
 
-    <section class="card-container">
-        <div class="card">
-            <img src="{% static 'images/nature.jpg' %}" alt="Sample Image">
-        </div>
-        <div class="card">
-            <h1>Ibyo ukeneye nk'umukoresha.</h1>
-            <h2>Shyigikira abakozi bawe n'ibisubizo by'ubukoresha bihuye n'ibikenewe by'ikigo cyawe</h2>
-            <p> 
-                Sura serivisi zoroheje z'ubukoresha zateguwe kugira ngo zigufashe kubona impano zihambaye zihuje n'icyerekezo cy'ikigo cyawe. Dufasha abakoresha kubona abakozi bafite ubumenyi buhamye, bashobora guteza imbere umusaruro no guteza imbere umuco mwiza w'akazi.
-            </p>
-            <h2>Kwamamaza Amahirwe mu buryo Bunoze</h2>
-            <p>
-                Sangiza imyanya y'akazi yawe ku bantu benshi kugira ngo ukurure abakandida b'icyitegererezo. Urubuga rwacu rwemeza ko abakenewe bashobora kubona amahirwe yawe, bikongera ikigero cyo kugera ku bakandida no gukurura abantu bashoboye.
-            </p>
-            <h2>Abakandida Basuzumwe mbere, Bafite Ubushobozi</h2>
-            <p>
-                Bura igihe gito mu gusuzuma ibyasabwe. Dusuzuma abakandida byimbitse kugira ngo tugaragaze gusa abafite ubumenyi, ubunararibonye, n'agaciro bihuye n'ibikenewe byawe, bigatuma uburyo bwo gukoresha abakozi bwawe burushaho kuba bwiza kandi bukora neza.
-            </p>
-            <h2>Ibisubizo by'Ubukoresha Bihinduka kandi Byahujwe n'Ibikenewe</h2>
-            <p>
-                Hindura uburyo bwo gukoresha abakozi bwawe kugira ngo buhuze n'ibikenewe by'ubucuruzi bihindagurika. Niba ikigo cyawe gikenera abakozi b'igihe cyose, ab'igihe gito, cyangwa abakozi b'ibikorwa byihariye, ibisubizo byacu bihinduka bizafasha mu guhangana n'ibikenewe by'abakozi bihora bihinduka.
-            </p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Tangiza Urugendo Rwo <span>Kubona Abakozi Babereye</span> Ikigo Cyawe</h1>
+            <p class="hero-description">Dufasha abakoresha kubona abakozi b'umwuga. Sangiza imyanya y'akazi yawe kuri urubuga rwacu kandi ubone abakozi babereye akazi kawe.</p>
+            <div class="hero-buttons">
+                <a href="#" class="primary-button" id="openFormBtn">Tanga Amakuru y'Umukoresha</a>
+                <a href="{% url 'view_worker' %}" class="outline-button">Reba Abakozi</a>
+            </div>
         </div>
     </section>
 
-    <div class="container">
-        <h1>Tanga Amakuru y'Umukoresha</h1>
-
-        {% if messages %}
-            {% for message in messages %}
-                <div class="message">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-
-        <form method="POST">
-            {% csrf_token %}
+    <!-- Feature Cards Section -->
+    <section class="features-section">
+        <div class="section-title">
+            <h2>Ibyo Ukeneye Nk'umukoresha</h2>
+            <p>Serivisi zinoze zo gufasha abakoresha kubona abakozi babereye ibigo byabo</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-number">01</div>
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Shyigikira Abakozi</h3>
+                    <p>Dufasha abakoresha kubona abakozi bafite ubumenyi buhamye, bashobora guteza imbere umusaruro no guteza imbere umuco mwiza w'akazi.</p>
+                </div>
+            </div>
             
-            <label for="id_company">Izina ry'Ikigo:</label>
-            {{ form.company }}
-            {{ form.company.errors }}
-
-            <label for="id_email">Email:</label>
-            {{ form.email }}
-            {{ form.email.errors }}
-
-            <label for="id_phone">NUMERO:</label>
-            {{ form.phone }}
-            {{ form.phone.errors }}
-
-            <label for="id_position">Umwanya:</label>
-            {{ form.position }}
-            {{ form.position.errors }}
-
-            <label for="id_job_description">Ibisobanuro by'Akazi:</label>
-            {{ form.job_description }}
-            {{ form.job_description.errors }}
-
-            <label for="id_job_requirements">Ibisabwa ku kazi:</label>
-            {{ form.job_requirements }}
-            {{ form.job_requirements.errors }}
-
-            <label for="id_location">Ahantu:</label>
-            {{ form.location }}
-            {{ form.location.errors }}
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-number">02</div>
+                <div class="feature-icon">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Kwamamaza Amahirwe</h3>
+                    <p>Sangiza imyanya y'akazi yawe ku bantu benshi kugira ngo ukurure abakandida b'icyitegererezo kandi b'impano.</p>
+                </div>
+            </div>
             
-            <label for="id_rating">Rating:</label>
-            {{ form.rating }}
-            {{ form.rating.errors }}
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-number">03</div>
+                <div class="feature-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Abakandida Basuzumwe</h3>
+                    <p>Dusuzuma abakandida byimbitse kugira ngo tugaragaze gusa abafite ubumenyi n'ubunararibonye bihuye n'ibikenewe byawe.</p>
+                </div>
+            </div>
             
-            <button type="submit">Submit</button>
-        </form>
+            <div class="feature-card fade-in delay-3">
+                <div class="feature-number">04</div>
+                <div class="feature-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Ibisubizo Bihinduka</h3>
+                    <p>Hindura uburyo bwo gukoresha abakozi bwawe kugira ngo buhuze n'ibikenewe by'ubucuruzi bihindagurika.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-container">
+            <div class="about-image fade-in">
+                <img src="{% static 'images/nature.jpg' %}" alt="About JobLink">
+            </div>
+            
+            <div class="about-content fade-in delay-2">
+                <h2>Kutwiga Biratuma Ubona <span>Abakozi Babereye</span></h2>
+                <p>Mu gihe cy'imyaka 25+ y'uburambe, twahaye abakoresha benshi abakozi babereye. Duha agaciro gukorera hamwe n'abakoresha kugira ngo tumve neza ibikenewe kandi tubafashe kubona abakozi bakwiye.</p>
+                
+                <div class="about-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Gufasha abakoresha kugabanya igihe n'amafaranga bijyana no gushaka abakozi</p>
+                </div>
+                
+                <div class="about-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Gufasha abakozi kwihutisha kubona akazi gahuje n'ubushobozi bwabo</p>
+                </div>
+                
+                <a href="#" class="primary-button" id="aboutFormBtn">Tanga Amakuru y'Umukoresha</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="services-container">
+            <div class="section-title">
+                <h2>Serivisi Zacu</h2>
+                <p>Dufasha abakoresha kubona abakozi b'umwuga binyuze muri izi serivisi</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Gushaka Abakozi">
+                    </div>
+                    <div class="service-content">
+                        <h3>Gushaka Abakozi</h3>
+                        <p>Dushakira abakoresha abakozi bashoboye kandi bafite ubumenyi n'impamyabushobozi zikenewe. Dusuzuma abakandida kugira ngo dutoranyemo abashoboye.</p>
+                        <a href="#" class="read-more">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in delay-1">
+                    <div class="service-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Guhugura Abakozi">
+                    </div>
+                    <div class="service-content">
+                        <h3>Guhugura Abakozi</h3>
+                        <p>Dutegura gahunda zo guhugura abakozi zikurikije ibikenewe n'ikigo, bityo bigatuma abakozi bagira ubushobozi bukenewe kugira ngo barusheho kugira umusaruro.</p>
+                        <a href="#" class="read-more">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in delay-2">
+                    <div class="service-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Guhuza Impano">
+                    </div>
+                    <div class="service-content">
+                        <h3>Guhuza Impano</h3>
+                        <p>Dukorera abakoresha igenzura ryimbitse kugira ngo tubahuze n'abakozi bafite impano zihuye n'ibikenewe n'ibyifuzo by'ikigo kugira ngo bagere ku ntego z'ubucuruzi.</p>
+                        <a href="#" class="read-more">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Imyaka y'Uburambe</div>
+                </div>
+                
+                <div class="stat-item fade-in delay-1">
+                    <div class="stat-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Abakoresha Twafashije</div>
+                </div>
+                
+                <div class="stat-item fade-in delay-2">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-label">Abakozi Bashakiwe Akazi</div>
+                </div>
+                
+                <div class="stat-item fade-in delay-3">
+                    <div class="stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Abakoresha Baduha Amanota</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Witabire Kubona Abakozi Bashoboye</h2>
+            <p>Hitamo JobLink kugira ngo ufashwe kubona abakozi b'umwuga kandi bashoboye babereye ikigo cyawe. Tangira nonaha.</p>
+            <a href="#" class="primary-button" id="ctaFormBtn">Tanga Amakuru y'Umukoresha</a>
+        </div>
+    </section>
+    
+    <!-- Form Modal -->
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 class="modal-title">Tanga Amakuru y'Umukoresha</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_company">Izina ry'Ikigo:</label>
+                    {{ form.company }}
+                    {{ form.company.errors }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_email">Email:</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_phone">NUMERO:</label>
+                    {{ form.phone }}
+                    {{ form.phone.errors }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_position">Umwanya:</label>
+                    {{ form.position }}
+                    {{ form.position.errors }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_job_description">Ibisobanuro by'Akazi:</label>
+                    {{ form.job_description }}
+                    {{ form.job_description.errors }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_job_requirements">Ibisabwa ku kazi:</label>
+                    {{ form.job_requirements }}
+                    {{ form.job_requirements.errors }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_location">Ahantu:</label>
+                    {{ form.location }}
+                    {{ form.location.errors }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_rating">Rating:</label>
+                    {{ form.rating }}
+                    {{ form.rating.errors }}
+                </div>
+                
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
     </div>
-
+    
+    <!-- Footer -->
     <footer>
-        <div class="contact-info">
-            <h1>Nimero</h1>
-            <h3>Phone:+250793487065</h3>
-            <h3>Email: murenzicharles24@gmail.com</h3>
-            <p>&copy; 2024 JobLink - All Rights Reserved</p>
-        </div>
-        <div class="social-media">
-            <h1>Imbuga Nkoranyambaga</h1>
-            <ul>
-                <li><a href="https://youtube.com/@murenzicharles" target="_blank">YouTube</a></li>
-                <li><a href="https://www.instagram.com/murenzi893" target="_blank">Instagram</a></li>
-            </ul>
-        </div>
-        <div class="visit-info">
-            <h1>Dusure</h1>
-            <h2>Kigali, Rwanda</h2>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Kutwiga</h3>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <p>+250793487065</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <p>murenzicharles24@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <p>Kigali, Rwanda</p>
+                        </div>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Ahukulile</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> AHABANZA</a></li>
+                        <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> ABAKOZI</a></li>
+                        <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> ABAKORESHA</a></li>
+                        <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> REBA UMUKOZI</a></li>
+                        <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> REBA ABAKORESHA</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Serivisi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gushaka Abakozi</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhugura Abakozi</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhuza Impano</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gusuzuma Abakandida</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Kwamamaza Akazi</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Ibindi</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> IBYO DUKORA</a></li>
+                        <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> AMATANGAZO</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Politiki yo Kubungabunga Amakuru</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Amabwiriza</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 JobLink - All Rights Reserved</p>
+            </div>
         </div>
     </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        // Modal functionality
+        const modal = document.getElementById("formModal");
+        const openFormBtn = document.getElementById("openFormButton");
+        const openHeroFormBtn = document.getElementById("openFormBtn");
+        const openAboutFormBtn = document.getElementById("aboutFormBtn");
+        const openCtaFormBtn = document.getElementById("ctaFormBtn");
+        const closeModal = document.getElementById("closeModal");
+        
+        // Open modal from different buttons
+        openFormBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            modal.style.display = "block";
+        });
+        
+        openHeroFormBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            modal.style.display = "block";
+        });
+        
+        openAboutFormBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            modal.style.display = "block";
+        });
+        
+        openCtaFormBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            modal.style.display = "block";
+        });
+        
+        // Close modal
+        closeModal.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+        
+        window.addEventListener("click", function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+        
+        // Fade-in animation
+        document.addEventListener("DOMContentLoaded", function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
 </body>
-</html>

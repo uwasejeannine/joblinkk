@@ -2,239 +2,865 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>JobLink - About Us</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobLink - Ibyo Dukora</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-       
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: white;
-            color: #333;
+        :root {
+            --primary-color: #119fa5;
+            --secondary-color: #ef8f20;
+            --accent-color: #0d7176;
+            --dark-primary: #194e4f;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+            --light-bg: #f9f9f9;
+            --border-radius: 30px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
-        /* Basic Reset */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Navigation Bar */
-        nav {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: url('{% static "images/nature.jpg"%}') no-repeat center center/cover;
-            padding: 50px 0px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(to right, #119fa5, #0d7176);
             color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         nav ul {
-            list-style: none;
             display: flex;
+            list-style: none;
             gap: 20px;
-            justify-content: center;
         }
 
         nav ul li a {
             color: white;
             text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: var(--transition);
         }
 
         nav ul li a:hover {
-            color: #f0a500;
-            border-radius: 5px;
-            font-size: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        nav div {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        nav div h1 {
-            font-size: 2em;
+        .nav-button {
+            background-color: var(--secondary-color);
             color: white;
-            margin-bottom: 5px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        nav div h3 {
-            font-size: 1.5em;
-            color: #ccc;
-            font-weight: normal;
+        .nav-button:hover {
+            background-color: #d97c18;
+            transform: translateY(-2px);
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                gap: 10px;
-            }
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/nature.jpg"%}');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            text-align: center;
+            color: white;
+            position: relative;
         }
 
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-        .card-container {
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
-            padding: 20px;
+            margin-top: 30px;
         }
 
-        .card {
-            width: 45%;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+        .primary-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .primary-button:hover {
+            background-color: var(--dark-primary);
+            transform: translateY(-3px);
+        }
+
+        .secondary-button {
+            background-color: transparent;
+            color: white;
+            padding: 12px 30px;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .secondary-button:hover {
+            background-color: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background-color: white;
+            padding: 80px 0;
             text-align: center;
         }
 
-        .card img {
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .stats-heading {
+            font-size: 1.8rem;
+            color: var(--dark-primary);
+            margin-bottom: 40px;
+        }
+
+        .stats-info {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background-color: var(--light-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            min-width: 200px;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Services Section */
+        .services-section {
+            background-color: var(--light-bg);
+            padding: 80px 0;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--dark-primary);
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .section-subtitle {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+
+        .service-content {
+            padding: 25px;
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark-primary);
+        }
+
+        .service-description {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .service-icon {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .about-image img {
             width: 100%;
             height: auto;
-            border-radius: 10px;
+            display: block;
         }
 
-        .card h1 {
-            margin-bottom: 15px;
-            color: #333;
-            font-size: 1.8em;
-        }
-
-        .card p {
-            color: #666;
-            line-height: 1.6;
-            text-align: center;
-        }
-
-        footer {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            padding: 20px;
-            background-color: #333;
-            color: #fff;
-            font-family: Arial, sans-serif;
-        }
-
-        footer div {
+        .about-content {
             flex: 1;
-            padding: 10px;
+            min-width: 300px;
         }
 
-        footer h1 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: #ffcc00;
+        .about-title {
+            font-size: 2.2rem;
+            color: var(--dark-primary);
+            margin-bottom: 20px;
         }
 
-        footer h3, footer h2 {
-            font-size: 1em;
-            margin: 5px 0;
+        .about-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.8;
         }
 
-        footer p {
-            font-size: 0.9em;
-            margin-top: 15px;
-        }
-
-        .contact-info h3, .visit-info h2 {
-            color: #ddd;
-        }
-
-        .social-media ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .social-media li {
-            margin: 5px 0;
-        }
-
-        .social-media a {
-            color: #ffcc00;
+        .about-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
             text-decoration: none;
         }
 
-        .social-media a:hover {
-            text-decoration: underline;
+        .about-button:hover {
+            background-color: var(--dark-primary);
+            transform: translateY(-3px);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-color: var(--light-bg);
+            padding: 80px 0;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .contact-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .contact-title {
+            font-size: 1.3rem;
+            color: var(--dark-primary);
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, #119fa5, #0d7176);
+            color: #ddd;
+            padding: 60px 0 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .footer-contact-item i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a i {
+            margin-right: 8px;
+            font-size: 12px;
+            color: var(--secondary-color);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .about-container {
+                flex-direction: column;
+            }
+            
+            .about-image, .about-content {
+                width: 100%;
+            }
         }
 
         @media (max-width: 768px) {
-            footer {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-
-            footer div {
-                text-align: center;
-                padding: 10px 0;
+            
+            .stats-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <nav id="navbar">
-        <ul>
-            <li><a href="{% url 'home' %}">AHABANZA</a></li>
-            <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
-            <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
-            <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
-            <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
-            <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
-            <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
-        </ul>
-        <div>
-            <h1>IBYO DUKORA</h1>
-            <h3>AHABANZA // IBYO DUKORA</h3> 
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">AHABANZA</a></li>
+                    <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
+                    <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
+                    <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
+                    <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
+                    <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
+                    <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
+                </ul>
+            </nav>
+            <a href="#" class="nav-button">login</a>
         </div>
-    </nav>
+    </header>
 
-    <section class="card-container">
-        <div class="card">
-            <img src="{% static 'images/nature.jpg' %}" alt="Sample Image">
-        </div>
-        <div class="card">
-            <h1>IBYO DUKORA</h1>
-            <p>
-                Kuri JobLink, duhuza ibigo n'abakozi b'abahanga kandi tugafasha abashaka akazi kubona umwuga wuzuye ubuzima.
-                Urubuga rwacu rworoshya uburyo bwo gushaka abakozi, rutanga serivisi zigenewe abatanga akazi ndetse n'abashaka akazi.
-                Abatanga akazi bashobora gushyiraho ibyifuzo by'akazi, kwinjiza abakozi bashoboye, no kubona ibisubizo byihuse mu guhitamo abakozi,
-                mu gihe abashaka akazi bashobora gushaka ibyifuzo by'akazi, kohereza ubusabe bw'akazi, no kwakira inama ku mwuga.
-                Twiyemeje guteza imbere intsinzi y'impande zombi, twizeza ko ibigo n'abakozi bazahigira imbere.
-                Twiyunge natwe none, maze twubake umusingi hagati y'ubushobozi n'amahirwe!
-            </p>
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h1 class="hero-title fade-in">IBYO <span style="color: var(--secondary-color);">DUKORA</span></h1>
+            <p class="hero-description fade-in delay-1">Dufasha ibigo no kubona abakozi, tunafasha abashaka akazi kubona umwanya ubereye.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'employer' %}" class="primary-button fade-in delay-2">
+                    <i class="fas fa-building"></i> Ku Bakoresha
+                </a>
+                <a href="{% url 'worker' %}" class="secondary-button fade-in delay-3">
+                    <i class="fas fa-user"></i> Ku Bashaka Akazi
+                </a>
+            </div>
         </div>
     </section>
 
-    <form style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 100%; text-align: center;">
-        <label for="contact" style="display: block; margin-bottom: 20px; font-size: 16px; color: #333;">NIMERO: 0793487065</label>
-        <label for="email" style="display: block; margin-bottom: 20px; font-size: 16px; color: #333;">EMAIL: murenzicharles24@gmail.com</label>
-        <label for="location" style="display: block; margin-bottom: 20px; font-size: 16px; color: #333;">LOCATION: Kigali</label>
-    </form>
-    
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <h2 class="stats-heading">Turashaka kugufasha gukora itandukaniro</h2>
+            <p class="stats-info">Kuri JobLink, dufasha ibigo kubona abakozi b'abahanga kandi dufasha abantu kubona akazi kajyanye n'ubumenyi bwabo</p>
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-number">80+</div>
+                    <div class="stat-label">Abanyakazi bashya buri kwezi</div>
+                </div>
+                <div class="stat-card fade-in delay-1">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Akazi kabonetse</div>
+                </div>
+                <div class="stat-card fade-in delay-2">
+                    <div class="stat-number">2K+</div>
+                    <div class="stat-label">Abakozi bashimwe</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="services-container">
+            <h2 class="section-title">Serivisi Dutanga</h2>
+            <p class="section-subtitle">Izo ni serivisi nyamukuru dutanga kugira ngo tugufashe gukora neza</p>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-content">
+                        <div class="service-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="service-title">Guhuza Abakozi n'Akazi</h3>
+                        <p class="service-description">Dukoresha ikoranabuhanga ry'igihe kugira ngo guhuza ubushobozi n'ibyifuzo by'ibigo bitandukanye, dutanga imyanya ku bushake.</p>
+                    </div>
+                </div>
+                <div class="service-card fade-in delay-1">
+                    <div class="service-content">
+                        <div class="service-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="service-title">Gutunganya CVs</h3>
+                        <p class="service-description">Tugufasha gutunganya CV yawe kugira ngo werekane ubumenyi n'ubushobozi bwawe ku buryo bunoze.</p>
+                    </div>
+                </div>
+                <div class="service-card fade-in delay-2">
+                    <div class="service-content">
+                        <div class="service-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="service-title">Gushaka Abakozi</h3>
+                        <p class="service-description">Dufasha ibigo gushaka abakozi babereye kandi bafite ubumenyi bukenewe. Turamenya neza ko buri mukozi ajyanye n'umwanya ukenewe.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-container">
+            <div class="about-image fade-in">
+                <img src="{% static 'images/nature.jpg' %}" alt="About JobLink">
+            </div>
+            <div class="about-content fade-in delay-1">
+                <h2 class="about-title">IBYO DUKORA</h2>
+                <p class="about-description">
+                    Kuri JobLink, duhuza ibigo n'abakozi b'abahanga kandi tugafasha abashaka akazi kubona umwuga wuzuye ubuzima.
+                    Urubuga rwacu rworoshya uburyo bwo gushaka abakozi, rutanga serivisi zigenewe abatanga akazi ndetse n'abashaka akazi.
+                </p>
+                <p class="about-description">
+                    Abatanga akazi bashobora gushyiraho ibyifuzo by'akazi, kwinjiza abakozi bashoboye, no kubona ibisubizo byihuse mu guhitamo abakozi,
+                    mu gihe abashaka akazi bashobora gushaka ibyifuzo by'akazi, kohereza ubusabe bw'akazi, no kwakira inama ku mwuga.
+                </p>
+                <p class="about-description">
+                    Twiyemeje guteza imbere intsinzi y'impande zombi, twizeza ko ibigo n'abakozi bazahigira imbere.
+                    Twiyunge natwe none, maze twubake umusingi hagati y'ubushobozi n'amahirwe!
+                </p>
+                <a href="{% url 'contact' %}" class="about-button">
+                    <i class="fas fa-envelope"></i> Twandikire
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <h2 class="section-title">Twandikire</h2>
+            <p class="section-subtitle">Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.</p>
+            <div class="contact-grid">
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="contact-title">Telefoni</h3>
+                    <p class="contact-info">+250793487065</p>
+                </div>
+                <div class="contact-card fade-in delay-1">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="contact-title">Imeyili</h3>
+                    <p class="contact-info">murenzicharles24@gmail.com</p>
+                </div>
+                <div class="contact-card fade-in delay-2">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="contact-title">Ahantu</h3>
+                    <p class="contact-info">Kigali, Rwanda</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <div class="contact-info">
-            <h1>Nimero</h1>
-            <h3>Phone:+250793487065</h3>
-            <h3>Email: murenzicharles24@gmail.com</h3>
-            <p>&copy; 2024 JobLink - All Rights Reserved</p>
-        </div>
-        
-        <div class="social-media">
-            <h1>Imbuga Nkoranyambaga</h1>
-            <ul>
-                <li><a href="https://youtube.com/@murenzicharles?si=U-CoZVC1GvvwipHf" target="_blank">YouTube</a></li>
-                <li><a href="https://www.instagram.com/murenzi893/profilecard/?igsh=Ym14ZDk5aG15ODdv" target="_blank">Instagram</a></li>
-            </ul>
-        </div>
-        
-        <div class="visit-info">
-            <h1>Dusure</h1>
-            <h2>Kigali, Rwanda</h2>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Kutwiga</h3>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <p>+250793487065</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <p>murenzicharles24@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <p>Kigali, Rwanda</p>
+                        </div>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Ahukulile</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> AHABANZA</a></li>
+                        <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> ABAKOZI</a></li>
+                        <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> ABAKORESHA</a></li>
+                        <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> REBA UMUKOZI</a></li>
+                        <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> REBA ABAKORESHA</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Serivisi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gushaka Abakozi</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhugura Abakozi</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhuza Impano</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gusuzuma Abakandida</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Kwamamaza Akazi</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Ibindi</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> IBYO DUKORA</a></li>
+                        <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> AMATANGAZO</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Politiki yo Kubungabunga Amakuru</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Amabwiriza</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="<div class="footer-bottom">
+                <p>&copy; 2024 JobLink - All Rights Reserved</p>
+            </div>
         </div>
     </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        // Fade-in animation
+        document.addEventListener("DOMContentLoaded", function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
 </body>
 </html>

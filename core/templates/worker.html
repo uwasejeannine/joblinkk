@@ -4,463 +4,1423 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobLink - Employee Submission Form</title>
+    <title>JobLink - ABAKOZI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: white;
-            margin: 0;
-            padding: 0;
+        :root {
+            --primary-color: #119fa5;
+            --secondary-color: #ef8f20;
+            --accent-color: #0d7176;
+            --dark-primary: #194e4f;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+            --light-bg: #f9f9f9;
+            --border-radius: 30px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
 
-        nav {
-            background: url('{% static "images/nature.jpg"%}') no-repeat center center/cover;
-            padding: 50px 0;
-            width: 100%;
-            z-index: 999;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 20px;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info i {
+            margin-right: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            color: var(--dark-primary);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(to right, #119fa5, #0d7176);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
         }
 
         nav ul {
-            list-style-type: none;
             display: flex;
-            justify-content: center;
+            list-style: none;
             gap: 20px;
         }
 
-        nav li {
-            margin: 0;
-        }
-
-        nav a {
+        nav ul li a {
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: var(--transition);
         }
 
-        nav a:hover {
-            color: #f0a500;
-            border-radius: 5px;
-            font-size: 20px;
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        nav div {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        nav div h1 {
-            font-size: 2em;
+        .nav-button {
+            background-color: var(--secondary-color);
             color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-button:hover {
+            background-color: #d97c18;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/nature.jpg"%}');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero-title span {
+            color: var(--secondary-color);
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .primary-button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .primary-button:hover {
+            background-color: #d97c18;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .outline-button {
+            background-color: transparent;
+            color: white;
+            padding: 12px 25px;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .outline-button:hover {
+            background-color: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Feature Cards */
+        .features-section {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark-primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            width: 260px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            color: white;
+            font-size: 28px;
+        }
+
+        .feature-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .feature-content h3 {
+            color: var(--dark-primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .feature-content p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Journey Section */
+        .journey-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .journey-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .journey-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .journey-item {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 40px;
+        }
+
+        .journey-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .journey-content h3 {
+            color: var(--dark-primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .journey-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .services-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            width: 350px;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+
+        .service-content {
+            padding: 20px;
+        }
+
+        .service-content h3 {
+            color: var(--dark-primary);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .service-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .read-more i {
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            color: var(--secondary-color);
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .testimonial-content::before {
+            content: """;
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: -15px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-info h4 {
+            color: var(--dark-primary);
             margin-bottom: 5px;
         }
 
-        nav div h3 {
-            font-size: 1.5em;
-            color: #ccc;
-            font-weight: normal;
+        .testimonial-info p {
+            color: #777;
+            font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            nav a {
-                padding: 10px;
-                width: 100%;
-                text-align: center;
-            }
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(rgba(17, 159, 165, 0.9), rgba(13, 113, 118, 0.9)), url('{% static "images/nature.jpg"%}');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 0;
+            color: white;
         }
-            
-        /* Sticky navbar styles */
-        .sticky {
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            width: 220px;
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 30px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+            background-color: white;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cta-container h2 {
+            font-size: 2.5rem;
+            color: var(--dark-primary);
+            margin-bottom: 20px;
+        }
+
+        .cta-container p {
+            margin-bottom: 30px;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        /* Modal Popups */
+        .modal {
+            display: none;
             position: fixed;
+            z-index: 1000;
+            left: 0;
             top: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            padding: 10px 0;
-        }
-        
-        .sticky div h1, .sticky div h3 {
-            display: none;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
         }
 
-        /* Content adjustment for sticky navbar */
-        .content-wrapper {
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
             position: relative;
+            animation: modalfade 0.3s;
         }
 
-        /* Section Styling */
-        .joblink-section {
-            background-color: rgb(193, 233, 245);
-            padding: 60px 20px;
-            text-align: left;
-            margin-bottom: 2%;
-            position: relative;
-            z-index: 980;
+        @keyframes modalfade {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
         }
 
-        /* When navbar is sticky, adjust the position of joblink-section */
-        .padding-top {
-            padding-top: 120px;
-        }
-
-        /* Intro Section */
-        .intro h1 {
-            font-size: 2.5rem;
-            margin: 0;
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
             font-weight: bold;
-            color: #005580;
-        }
-
-        .intro p {
-            font-size: 1.2rem;
-            color: black;
-            margin: 20px 0;
-        }
-
-        .cta-button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: white;
-            background-color: #005580;
-            border: none;
-            border-radius: 5px;
+            color: #666;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: var(--transition);
         }
 
-        .cta-button:hover {
-            background-color: #003d5c;
+        .close-modal:hover {
+            color: #000;
         }
 
-        /* Job Seekers Section */
-        .job-seekers h2 {
-            font-size: 2rem;
-            color: #333;
+        .modal-title {
+            color: var(--dark-primary);
             margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
         }
 
-        .job-seekers p {
-            font-size: 1.2rem;
-            color: black;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        /* General Styles for Cards Container */
-        .cards {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            padding: 80px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 10px 0px blue;
-            position: relative;
-            z-index: 980;
-        }
-
-        /* Individual Card Styles */
-        .card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            flex: 1;
-            max-width: 500px;
-            text-align: center;
-        }
-
-        /* Card Heading Styles */
-        .card h3 {
-            font-family: Arial, sans-serif;
-            color: #333;
-        }
-
-        /* Card Paragraph Styles */
-        .card p {
-            font-family: Arial, sans-serif;
-            color: black;
-            font-size: 1.3em;
-        }
-
-        /* Image Styles */
-        .card img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-            border-radius: 10px;
-        }
-
-        .card .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #005580;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .card .button:hover {
-            background-color: #003d5c;
-        }
-
-        .form-box {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: white;
-            position: relative;
-            z-index: 970;
-        }
-
-        h3 {
-            text-align: center;
+        /* Form Styles */
+        .form-group {
             margin-bottom: 20px;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 600;
+            color: #444;
         }
 
-        input[type="text"], input[type="email"], input[type="file"], input[type="number"] {
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="file"],
+        input[type="number"],
+        textarea,
+        select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 16px;
+            transition: var(--transition);
         }
 
-        button {
-            display: block;
-            padding: 10px 20px;
-            background-color: #28a745;
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(17, 159, 165, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background-color: var(--primary-color);
             color: white;
+            padding: 12px 25px;
             border: none;
-            border-radius: 4px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            width: 30%;
+            transition: var(--transition);
+            display: block;
             margin: 0 auto;
+            min-width: 150px;
         }
 
-        button:hover {
-            background-color: #218838;
+        .submit-button:hover {
+            background-color: var(--dark-primary);
+            transform: translateY(-3px);
         }
 
+        /* Footer */
         footer {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            padding: 20px;
-            background-color: #333;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            position: relative;
-            z-index: 960;
-        }
-
-        footer div {
-            flex: 1;
-            padding: 10px;
-        }
-
-        footer h1 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: #ffcc00;
-        }
-
-        footer h3, footer h2 {
-            font-size: 1em;
-            margin: 5px 0;
-        }
-
-        footer p {
-            font-size: 0.9em;
-            margin-top: 15px;
-        }
-
-        .contact-info h3, .visit-info h2 {
+            background: linear-gradient(to right, #119fa5, #0d7176);
             color: #ddd;
+            padding: 60px 0 20px;
         }
 
-        .social-media ul {
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .footer-contact-item i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        .footer-links {
             list-style: none;
-            padding: 0;
         }
 
-        .social-media li {
-            margin: 5px 0;
+        .footer-links li {
+            margin-bottom: 10px;
         }
 
-        .social-media a {
-            color: #ffcc00;
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a i {
+            margin-right: 8px;
+            font-size: 12px;
+            color: var(--secondary-color);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
             text-decoration: none;
         }
 
-        .social-media a:hover {
-            text-decoration: underline;
+        .footer-social a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .journey-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
-            footer {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-
-            footer div {
-                text-align: center;
-                padding: 10px 0;
+            
+            .stat-item {
+                width: 45%;
             }
+        }
 
-            .cards {
-                flex-direction: column;
-                padding: 40px 20px;
+        @media (max-width: 576px) {
+            .feature-card,
+            .service-card {
+                width: 100%;
             }
-
-            .card {
-                max-width: 100%;
+            
+            .stat-item {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <nav id="navbar">
-        <ul>
-            <li><a href="{% url 'home' %}">AHABANZA</a></li>
-            <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
-            <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
-            <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
-            <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
-            <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
-            <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
-        </ul>
-        <div>
-            <h1>ABAKOZI</h1>
-            <h3>AHABANZA // ABAKOZI</h3> 
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">AHABANZA</a></li>
+                    <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
+                    <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
+                    <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
+                    <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
+                    <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
+                    <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
+                </ul>
+            </nav>
+            <a href="#" class="nav-button" id="openLoginModal">login</a>
         </div>
-    </nav>
+    </header>
 
-    <div class="content-wrapper" id="content-wrapper">
-        <section class="joblink-section" id="joblink-section">
-            <div class="intro">
-                <h1>Ikaze muri JobLink</h1>
-                <h1>Shaka Akazi Kakunyuze</h1>
-                <p>
-                    Muri JobLink, duhura abantu bafite impano n'abakoresha b'icyitegererezo kugirango tugufashe kubona akazi kanyuze<br>
-                    Akazi kihuye n'intego zawe z'umwuga n'icyerekezo cyawe. Niba winjiye mu isoko ry'akazi, <br>cyangwa ushaka kuzamura umwuga wawe, turi hano kugufasha mu rugendo rwawe rwose. Ushaka akazi? Turahari kugufasha kubona akazi <br>
-                    Turi hano kugufasha kubona akazi gihuye n'ubushobozi bwawe n'intego zawe. Sura amahirwe, usabe akazi,<br>
-                    usabe akazi, tangira umwuga wawe kandi ugerageze kugera ku byo wizeye ubu natwe.
-                </p>
-            </div>
-        </section>
-
-        <div class="cards">
-            <div class="card">
-                <h3>Shakisha Akazi</h3>
-                <p>Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.</p>
-                <img src="{% static 'images/nature.jpg' %}" alt="Shakisha Akazi">
-            </div>
-            <div class="card">
-                <h3>Tanga Umwirondoro Wawe</h3>
-                <p>Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka.</p>
-                <img src="{% static 'images/nature.jpg' %}" alt="Tanga Umwirondoro">
-            </div>
-            <div class="card">
-                <h3>Inama ku Mwuga</h3>
-                <p>Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe.</p>
-                <img src="{% static 'images/nature.jpg' %}" alt="Inama ku Mwuga">
-                <a href="#" class="button">Inama</a>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Ikaze muri JobLink <span>Shaka Akazi Kakunyuze</span></h1>
+            <p class="hero-description">Muri JobLink, duhura abantu bafite impano n'abakoresha b'icyitegererezo kugirango tugufashe kubona akazi kanyuze. Sura amahirwe, usabe akazi, tangira umwuga wawe nanjye.</p>
+            <div class="hero-buttons">
+                <a href="#" class="primary-button" id="openFormModalBtn">Tanga Amakuru y'Umukozi</a>
+                <a href="{% url 'view_employers' %}" class="outline-button">Reba Abakoresha</a>
             </div>
         </div>
+    </section>
 
-        <section>
-            <div class="form-box">
-                <h3>Tanga Amakuru y'Umukozi</h3>
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    
+    <!-- Feature Cards Section -->
+    <section class="features-section">
+        <div class="section-title">
+            <h2>Ibyo Ukeneye Nk'umushakakazi</h2>
+            <p>Serivisi zinoze zo gufasha abashaka akazi kubona akazi kabereye ubushobozi bwabo</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-number">01</div>
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Shakisha Akazi</h3>
+                    <p>Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-number">02</div>
+                <div class="feature-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Tanga Umwirondoro</h3>
+                    <p>Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka kugira ngo bakumenye byoroshye.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-number">03</div>
+                <div class="feature-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Inama ku Mwuga</h3>
+                    <p>Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card fade-in delay-3">
+                <div class="feature-number">04</div>
+                <div class="feature-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Guhabwa Akazi</h3>
+                    <p>Twakuhuza n'abakoresha bakeneye abakozi bafite ubushobozi bwiza nkawe, tugufasha kubona akazi gakwiriye.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section class="journey-section">
+        <div class="journey-container">
+            <div class="section-title">
+                <h2>Urugendo rwo Gushaka Akazi</h2>
+                <p>Dore intambwe z'ingenzi mu gushaka akazi ukoresheje JobLink</p>
+            </div>
+            
+            <div class="journey-grid">
+                <div class="journey-item fade-in">
+                    <div class="journey-number">1</div>
+                    <div class="journey-content">
+                        <h3>Kwiyandikisha</h3>
+                        <p>Tangira ushyire amakuru yawe muri sisitemu yacu binyuze mu kumenyekanisha imyirondoro yawe. Ni intambwe yoroshye kandi yihuse yo gutangira urugendo rwawe.</p>
+                    </div>
+                </div>
+                
+                <div class="journey-item fade-in delay-1">
+                    <div class="journey-number">2</div>
+                    <div class="journey-content">
+                        <h3>Gushaka Amahirwe</h3>
+                        <p>Nyuma yo kwiyandikisha, ushobora kureba imyanya y'akazi iri muri sisitemu kandi ukora ubushakashatsi ku bakoresha batandukanye.</p>
+                    </div>
+                </div>
+                
+                <div class="journey-item fade-in delay-2">
+                    <div class="journey-number">3</div>
+                    <div class="journey-content">
+                        <h3>Gusaba Akazi</h3>
+                        <p>Igihe ubonye umwanya ukwiye, ushobora kuwusabira hakoreshejwe sisitemu yacu yoroshye kandi ishobora gukoreshwa ku buryo bworoshye.</p>
+                    </div>
+                </div>
+                
+                <div class="journey-item fade-in delay-3">
+                    <div class="journey-number">4</div>
+                    <div class="journey-content">
+                        <h3>Kubonana n'Umukoresha</h3>
+                        <p>Umukoresha aramutse ashimye dosiye yawe, uzahamagarwa kugira ngo uze kubonana na we. Dushobora kugufasha kwitegura iyo nterview.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="services-container">
+            <div class="section-title">
+                <h2>Serivisi Zacu</h2>
+                <p>Dufasha abashaka akazi kubona umwanya ubereye binyuze muri izi serivisi</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Gushaka Akazi">
+                    </div>
+                    <div class="service-content">
+                        <h3>Gushaka Akazi</h3>
+                        <p>Dufite urutonde runini rw'imyanya y'akazi itandukanye ishobora kukwiriye. Urutonde rw'akazi rwahura n'ubumenyi bwawe kugira ngo ubone amahirwe meza.</p>
+                        <a href="#" class="read-more">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in delay-1">
+                    <div class="service-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Gutegura CV">
+                    </div>
+                    <div class="service-content">
+                        <h3>Gutegura CV</h3>
+                        <p>Dufasha abashaka akazi gutegura CV nziza kandi zikurura abakoresha. Tubigisha uburyo bwo kwerekana ubushobozi bwawe ku buryo bwiza.</p>
+                        <a href="#" class="read-more">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in delay-2">
+                    <div class="service-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Kwigisha Uko Bakora Interview">
+                    </div>
+                    <div class="service-content">
+                        <h3>Kwigisha Uko Bakora Interview</h3>
+                        <p>Dutegura abasaba akazi mu bibazo bisanzwe babazwa muri interview, tubigisha uko bagomba kwitwara, no gutanga ibisubizo binoze.</p>
+                        <a href="#" class="read-more">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <div class="section-title">
+                <h2>Abakozi Twafashije</h2>
+                <p>Dore ibyo bamwe mu bakozi bafashijwe na JobLink bavuga</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-content">
+                        <p>JobLink yafashije kubona akazi mu kigo nkunda gikora mu by'ikoranabuhanga hashize ukwezi kumwe gusa nyuma yo kwiyandikisha. Uburyo bwabo bworoshye kandi inkunga batanze yabaye ifasha cyane.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <img src="{% static 'images/nature.jpg' %}" alt="Profile Avatar">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4>Marie Uwase</h4>
+                            <p>Software Developer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card fade-in delay-1">
+                    <div class="testimonial-content">
+                        <p>Sinari nzi uko natangira gushaka akazi nyuma yo kurangiza amashuri. JobLink yampaye inama kuri CV yanjye, banditse mu nyandiko nyinshi kandi banfashije kubona umwanya mu by'ubucuruzi.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <img src="{% static 'images/nature.jpg' %}" alt="Profile Avatar">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4>Jean Claude Ndoli</h4>
+                            <p>Marketing Manager</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card fade-in delay-2">
+                    <div class="testimonial-content">
+                        <p>Akazi ka JobLink gakoze neza cyane. Imyitozo bateguye yo gutegura interview yamfashije kwigiramo icyizere, kandi amakuru batanze ku bakoresha batandukanye yari ingirakamaro cyane!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <img src="{% static 'images/nature.jpg' %}" alt="Profile Avatar">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4>Ange Mutoni</h4>
+                            <p>Accountant</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Imyaka y'Uburambe</div>
+                </div>
+                
+                <div class="stat-item fade-in delay-1">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-label">Abakozi Bashakiwe Akazi</div>
+                </div>
+                
+                <div class="stat-item fade-in delay-2">
+                    <div class="stat-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Abakoresha Dufatanya</div>
+                </div>
+                
+                <div class="stat-item fade-in delay-3">
+                    <div class="stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Abaduha Amanota</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Witabire Gushaka Akazi Vuba</h2>
+            <p>Hitamo JobLink kugira ngo ufashwe kubona akazi gakwiye ubumenyi bwawe kandi gahuje n'icyerekezo cyawe. Tangira nonaha.</p>
+            <a href="#" class="primary-button" id="ctaFormBtn">Tanga Amakuru Yawe</a>
+        </div>
+    </section>
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeLoginModal">&times;</span>
+            <h2 class="modal-title">Login</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_email">Email:</label>
+                    <input type="email" id="id_email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password">Ijambo ryibanga:</label>
+                    <input type="password" id="id_password" name="password" required>
+                </div>
+                
+                <button type="submit" class="submit-button">Injira</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Worker Information Form Modal -->
+    <div id="workerFormModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeFormModal">&times;</span>
+            <h2 class="modal-title">Tanga Amakuru y'Umukozi</h2>
+            
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="form-group">
                     <label for="id_name">AMAZINA</label>
                     {{ form.name }}
                     {{ form.name.errors }}
-                    
+                </div>
+                
+                <div class="form-group">
                     <label for="id_email">Email</label>
                     {{ form.email }}
                     {{ form.email.errors }}
-                    
+                </div>
+                
+                <div class="form-group">
                     <label for="id_phone">NUMERO</label>
                     {{ form.phone }}
                     {{ form.phone.errors }}
-                    
+                </div>
+                
+                <div class="form-group">
                     <label for="id_position">UMWANYA USHAKA</label>
                     {{ form.position }}
                     {{ form.position.errors }}
-                    
+                </div>
+                
+                <div class="form-group">
                     <label for="id_experience">Experience (MUNYAKA)</label>
                     {{ form.experience }}
                     {{ form.experience.errors }}
-                    
+                </div>
+                
+                <div class="form-group">
                     <label for="id_resume">RESUME/CV</label>
                     {{ form.resume }}
                     {{ form.resume.errors }}
-                    
-                    <button type="submit">INJIZA</button>
-                </form>
+                </div>
+                
+                <button type="submit" class="submit-button">INJIZA</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Kutwiga</h3>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <p>+250793487065</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <p>murenzicharles24@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <p>Kigali, Rwanda</p>
+                        </div>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Ahukulile</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> AHABANZA</a></li>
+                        <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> ABAKOZI</a></li>
+                        <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> ABAKORESHA</a></li>
+                        <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> REBA UMUKOZI</a></li>
+                        <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> REBA ABAKORESHA</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Serivisi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gushaka Abakozi</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhugura Abakozi</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhuza Impano</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gusuzuma Abakandida</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Kwamamaza Akazi</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Ibindi</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> IBYO DUKORA</a></li>
+                        <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> AMATANGAZO</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Politiki yo Kubungabunga Amakuru</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Amabwiriza</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+                    </ul>
+                </div>
             </div>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <div class="contact-info">
-                <h1>Nimero</h1>
-                <h3>Phone:+250793487065</h3>
-                <h3>Email: murenzicharles24@gmail.com</h3>
+            
+            <div class="footer-bottom">
                 <p>&copy; 2024 JobLink - All Rights Reserved</p>
             </div>
-            
-            <div class="social-media">
-                <h1>Imbuga Nkoranyambaga</h1>
-                <ul>
-                    <li><a href="https://youtube.com/@murenzicharles?si=U-CoZVC1GvvwipHf" target="_blank">YouTube</a></li>
-                    <li><a href="https://www.instagram.com/murenzi893/profilecard/?igsh=Ym14ZDk5aG15ODdv" target="_blank">Instagram</a></li>
-                </ul>
-            </div>
-            
-            <div class="visit-info">
-                <h1>Dusure</h1>
-                <h2>Kigali, Rwanda</h2>
-            </div>
-        </footer>
-    </div>
-
+        </div>
+    </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
-        // JavaScript to handle sticky navbar and section visibility
-        window.onscroll = function() {manageStickyElements()};
-
-        var navbar = document.getElementById("navbar");
-        var contentWrapper = document.getElementById("content-wrapper");
-        var joblinkSection = document.getElementById("joblink-section");
-        var sticky = navbar.offsetTop;
-
-        function manageStickyElements() {
-            if (window.pageYOffset >= sticky) {
-                navbar.classList.add("sticky");
-                contentWrapper.classList.add("padding-top");
-            } else {
-                navbar.classList.remove("sticky");
-                contentWrapper.classList.remove("padding-top");
+        // Login Modal functionality
+        const loginModal = document.getElementById("loginModal");
+        const openLoginBtn = document.getElementById("openLoginModal");
+        const closeLoginModal = document.getElementById("closeLoginModal");
+        
+        // Worker Form Modal functionality
+        const workerFormModal = document.getElementById("workerFormModal");
+        const openFormBtn = document.getElementById("openFormModalBtn");
+        const ctaFormBtn = document.getElementById("ctaFormBtn");
+        const closeFormModal = document.getElementById("closeFormModal");
+        
+        // Open login modal
+        openLoginBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            loginModal.style.display = "block";
+        });
+        
+        // Close login modal
+        closeLoginModal.addEventListener("click", function() {
+            loginModal.style.display = "none";
+        });
+        
+        // Open worker form modal
+        openFormBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            workerFormModal.style.display = "block";
+        });
+        
+        // Open worker form modal from CTA
+        ctaFormBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            workerFormModal.style.display = "block";
+        });
+        
+        // Close worker form modal
+        closeFormModal.addEventListener("click", function() {
+            workerFormModal.style.display = "none";
+        });
+        
+        // Close any modal when clicking outside
+        window.addEventListener("click", function(event) {
+            if (event.target == loginModal) {
+                loginModal.style.display = "none";
             }
-        }
+            if (event.target == workerFormModal) {
+                workerFormModal.style.display = "none";
+            }
+        });
+        
+        // Fade-in animation
+        document.addEventListener("DOMContentLoaded", function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
     </script>
 </body>
 </html>
