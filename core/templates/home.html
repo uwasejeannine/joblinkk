@@ -79,6 +79,7 @@
         #navbar ul li a:hover {
             background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
+            
         }
 
         #login-btn {
@@ -782,303 +783,377 @@
                 font-size: 1.5rem;
             }
         }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <ul>
-            <li><a href="{% url 'home' %}">AHABANZA</a></li>
-            <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
-            <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
-            <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
-            <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
-            <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
-            <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
-        </ul>
-        <button id="login-btn">LOGIN</button>
-    </nav>
+    </style></head>
+    <body>
+        <!-- Navigation -->
+        <nav id="navbar" style="display: flex; justify-content: flex-end; align-items: center; background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); position: sticky; top: 0; z-index: 100;">
+            <div class="language-selector" style="display: flex; gap: 8px; padding: 6px; background-color: #f3f4f6; border-radius: 8px;">
+                <button id="lang-en" class="lang-btn" style="border: none; background: none; padding: 8px; font-size: 14px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: #6b7280;">
+                  <span style="font-size: 16px;">🇬🇧</span>
+                </button>
+                <button id="lang-fr" class="lang-btn" style="border: none; background: none; padding: 8px; font-size: 14px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: #6b7280;">
+                  <span style="font-size: 16px;">🇫🇷</span>
+                </button>
+                <button id="lang-rw" class="lang-btn active" style="border: none; background-color: #3b82f6; padding: 8px; font-size: 14px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: white; box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);">
+                  <span style="font-size: 16px;">🇷🇼</span>
+                </button>
+              </div>
+          
+            <ul>
+                <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
+                <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
+                <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
+                <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKERS" data-fr="VOIR TRAVAILLEURS" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
+                <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
+                <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
+                <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
+            </ul>
+            <button id="login-btn" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</button>
+        </nav>
+    
+        <!-- Hero Section with improved transparency -->
+        <div class="hero">
+            <div class="hero-content">
+                <h1 class="translatable" data-en="Find a Job or <span style='color: #d97c18;'>Qualified Employees</span>" data-fr="Recherchez un Emploi ou <span style='color: #d97c18;'>des Employés Qualifiés</span>" data-rw="Shakisha Akazi cyangwa <span style='color: #d97c18;'>Abakozi Babereye</span>">Shakisha Akazi cyangwa <span style="color: #d97c18;">Abakozi Babereye</span></h1>
+                <p class="translatable" data-en="JobLink is revolutionizing how people search for jobs and how employers find diverse talent. We use efficient and technology-driven methods to help everyone find what they need quickly and efficiently." data-fr="JobLink révolutionne la façon dont les gens recherchent un emploi et dont les employeurs trouvent des talents diversifiés. Nous utilisons des méthodes efficaces et technologiques pour aider chacun à trouver rapidement et efficacement ce dont il a besoin." data-rw="JobLink irimo guhindura byimbitse uko abantu bashaka akazi n'uko abakoresha bashaka impano zitandukanye. Turakoresha uburyo bunoze kandi bukoresha ikoranabuhanga kugira ngo dufashe buri wese kubona icyo akeneye mu buryo bwihuse kandi bunoze.">JobLink irimo guhindura byimbitse uko abantu bashaka akazi n'uko abakoresha bashaka impano zitandukanye. Turakoresha uburyo bunoze kandi bukoresha ikoranabuhanga kugira ngo dufashe buri wese kubona icyo akeneye mu buryo bwihuse kandi bunoze.</p>
+                <div class="hero-buttons">
+                    <a href="{% url 'worker' %}" class="button translatable" data-en="START NOW" data-fr="COMMENCER MAINTENANT" data-rw="TANGIRA NONAHA">TANGIRA NONAHA</a>
+                    <a href="{% url 'what_we_do' %}" class="button button-outline translatable" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Services Section -->
+        <section class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="translatable" data-en="Our Services" data-fr="Nos Services" data-rw="Serivisi Zacu">Serivisi Zacu</h2>
+                    <p class="translatable" data-en="We provide all kinds of services to help employees and employers find the perfect match in positions and talent." data-fr="Nous fournissons toutes sortes de services pour aider les employés et les employeurs à trouver la correspondance parfaite entre les postes et les talents." data-rw="Dutanga serivisi z'ubwoko bwose zo gufasha abakozi n'abakoresha guhura n'imyanya n'abakozi b'inyabutatu.">Dutanga serivisi z'ubwoko bwose zo gufasha abakozi n'abakoresha guhura n'imyanya n'abakozi b'inyabutatu.</p>
+                </div>
+                <div class="feature-boxes">
+                    <div class="feature-box">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3 class="feature-title translatable" data-en="Jobs" data-fr="Emplois" data-rw="Akazi">Akazi</h3>
+                        </div>
+                        <p class="feature-description translatable" data-en="Browse our extensive list of job opportunities, updated daily across different industries." data-fr="Parcourez notre vaste liste d'opportunités d'emploi, mise à jour quotidiennement dans différentes industries." data-rw="Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye.">Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye.</p>
+                        <a href="{% url 'view_employers' %}" class="button translatable" data-en="View Jobs" data-fr="Voir les Emplois" data-rw="Reba Akazi">Reba Akazi</a>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h3 class="feature-title translatable" data-en="Create CV (Resume)" data-fr="Créer un CV" data-rw="Gukora CV (Resume)">Gukora CV (Resume)</h3>
+                        </div>
+                        <p class="feature-description translatable" data-en="We help you create an impressive profile that will help you get a job." data-fr="Nous vous aidons à créer un profil impressionnant qui vous aidera à obtenir un emploi." data-rw="Turagufasha gukora umwirondoro ushimishije uzatuma ubona akazi.">Turagufasha gukora umwirondoro ushimishije uzatuma ubona akazi.</p>
+                        <a href="{% url 'worker' %}" class="button translatable" data-en="Start Now" data-fr="Commencer Maintenant" data-rw="Tangira Nonaha">Tangira Nonaha</a>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3 class="feature-title translatable" data-en="Job Interview" data-fr="Entretien d'Embauche" data-rw="Ikiganiro cy'akazi">Ikiganiro cy'akazi</h3>
+                        </div>
+                        <p class="feature-description translatable" data-en="Prepare for job interviews through specialized training, and get the job you want." data-fr="Préparez-vous aux entretiens d'embauche grâce à une formation spécialisée et obtenez l'emploi que vous souhaitez." data-rw="Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza.">Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza.</p>
+                        <a href="{% url 'what_we_do' %}" class="button translatable" data-en="Learn More" data-fr="En Savoir Plus" data-rw="Iga Birenzeho">Iga Birenzeho</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Employer Information Section -->
+        <section class="employers">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="translatable" data-en="Employers" data-fr="Employeurs" data-rw="Abakoresha">Abakoresha</h2>
+                    <p class="translatable" data-en="Search for suitable candidates for your jobs through our trusted and exclusive recruitment process. We help employers find talented employees who match their company culture and goals." data-fr="Recherchez des candidats appropriés pour vos emplois grâce à notre processus de recrutement fiable et exclusif. Nous aidons les employeurs à trouver des employés talentueux qui correspondent à la culture et aux objectifs de leur entreprise." data-rw="Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi. Dufasha abakoresha kubona impano z'abakozi bashoboye kandi bahuje n'umuco w'ikigo cyabo n'intego zabo.">Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi. Dufasha abakoresha kubona impano z'abakozi bashoboye kandi bahuje n'umuco w'ikigo cyabo n'intego zabo.</p>
+                </div>
+                <div class="feature-boxes">
+                    <div class="feature-box">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <h3 class="feature-title translatable" data-en="Post Job Announcements" data-fr="Publier des Offres d'Emploi" data-rw="Tangaza Amatangazo y'Imirimo">Tangaza Amatangazo y'Imirimo</h3>
+                        </div>
+                        <p class="feature-description translatable" data-en="Post your job positions to reach thousands of qualified candidates." data-fr="Publiez vos postes pour atteindre des milliers de candidats qualifiés." data-rw="Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi.">Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi.</p>
+                        <a href="{% url 'employer' %}" class="button translatable" data-en="Post Now" data-fr="Publier Maintenant" data-rw="Tangaza Ubu">Tangaza Ubu</a>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <h3 class="feature-title translatable" data-en="Screen Candidates" data-fr="Sélectionner les Candidats" data-rw="Gusuzuma Abakandida">Gusuzuma Abakandida</h3>
+                        </div>
+                        <p class="feature-description translatable" data-en="We pre-screen candidates so you only meet with qualified candidates who match your needs." data-fr="Nous présélectionnons les candidats afin que vous ne rencontriez que des candidats qualifiés qui répondent à vos besoins." data-rw="Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.">Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.</p>
+                        <a href="{% url 'employer' %}" class="button translatable" data-en="Learn More" data-fr="En Savoir Plus" data-rw="Menya Birenzeho">Menya Birenzeho</a>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3 class="feature-title translatable" data-en="Flexible Employment Solutions" data-fr="Solutions d'Emploi Flexibles" data-rw="Ibisubizo by'Ubukoresha Bihinduka">Ibisubizo by'Ubukoresha Bihinduka</h3>
+                        </div>
+                        <p class="feature-description translatable" data-en="Whether you need full-time, part-time, or contract workers, we provide flexible employment solutions tailored to your business needs." data-fr="Que vous ayez besoin de travailleurs à temps plein, à temps partiel ou contractuels, nous proposons des solutions d'emploi flexibles adaptées aux besoins de votre entreprise." data-rw="Niba ukeneye abakozi b'igihe cyose, ab'igihe gito, cyangwa abakozi b'amasezerano, dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.">Niba ukeneye abakozi b'igihe cyose, ab'igihe gito, cyangwa abakozi b'amasezerano, dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.</p>
+                        <a href="{% url 'employer' %}" class="button translatable" data-en="Start Now" data-fr="Commencer Maintenant" data-rw="Tangira Nonaha">Tangira Nonaha</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Employee Information Section -->
+        <section class="employees">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="translatable" data-en="Employees" data-fr="Employés" data-rw="Abakozi">Abakozi</h2>
+                    <p class="translatable" data-en="Looking for a job? We're here to help you find a job that matches your skills and goals. Explore opportunities, apply for jobs, start your career, and strive to reach your aspirations with us." data-fr="Vous cherchez un emploi? Nous sommes là pour vous aider à trouver un emploi qui correspond à vos compétences et à vos objectifs. Explorez les opportunités, postulez, démarrez votre carrière et efforcez-vous d'atteindre vos aspirations avec nous." data-rw="Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe. Sura ibyo amahirwe, usabe akazi, tangira umwuga wawe, kandi ugerageze kugera ku byo wizeye ubu natwe.">Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe. Sura ibyo amahirwe, usabe akazi, tangira umwuga wawe, kandi ugerageze kugera ku byo wizeye ubu natwe.</p>
+                </div>
+                <div class="feature-boxes">
+                    <div class="feature-box">
+                        <div class="feature-image">
+                            <img src="{% static 'images/nature.jpg' %}" alt="Job Search">
+                        </div>
+                        <div class="feature-header">
+                            <h3 class="feature-title translatable" data-en="Search for Jobs" data-fr="Rechercher des Emplois" data-rw="Shakisha Imyanya y'Akazi">Shakisha Imyanya y'Akazi</h3>
+                        </div>
+                        <p class="feature-description translatable" data-en="Use our search platform to find thousands of job positions offered by exemplary employers." data-fr="Utilisez notre plateforme de recherche pour trouver des milliers de postes proposés par des employeurs exemplaires." data-rw="Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.">Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.</p>
+                        <a href="{% url 'view_employers' %}" class="button translatable" data-en="Search" data-fr="Rechercher" data-rw="Shakisha">Shakisha</a>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-image">
+                            <img src="{% static 'images/nature.jpg' %}" alt="Profile Upload">
+                        </div>
+                        <div class="feature-header">
+                            <h3 class="feature-title translatable" data-en="Submit Your Profile" data-fr="Soumettre Votre Profil" data-rw="Tanga Umwirondoro Wawe">Tanga Umwirondoro Wawe</h3>
+                        </div>
+                        <p class="feature-description translatable" data-en="Submit your profile to our database and be visible to potential employers." data-fr="Soumettez votre profil à notre base de données et soyez visible pour les employeurs potentiels." data-rw="Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka.">Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka.</p>
+                        <a href="{% url 'worker' %}" class="button translatable" data-en="Submit" data-fr="Soumettre" data-rw="Tanga">Tanga</a>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-image">
+                            <img src="{% static 'images/nature.jpg' %}" alt="Career Advice">
+                        </div>
+                        <div class="feature-header">
+                            <h3 class="feature-title translatable" data-en="Career Advice" data-fr="Conseils de Carrière" data-rw="Inama ku Mwuga">Inama ku Mwuga</h3>
+                        </div>
+                        <p class="feature-description translatable" data-en="Get expert advice on your career to enhance your job search performance and career development." data-fr="Obtenez des conseils d'experts sur votre carrière pour améliorer vos performances de recherche d'emploi et votre développement professionnel." data-rw="Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe.">Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe.</p>
+                        <a href="{% url 'what_we_do' %}" class="button translatable" data-en="Advice" data-fr="Conseils" data-rw="Inama">Inama</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const langEnBtn = document.getElementById('lang-en');
+        const langFrBtn = document.getElementById('lang-fr');
+        const langRwBtn = document.getElementById('lang-rw');
+        const navLinks = document.querySelectorAll('#navbar a');
+        const loginBtn = document.getElementById('login-btn');
+        const translatableElements = document.querySelectorAll('.translatable');
+        
+        // Function to change language
+        function changeLanguage(lang) {
+            // Update navigation links
+            navLinks.forEach(link => {
+                if (link.dataset[lang]) {
+                    link.textContent = link.dataset[lang];
+                }
+            });
+            
+            // Update login button
+            if (loginBtn.dataset[lang]) {
+                loginBtn.textContent = loginBtn.dataset[lang];
+            }
+            
+            // Update all other translatable elements
+            translatableElements.forEach(element => {
+                if (element.dataset[lang]) {
+                    // Handle elements with HTML content (like spans with styling)
+                    element.innerHTML = element.dataset[lang];
+                }
+            });
+            
+            // Update active button state
+            langEnBtn.classList.toggle('active', lang === 'en');
+            langFrBtn.classList.toggle('active', lang === 'fr');
+            langRwBtn.classList.toggle('active', lang === 'rw');
+            
+            // Save language preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+        
+        // Event listeners for language buttons
+        langEnBtn.addEventListener('click', function() {
+            changeLanguage('en');
+        });
+        
+        langFrBtn.addEventListener('click', function() {
+            changeLanguage('fr');
+        });
+        
+        langRwBtn.addEventListener('click', function() {
+            changeLanguage('rw');
+        });
+        
+        // Check for saved language preference
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang) {
+            changeLanguage(savedLang);
+        }
+    });
+    </script>
+    </body>
+    
 
-    <!-- Hero Section with improved transparency -->
-    <div class="hero">
-        <div class="hero-content">
-            <h1>Shakisha Akazi cyangwa <span style="color: #d97c18;">Abakozi Babereye</span></h1>
-            <p>JobLink irimo guhindura byimbitse uko abantu bashaka akazi n'uko abakoresha bashaka impano zitandukanye. Turakoresha uburyo bunoze kandi bukoresha ikoranabuhanga kugira ngo dufashe buri wese kubona icyo akeneye mu buryo bwihuse kandi bunoze.</p>
-            <div class="hero-buttons">
-                <a href="{% url 'worker' %}" class="button">TANGIRA NONAHA</a>
-                <a href="{% url 'what_we_do' %}" class="button button-outline">IBYO DUKORA</a>
+    <!-- Statistics Section -->
+<section class="statistics">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="translatable" data-en="Our Statistics" data-fr="Nos Statistiques" data-rw="Imibare Yacu">Imibare Yacu</h2>
+            <p class="translatable" data-en="Statistics about what we do and how we work with people" data-fr="Statistiques sur ce que nous faisons et comment nous travaillons avec les gens" data-rw="Imibare ijyanye n'icyo dukora n'uko dukorana n'abantu">Imibare ijyanye n'icyo dukora n'uko dukorana n'abantu</p>
+        </div>
+        <div class="stat-container">
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-count">1,200+</div>
+                <div class="stat-label translatable" data-en="Employees" data-fr="Employés" data-rw="Abakozi">Abakozi</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <div class="stat-count">50+</div>
+                <div class="stat-label translatable" data-en="Trainers" data-fr="Formateurs" data-rw="Abahugura">Abahugura</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-count">75+</div>
+                <div class="stat-label translatable" data-en="Courses" data-fr="Cours" data-rw="Amasomo">Amasomo</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-count">120+</div>
+                <div class="stat-label translatable" data-en="Events" data-fr="Événements" data-rw="Ibikorwa">Ibikorwa</div>
             </div>
         </div>
     </div>
-    
-    <!-- Services Section -->
-    <section class="services">
-        <div class="container">
-            <div class="section-header">
-                <h2>Serivisi Zacu</h2>
-                <p>Dutanga serivisi z'ubwoko bwose zo gufasha abakozi n'abakoresha guhura n'imyanya n'abakozi b'inyabutatu.</p>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+    <div class="contact-container">
+        <h2 class="section-title translatable" data-en="Contact Us" data-fr="Contactez-Nous" data-rw="Twandikire">Twandikire</h2>
+        <p class="section-subtitle translatable" data-en="Have a question or need assistance? You can write to us or call us." data-fr="Vous avez une question ou besoin d'aide? Vous pouvez nous écrire ou nous appeler." data-rw="Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.">Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.</p>
+        <div class="contact-grid">
+            <div class="contact-card fade-in">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3 class="contact-title translatable" data-en="Phone" data-fr="Téléphone" data-rw="Telefoni">Telefoni</h3>
+                <p class="contact-info">+250793487065</p>
             </div>
-            <div class="feature-boxes">
-                <div class="feature-box">
-                    <div class="feature-header">
-                        <div class="feature-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <h3 class="feature-title">Akazi</h3>
-                    </div>
-                    <p class="feature-description">Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye.</p>
-                    <a href="{% url 'view_employers' %}" class="button">Reba Akazi</a>
+            <div class="contact-card fade-in delay-1">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
                 </div>
-                <div class="feature-box">
-                    <div class="feature-header">
-                        <div class="feature-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <h3 class="feature-title">Gukora CV (Resume)</h3>
-                    </div>
-                    <p class="feature-description">Turagufasha  gukora umwirondoro ushimishije uzatuma ubona akazi.</p>
-                    <a href="{% url 'worker' %}" class="button">Tangira Nonaha</a>
+                <h3 class="contact-title translatable" data-en="Email" data-fr="Email" data-rw="Imeyili">Imeyili</h3>
+                <p class="contact-info">murenzicharles24@gmail.com</p>
+            </div>
+            <div class="contact-card fade-in delay-2">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
                 </div>
-                <div class="feature-box">
-                    <div class="feature-header">
-                        <div class="feature-icon">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <h3 class="feature-title">Ikiganiro cy'akazi</h3>
-                    </div>
-                    <p class="feature-description">Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza.</p>
-                    <a href="{% url 'what_we_do' %}" class="button">Iga Birenzeho</a>
-                </div>
+                <h3 class="contact-title translatable" data-en="Location" data-fr="Emplacement" data-rw="Ahantu">Ahantu</h3>
+                <p class="contact-info">Kigali, Rwanda</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Employer Information Section -->
-    <section class="employers">
-        <div class="container">
-            <div class="section-header">
-                <h2>Abakoresha</h2>
-                <p>Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi. Dufasha abakoresha kubona impano z'abakozi bashoboye kandi bahuje n'umuco w'ikigo cyabo n'intego zabo.</p>
-            </div>
-            <div class="feature-boxes">
-                <div class="feature-box">
-                    <div class="feature-header">
-                        <div class="feature-icon">
-                            <i class="fas fa-bullhorn"></i>
-                        </div>
-                        <h3 class="feature-title">Tangaza Amatangazo y'Imirimo</h3>
-                    </div>
-                    <p class="feature-description">Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi.</p>
-                    <a href="{% url 'employer' %}" class="button">Tangaza Ubu</a>
-                </div>
-                <div class="feature-box">
-                    <div class="feature-header">
-                        <div class="feature-icon">
-                            <i class="fas fa-user-check"></i>
-                        </div>
-                        <h3 class="feature-title">Gusuzuma Abakandida</h3>
-                    </div>
-                    <p class="feature-description">Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.</p>
-                    <a href="{% url 'employer' %}" class="button">Menya Birenzeho</a>
-                </div>
-                <div class="feature-box">
-                    <div class="feature-header">
-                        <div class="feature-icon">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                        <h3 class="feature-title">Ibisubizo by'Ubukoresha Bihinduka</h3>
-                    </div>
-                    <p class="feature-description">Niba ukeneye abakozi b'igihe cyose, ab'igihe gito, cyangwa abakozi b'amasezerano, dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.</p>
-                    <a href="{% url 'employer' %}" class="button">Tangira Nonaha</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Employee Information Section -->
-    <section class="employees">
-        <div class="container">
-            <div class="section-header">
-                <h2>Abakozi</h2>
-                <p>Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe. Sura ibyo amahirwe, usabe akazi, tangira umwuga wawe, kandi ugerageze kugera ku byo wizeye ubu natwe.</p>
-            </div>
-            <div class="feature-boxes">
-                <div class="feature-box">
-                    <div class="feature-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Job Search">
-                    </div>
-                    <div class="feature-header">
-                        <h3 class="feature-title">Shakisha Imyanya y'Akazi</h3>
-                    </div>
-                    <p class="feature-description">Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.</p>
-                    <a href="{% url 'view_employers' %}"<a href="{% url 'view_employers' %}" class="button">Shakisha</a>
-                </div>
-                <div class="feature-box">
-                    <div class="feature-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Profile Upload">
-                    </div>
-                    <div class="feature-header">
-                        <h3 class="feature-title">Tanga Umwirondoro Wawe</h3>
-                    </div>
-                    <p class="feature-description">Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka.</p>
-                    <a href="{% url 'worker' %}" class="button">Tanga</a>
-                </div>
-                <div class="feature-box">
-                    <div class="feature-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Career Advice">
-                    </div>
-                    <div class="feature-header">
-                        <h3 class="feature-title">Inama ku Mwuga</h3>
-                    </div>
-                    <p class="feature-description">Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe.</p>
-                    <a href="{% url 'what_we_do' %}" class="button">Inama</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Statistics Section -->
-    <section class="statistics">
-        <div class="container">
-            <div class="section-header">
-                <h2>Imibare Yacu</h2>
-                <p>Imibare ijyanye n'icyo dukora n'uko dukorana n'abantu</p>
-            </div>
-            <div class="stat-container">
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-count">1,200+</div>
-                    <div class="stat-label">Abakozi</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="stat-count">50+</div>
-                    <div class="stat-label">Abahugura</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="stat-count">75+</div>
-                    <div class="stat-label">Amasomo</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="stat-count">120+</div>
-                    <div class="stat-label">Ibikorwa</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="contact-container">
-            <h2 class="section-title">Twandikire</h2>
-            <p class="section-subtitle">Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.</p>
-            <div class="contact-grid">
-                <div class="contact-card fade-in">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <h3 class="contact-title">Telefoni</h3>
-                    <p class="contact-info">+250793487065</p>
-                </div>
-                <div class="contact-card fade-in delay-1">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3 class="contact-title">Imeyili</h3>
-                    <p class="contact-info">murenzicharles24@gmail.com</p>
-                </div>
-                <div class="contact-card fade-in delay-2">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3 class="contact-title">Ahantu</h3>
-                    <p class="contact-info">Kigali, Rwanda</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h3>Kutwiga</h3>
-                    <div class="footer-contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <p>+250793487065</p>
-                        </div>
-                    </div>
-                    <div class="footer-contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <p>murenzicharles24@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="footer-contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <p>Kigali, Rwanda</p>
-                        </div>
-                    </div>
-                    <div class="footer-social">
-                        <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
+   <!-- Footer -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3 class="translatable" data-en="About Us" data-fr="À Propos" data-rw="Kutwiga">Kutwiga</h3>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <p>+250793487065</p>
                     </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Ahukulile</h3>
-                    <ul class="footer-links">
-                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> AHABANZA</a></li>
-                        <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> ABAKOZI</a></li>
-                        <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> ABAKORESHA</a></li>
-                        <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> REBA UMUKOZI</a></li>
-                        <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> REBA ABAKORESHA</a></li>
-                    </ul>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <p>murenzicharles24@gmail.com</p>
+                    </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Serivisi</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gushaka Abakozi</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhugura Abakozi</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhuza Impano</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gusuzuma Abakandida</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Kwamamaza Akazi</a></li>
-                    </ul>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <p class="translatable" data-en="Kigali, Rwanda" data-fr="Kigali, Rwanda" data-rw="Kigali, Rwanda">Kigali, Rwanda</p>
+                    </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Ibindi</h3>
-                    <ul class="footer-links">
-                        <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> IBYO DUKORA</a></li>
-                        <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> AMATANGAZO</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Politiki yo Kubungabunga Amakuru</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Amabwiriza</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
-                    </ul>
+                <div class="footer-social">
+                    <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
             
-            <div class="footer-bottom">
-                <p>&copy; {% now "Y" %} JobLink - All Rights Reserved</p>
+            <div class="footer-column">
+                <h3 class="translatable" data-en="Quick Links" data-fr="Liens Rapides" data-rw="Ahukulile">Ahukulile</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</span></a></li>
+                    <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</span></a></li>
+                    <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</span></a></li>
+                    <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="VIEW WORKER" data-fr="VOIR TRAVAILLEUR" data-rw="REBA UMUKOZI">REBA UMUKOZI</span></a></li>
+                    <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</span></a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="translatable" data-en="Services" data-fr="Services" data-rw="Serivisi">Serivisi</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Worker Recruitment" data-fr="Recrutement de Travailleurs" data-rw="Gushaka Abakozi">Gushaka Abakozi</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Worker Training" data-fr="Formation des Travailleurs" data-rw="Guhugura Abakozi">Guhugura Abakozi</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Talent Matching" data-fr="Correspondance de Talents" data-rw="Guhuza Impano">Guhuza Impano</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Candidate Screening" data-fr="Filtrage des Candidats" data-rw="Gusuzuma Abakandida">Gusuzuma Abakandida</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Job Advertising" data-fr="Publicité d'Emploi" data-rw="Kwamamaza Akazi">Kwamamaza Akazi</span></a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="translatable" data-en="More" data-fr="Plus" data-rw="Ibindi">Ibindi</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="WHAT WE DO" data-fr="CE QUE NOUS FAISONS" data-rw="IBYO DUKORA">IBYO DUKORA</span></a></li>
+                    <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Privacy Policy" data-fr="Politique de Confidentialité" data-rw="Politiki yo Kubungabunga Amakuru">Politiki yo Kubungabunga Amakuru</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Terms & Conditions" data-fr="Termes et Conditions" data-rw="Amabwiriza">Amabwiriza</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="FAQs" data-fr="FAQs" data-rw="FAQs">FAQs</span></a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        
+        <div class="footer-bottom">
+            <p class="translatable" data-en="&copy; {% now 'Y' %} JobLink - All Rights Reserved" data-fr="&copy; {% now 'Y' %} JobLink - Tous Droits Réservés" data-rw="&copy; {% now 'Y' %} JobLink - Uburenganzira Bwose Bwihariwe">&copy; {% now "Y" %} JobLink - All Rights Reserved</p>
+        </div>
+    </div>
+</footer>
     
     <script>
         // JavaScript to handle sticky navbar

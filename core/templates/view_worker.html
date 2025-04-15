@@ -842,22 +842,105 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="header-content">
-            <nav>
-                <ul>
-                    <li><a href="{% url 'home' %}">AHABANZA</a></li>
-                    <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
-                    <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
-                    <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
-                    <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
-                    <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
-                    <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
-                </ul>
-            </nav>
-            <a href="#" class="nav-button" id="openFormButton">login</a>
+<header>
+    <div class="header-content">
+        <div class="language-selector">
+            <button id="lang-en" class="lang-btn">EN</button>
+            <button id="lang-fr" class="lang-btn">FR</button>
+            <button id="lang-rw" class="lang-btn active">RW</button>
         </div>
-    </header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
+                <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
+                <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
+                <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKERS" data-fr="VOIR TRAVAILLEURS" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
+                <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
+                <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
+                <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="nav-button" id="openFormButton" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
+    </div>
+</header>
+
+<script>
+// Language switching functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const langButtons = document.querySelectorAll('.lang-btn');
+    
+    // Function to change language
+    function changeLanguage(lang) {
+        // Update all elements with data attributes
+        const elements = document.querySelectorAll('[data-'+lang+']');
+        
+        elements.forEach(element => {
+            element.textContent = element.getAttribute('data-'+lang);
+        });
+        
+        // Update active button
+        langButtons.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById('lang-'+lang).classList.add('active');
+        
+        // Save language preference to localStorage
+        localStorage.setItem('preferredLanguage', lang);
+    }
+    
+    // Add click event listeners to language buttons
+    langButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const lang = this.id.replace('lang-', '');
+            changeLanguage(lang);
+        });
+    });
+    
+    // Load preferred language from localStorage if available
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+        changeLanguage(savedLang);
+    } else {
+        // Default language is Kinyarwanda
+        changeLanguage('rw');
+    }
+});
+</script>
+
+<style>
+/* Basic styling for language selector */
+.language-selector {
+    display: flex;
+    gap: 8px;
+    padding: 6px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.lang-btn {
+    border: none;
+    background: none;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: #6b7280;
+}
+
+.lang-btn.active {
+    background-color: #3b82f6;
+    color: white;
+    box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
+}
+
+</style>
 
     <!-- Page Banner -->
     <section class="page-banner">
@@ -1294,77 +1377,77 @@
         </div>
     </div>
     
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h3>Kutwiga</h3>
-                    <div class="footer-contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <p>+250793487065</p>
-                        </div>
-                    </div>
-                    <div class="footer-contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <p>murenzicharles24@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="footer-contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <p>Kigali, Rwanda</p>
-                        </div>
-                    </div>
-                    <div class="footer-social">
-                        <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
+   <!-- Footer -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3 class="translatable" data-en="About Us" data-fr="À Propos" data-rw="Kutwiga">Kutwiga</h3>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <p>+250793487065</p>
                     </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Ahukulile</h3>
-                    <ul class="footer-links">
-                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> AHABANZA</a></li>
-                        <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> ABAKOZI</a></li>
-                        <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> ABAKORESHA</a></li>
-                        <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> REBA UMUKOZI</a></li>
-                        <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> REBA ABAKORESHA</a></li>
-                    </ul>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <p>murenzicharles24@gmail.com</p>
+                    </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Serivisi</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gushaka Abakozi</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhugura Abakozi</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhuza Impano</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gusuzuma Abakandida</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Kwamamaza Akazi</a></li>
-                    </ul>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <p class="translatable" data-en="Kigali, Rwanda" data-fr="Kigali, Rwanda" data-rw="Kigali, Rwanda">Kigali, Rwanda</p>
+                    </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Ibindi</h3>
-                    <ul class="footer-links">
-                        <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> IBYO DUKORA</a></li>
-                        <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> AMATANGAZO</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Politiki yo Kubungabunga Amakuru</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Amabwiriza</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
-                    </ul>
+                <div class="footer-social">
+                    <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
             
-            <div class="footer-bottom">
-                <p>&copy; 2024 JobLink - All Rights Reserved</p>
+            <div class="footer-column">
+                <h3 class="translatable" data-en="Quick Links" data-fr="Liens Rapides" data-rw="Ahukulile">Ahukulile</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</span></a></li>
+                    <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</span></a></li>
+                    <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</span></a></li>
+                    <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="VIEW WORKER" data-fr="VOIR TRAVAILLEUR" data-rw="REBA UMUKOZI">REBA UMUKOZI</span></a></li>
+                    <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</span></a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="translatable" data-en="Services" data-fr="Services" data-rw="Serivisi">Serivisi</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Worker Recruitment" data-fr="Recrutement de Travailleurs" data-rw="Gushaka Abakozi">Gushaka Abakozi</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Worker Training" data-fr="Formation des Travailleurs" data-rw="Guhugura Abakozi">Guhugura Abakozi</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Talent Matching" data-fr="Correspondance de Talents" data-rw="Guhuza Impano">Guhuza Impano</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Candidate Screening" data-fr="Filtrage des Candidats" data-rw="Gusuzuma Abakandida">Gusuzuma Abakandida</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Job Advertising" data-fr="Publicité d'Emploi" data-rw="Kwamamaza Akazi">Kwamamaza Akazi</span></a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="translatable" data-en="More" data-fr="Plus" data-rw="Ibindi">Ibindi</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="WHAT WE DO" data-fr="CE QUE NOUS FAISONS" data-rw="IBYO DUKORA">IBYO DUKORA</span></a></li>
+                    <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Privacy Policy" data-fr="Politique de Confidentialité" data-rw="Politiki yo Kubungabunga Amakuru">Politiki yo Kubungabunga Amakuru</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Terms & Conditions" data-fr="Termes et Conditions" data-rw="Amabwiriza">Amabwiriza</span></a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="FAQs" data-fr="FAQs" data-rw="FAQs">FAQs</span></a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        
+        <div class="footer-bottom">
+            <p class="translatable" data-en="&copy; {% now 'Y' %} JobLink - All Rights Reserved" data-fr="&copy; {% now 'Y' %} JobLink - Tous Droits Réservés" data-rw="&copy; {% now 'Y' %} JobLink - Uburenganzira Bwose Bwihariwe">&copy; {% now "Y" %} JobLink - All Rights Reserved</p>
+        </div>
+    </div>
+</footer>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>

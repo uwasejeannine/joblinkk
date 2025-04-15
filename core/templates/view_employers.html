@@ -116,6 +116,36 @@
             height: 40px;
             margin-right: 10px;
         }
+        .language-selector {
+        display: flex;
+        gap: 8px;
+        padding: 6px;
+        background-color: #f3f4f6;
+        border-radius: 8px;
+        margin-right: 20px;
+    }
+    
+    .lang-btn {
+        border: none;
+        background: none;
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        color: #6b7280;
+    }
+    
+    .lang-btn.active {
+        background-color: #3b82f6;
+        color: white;
+        box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
+    }
 
         nav ul {
             display: flex;
@@ -841,454 +871,791 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <nav>
-                <ul>
-                    <li><a href="{% url 'home' %}">AHABANZA</a></li>
-                    <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
-                    <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
-                    <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
-                    <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
-                    <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
-                    <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
-                </ul>
-            </nav>
-            <a href="#" class="nav-button" id="openFormButton">login</a>
+   <!-- Header -->
+<header>
+    <div class="header-content">
+        <div class="header-buttons">
+            <div class="language-selector">
+                <button onclick="changeLanguage('rw')" class="lang-btn">RW</button>
+                <button onclick="changeLanguage('en')" class="lang-btn">EN</button>
+                <button onclick="changeLanguage('fr')" class="lang-btn">FR</button>
+            </div>
+           
         </div>
-    </header>
+        <nav>
+            <ul id="main-menu">
+                <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL">AHABANZA</a></li>
+                <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="EMPLOYÉS">ABAKOZI</a></li>
+                <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS">ABAKORESHA</a></li>
+                <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKER" data-fr="VOIR EMPLOYÉ">REBA UMUKOZI</a></li>
+                <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS">REBA ABAKORESHA</a></li>
+                <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES">IBYO DUKORA</a></li>
+                <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES">AMATANGAZO</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="nav-button" id="openFormButton" data-en="Login" data-fr="Connexion">login</a>
+    </div>
+</header>
 
-    <!-- Page Banner -->
-    <section class="page-banner">
-        <div class="hero-content">
-            <h1 class="page-title">Reba <span style="color: var(--secondary-color);">Abakoresha</span> Babereye</h1>
-            <div class="breadcrumb">
-                <a href="{% url 'home' %}">AHABANZA</a> <span>/</span> REBA ABAKORESHA
-            </div>
-        </div>
-    </section>
 
-    <!-- Search Section -->
-    <section class="search-section">
-        <div class="search-container">
-            <form class="search-form">
-                <div class="search-group">
-                    <label for="category">Icyiciro cy'akazi</label>
-                    <select id="category" class="search-input">
-                        <option value="">Hitamo icyiciro</option>
-                        <option value="IT">Ikoranabuhanga</option>
-                        <option value="Accounting">Ibaruramari</option>
-                        <option value="Engineering">Ubuhanga</option>
-                        <option value="Healthcare">Ubuvuzi</option>
-                        <option value="Education">Uburezi</option>
-                    </select>
-                </div>
-                
-                <div class="search-group">
-                    <label for="location">Akarere</label>
-                    <select id="location" class="search-input">
-                        <option value="">Hitamo akarere</option>
-                        <option value="Kigali">Kigali</option>
-                        <option value="Musanze">Musanze</option>
-                        <option value="Huye">Huye</option>
-                        <option value="Rubavu">Rubavu</option>
-                        <option value="Nyagatare">Nyagatare</option>
-                    </select>
-                </div>
-                
-                <div class="search-group">
-                    <label for="company">Izina ry'Ikigo</label>
-                    <input type="text" id="company" class="search-input" placeholder="Andika izina ry'ikigo...">
-                </div>
-                
-                <div class="search-group">
-                    <button type="submit" class="search-button">
-                        <i class="fas fa-search"></i> Shakisha
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
 
-    <!-- Employers Section -->
-    <section class="employers-section">
-        <div class="employers-container">
-            <div class="section-header">
-                <h2>Abakoresha Baboneka</h2>
-                <p>Hitamo abakoresha bafite imirimo ijyanye n'ubumenyi bwawe</p>
-            </div>
-            
-            <div class="employers-grid">
-                {% for employer in employers %}
-                <div class="employer-card fade-in">
-                    <div class="employer-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="{{ employer.company }}">
-                        <div class="employer-category">{{ employer.position }}</div>
-                    </div>
-                    <div class="employer-content">
-                        <h3 class="employer-name">{{ employer.company }}</h3>
-                        <p class="employer-position">{{ employer.position }}</p>
-                        
-                        <div class="employer-details">
-                            <div class="employer-detail-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>{{ employer.email }}</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-phone"></i>
-                                <span>{{ employer.phone }}</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>{{ employer.location }}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="employer-requirements">
-                            <span class="requirement-tag">{{ employer.position }}</span>
-                        </div>
-                        
-                        <button class="view-profile-button" onclick="openEmployerModal({{ employer.id }}, '{{ employer.company }}', '{{ employer.position }}', '{{ employer.email }}', '{{ employer.phone }}', '{{ employer.location }}', '{{ employer.job_description }}', '{{ employer.job_requirements }}')">
-                            <i class="fas fa-building"></i> Reba Ibisobanuro
-                        </button>
-                    </div>
-                </div>
-                {% empty %}
-                <!-- Sample Employer Cards (shown if no employers in database) -->
-                <!-- Employer Card 1 -->
-                <div class="employer-card fade-in">
-                    <div class="employer-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
-                        <div class="employer-category">Ikoranabuhanga</div>
-                    </div>
-                    <div class="employer-content">
-                        <h3 class="employer-name">RwandaTech Solutions</h3>
-                        <p class="employer-position">Software Developer</p>
-                        
-                        <div class="employer-details">
-                            <div class="employer-detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Kigali, Rwanda</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>jobs@rwandatech.com</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-phone"></i>
-                                <span>+250 788 123 456</span>
-                            </div>
-                        </div>
-                        
-                        <div class="employer-requirements">
-                            <span class="requirement-tag">JavaScript</span>
-                            <span class="requirement-tag">React</span>
-                            <span class="requirement-tag">Python</span>
-                        </div>
-                        
-                        <button class="view-profile-button" onclick="openSampleEmployerModal('RwandaTech Solutions', 'Software Developer', 'jobs@rwandatech.com', '+250 788 123 456', 'Kigali', 'We are looking for a skilled software developer to join our team. You will be responsible for developing and maintaining our web applications.', 'Bachelors degree in Computer Science, 2+ years experience with JavaScript and React.')">
-                            <i class="fas fa-building"></i> Reba Ibisobanuro
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Employer Card 2 -->
-                <div class="employer-card fade-in delay-1">
-                    <div class="employer-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
-                        <div class="employer-category">Ibaruramari</div>
-                    </div>
-                    <div class="employer-content">
-                        <h3 class="employer-name">Rwanda Finance Group</h3>
-                        <p class="employer-position">Senior Accountant</p>
-                        
-                        <div class="employer-details">
-                            <div class="employer-detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Musanze, Rwanda</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>careers@rwandafinance.rw</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-phone"></i>
-                                <span>+250 789 456 123</span>
-                            </div>
-                        </div>
-                        
-                        <div class="employer-requirements">
-                            <span class="requirement-tag">Financial Reporting</span>
-                            <span class="requirement-tag">Tax Planning</span>
-                            <span class="requirement-tag">Audit</span>
-                        </div>
-                        
-                        <button class="view-profile-button" onclick="openSampleEmployerModal('Rwanda Finance Group', 'Senior Accountant', 'careers@rwandafinance.rw', '+250 789 456 123', 'Musanze', 'We are seeking an experienced accountant to manage our financial operations, prepare reports, and ensure compliance with tax regulations.', 'Masters degree in Accounting or Finance, 5+ years experience, CPA certification preferred.')">
-                            <i class="fas fa-building"></i> Reba Ibisobanuro
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Employer Card 3 -->
-                <div class="employer-card fade-in delay-2">
-                    <div class="employer-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
-                        <div class="employer-category">Ubuhanga</div>
-                    </div>
-                    <div class="employer-content">
-                        <h3 class="employer-name">BuildRwanda Engineering</h3>
-                        <p class="employer-position">Civil Engineer</p>
-                        
-                        <div class="employer-details">
-                            <div class="employer-detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Huye, Rwanda</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>hr@buildrwanda.com</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-phone"></i>
-                                <span>+250 782 345 678</span>
-                            </div>
-                        </div>
-                        
-                        <div class="employer-requirements">
-                            <span class="requirement-tag">Project Management</span>
-                            <span class="requirement-tag">AutoCAD</span>
-                            <span class="requirement-tag">Structural Design</span>
-                        </div>
-                        
-                        <button class="view-profile-button" onclick="openSampleEmployerModal('BuildRwanda Engineering', 'Civil Engineer', 'hr@buildrwanda.com', '+250 782 345 678', 'Huye', 'We are looking for a civil engineer to oversee infrastructure projects, ensure compliance with building codes, and collaborate with architects and contractors.', 'Bachelors degree in Civil Engineering, 7+ years experience in construction projects, proficiency with AutoCAD.')">
-                            <i class="fas fa-building"></i> Reba Ibisobanuro
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Employer Card 4 -->
-                <div class="employer-card fade-in delay-3">
-                    <div class="employer-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
-                        <div class="employer-category">Ubuvuzi</div>
-                    </div>
-                    <div class="employer-content">
-                        <h3 class="employer-name">Kigali Medical Center</h3>
-                        <p class="employer-position">Registered Nurse</p>
-                        
-                        <div class="employer-details">
-                            <div class="employer-detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Kigali, Rwanda</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>recruitment@kmc.rw</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-phone"></i>
-                                <span>+250 783 456 789</span>
-                            </div>
-                        </div>
-                        
-                        <div class="employer-requirements">
-                            <span class="requirement-tag">Patient Care</span>
-                            <span class="requirement-tag">Emergency Care</span>
-                            <span class="requirement-tag">Medical Records</span>
-                        </div>
-                        
-                        <button class="view-profile-button" onclick="openSampleEmployerModal('Kigali Medical Center', 'Registered Nurse', 'recruitment@kmc.rw', '+250 783 456 789', 'Kigali', 'We are seeking compassionate registered nurses to provide quality patient care in our hospital. You will be responsible for administering medication, monitoring patients, and assisting doctors.', 'Bachelors degree in Nursing, valid nursing license, minimum 3 years experience in a hospital setting.')">
-                            <i class="fas fa-building"></i> Reba Ibisobanuro
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Employer Card 5 -->
-                <div class="employer-card fade-in">
-                    <div class="employer-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
-                        <div class="employer-category">Uburezi</div>
-                    </div>
-                    <div class="employer-content">
-                        <h3 class="employer-name">Rwanda International Academy</h3>
-                        <p class="employer-position">Mathematics Teacher</p>
-                        
-                        <div class="employer-details">
-                            <div class="employer-detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Rubavu, Rwanda</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>jobs@ria.edu.rw</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-phone"></i>
-                                <span>+250 784 567 890</span>
-                            </div>
-                        </div>
-                        
-                        <div class="employer-requirements">
-                            <span class="requirement-tag">Calculus</span>
-                            <span class="requirement-tag">Statistics</span>
-                            <span class="requirement-tag">Curriculum Development</span>
-                        </div>
-                        
-                        <button class="view-profile-button" onclick="openSampleEmployerModal('Rwanda International Academy', 'Mathematics Teacher', 'jobs@ria.edu.rw', '+250 784 567 890', 'Rubavu', 'We are looking for a qualified mathematics teacher to join our secondary school. You will be responsible for teaching advanced mathematics to students and developing curriculum materials.', 'Masters degree in Mathematics or Education, 5+ years teaching experience, fluency in English and Kinyarwanda.')">
-                            <i class="fas fa-building"></i> Reba Ibisobanuro
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Employer Card 6 -->
-                <div class="employer-card fade-in delay-1">
-                    <div class="employer-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
-                        <div class="employer-category">Ikoranabuhanga</div>
-                    </div>
-                    <div class="employer-content">
-                        <h3 class="employer-name">Rwanda Networks Ltd</h3>
-                        <p class="employer-position">Network Administrator</p>
-                        
-                        <div class="employer-details">
-                            <div class="employer-detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Kigali, Rwanda</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>careers@rwandanetworks.com</span>
-                            </div>
-                            <div class="employer-detail-item">
-                                <i class="fas fa-phone"></i>
-                                <span>+250 785 678 901</span>
-                            </div>
-                        </div>
-                        
-                        <div class="employer-requirements">
-                            <span class="requirement-tag">Cisco</span>
-                            <span class="requirement-tag">Network Security</span>
-                            <span class="requirement-tag">Troubleshooting</span>
-                        </div>
-                        
-                        <button class="view-profile-button" onclick="openSampleEmployerModal('Rwanda Networks Ltd', 'Network Administrator', 'careers@rwandanetworks.com', '+250 785 678 901', 'Kigali', 'We are seeking a skilled network administrator to maintain our IT infrastructure, ensure network security, and provide technical support to staff.', 'Bachelors degree in IT or Computer Science, Cisco certifications, 4+ years experience in network administration.')">
-                            <i class="fas fa-building"></i> Reba Ibisobanuro
-                        </button>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            
-            <!-- Pagination -->
-            <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#"><i class="fas fa-angle-right"></i></a>
-            </div>
-        </div>
-    </section>
+<script>
+    // Set default language (Kinyarwanda)
+    let currentLanguage = 'rw';
     
-    <!-- Login Modal -->
-    <div id="formModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <h2 class="modal-title">Login</h2>
-            
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="message">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            
-            <form method="POST">
-                {% csrf_token %}
-                
-                <div class="form-group">
-                    <label for="id_email">Email:</label>
-                    <input type="email" id="id_email" name="email" class="search-input" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="id_password">Ijambo ryibanga:</label>
-                    <input type="password" id="id_password" name="password" class="search-input" required>
-                </div>
-                
-                <button type="submit" class="search-button">Injira</button>
-            </form>
+    // Function to change language
+    function changeLanguage(lang) {
+        currentLanguage = lang;
+        
+        // Update active button styling
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`.lang-btn:nth-child(${lang === 'rw' ? 1 : lang === 'en' ? 2 : 3})`).classList.add('active');
+        
+        // Update menu items
+        const menuItems = document.querySelectorAll('#main-menu li a, #openFormButton');
+        
+        menuItems.forEach(item => {
+            if (lang === 'en') {
+                if (item.getAttribute('data-en')) {
+                    item.textContent = item.getAttribute('data-en');
+                }
+            } else if (lang === 'fr') {
+                if (item.getAttribute('data-fr')) {
+                    item.textContent = item.getAttribute('data-fr');
+                }
+            } else {
+                // Reset to original Kinyarwanda
+                if (item.id === 'openFormButton') {
+                    item.textContent = 'login'; // Default text
+                } else {
+                    // Get original text from the URL path
+                    const href = item.getAttribute('href');
+                    const urlParts = href.split('/');
+                    const pageName = urlParts[urlParts.length - 2] || 'home';
+                    
+                    switch(pageName) {
+                        case 'home': item.textContent = 'AHABANZA'; break;
+                        case 'worker': item.textContent = 'ABAKOZI'; break;
+                        case 'employer': item.textContent = 'ABAKORESHA'; break;
+                        case 'view_worker': item.textContent = 'REBA UMUKOZI'; break;
+                        case 'view_employers': item.textContent = 'REBA ABAKORESHA'; break;
+                        case 'what_we_do': item.textContent = 'IBYO DUKORA'; break;
+                        case 'announcements': item.textContent = 'AMATANGAZO'; break;
+                        default: break;
+                    }
+                }
+            }
+        });
+        
+        // Save language preference to localStorage
+        localStorage.setItem('preferredLanguage', lang);
+    }
+    
+    // Set initial language from localStorage if available
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedLanguage = localStorage.getItem('preferredLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage);
+        } else {
+            // Set default active state
+            document.querySelector('.lang-btn:first-child').classList.add('active');
+        }
+    });
+</script>
+
+   <!-- Page Banner -->
+<section class="page-banner">
+    <div class="hero-content">
+        <h1 class="page-title">
+            <span data-en="View" data-fr="Voir">Reba</span> 
+            <span style="color: var(--secondary-color);" data-en="Qualified Employers" data-fr="Employeurs Qualifiés">Abakoresha Babereye</span>
+        </h1>
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL">AHABANZA</a> 
+            <span>/</span> 
+            <span data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS">REBA ABAKORESHA</span>
         </div>
     </div>
-    
-    <!-- Employer Details Modal -->
-    <div id="employerModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeEmployerModal">&times;</span>
-            <h2 class="modal-title">Amakuru y'Umukoresha</h2>
+</section>
+
+<!-- Search Section -->
+<section class="search-section">
+    <div class="search-container">
+        <form class="search-form">
+            <div class="search-group">
+                <label for="category" data-en="Job Category" data-fr="Catégorie d'emploi">Icyiciro cy'akazi</label>
+                <select id="category" class="search-input">
+                    <option value="" data-en="Select category" data-fr="Sélectionner une catégorie">Hitamo icyiciro</option>
+                    <option value="IT" data-en="Information Technology" data-fr="Technologie de l'information">Ikoranabuhanga</option>
+                    <option value="Accounting" data-en="Accounting" data-fr="Comptabilité">Ibaruramari</option>
+                    <option value="Engineering" data-en="Engineering" data-fr="Ingénierie">Ubuhanga</option>
+                    <option value="Healthcare" data-en="Healthcare" data-fr="Santé">Ubuvuzi</option>
+                    <option value="Education" data-en="Education" data-fr="Éducation">Uburezi</option>
+                </select>
+            </div>
             
-            <div class="employer-modal-header">
-                <img src="{% static 'images/nature.jpg' %}" alt="Employer Profile" id="employerModalImage">
-                <div class="employer-modal-header-info">
-                    <h3 id="employerModalName"></h3>
-                    <p id="employerModalPosition"></p>
+            <div class="search-group">
+                <label for="location" data-en="District" data-fr="District">Akarere</label>
+                <select id="location" class="search-input">
+                    <option value="" data-en="Select district" data-fr="Sélectionner un district">Hitamo akarere</option>
+                    <option value="Kigali">Kigali</option>
+                    <option value="Musanze">Musanze</option>
+                    <option value="Huye">Huye</option>
+                    <option value="Rubavu">Rubavu</option>
+                    <option value="Nyagatare">Nyagatare</option>
+                </select>
+            </div>
+            
+            <div class="search-group">
+                <label for="company" data-en="Company Name" data-fr="Nom de l'entreprise">Izina ry'Ikigo</label>
+                <input type="text" id="company" class="search-input" 
+                       data-placeholder-rw="Andika izina ry'ikigo..." 
+                       data-placeholder-en="Enter company name..." 
+                       data-placeholder-fr="Entrez le nom de l'entreprise..." 
+                       placeholder="Andika izina ry'ikigo...">
+            </div>
+            
+            <div class="search-group">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i> 
+                    <span data-en="Search" data-fr="Rechercher">Shakisha</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    // Extend the language change function to handle these new elements
+    function updatePageContent(lang) {
+        // Update all elements with data-en or data-fr attributes
+        document.querySelectorAll('[data-' + lang + ']').forEach(element => {
+            element.textContent = element.getAttribute('data-' + lang);
+        });
+        
+        // Handle placeholders specifically
+        document.querySelectorAll('input[data-placeholder-' + lang + ']').forEach(input => {
+            input.placeholder = input.getAttribute('data-placeholder-' + lang);
+        });
+        
+        // Update select option text
+        document.querySelectorAll('select option').forEach(option => {
+            if (option.getAttribute('data-' + lang)) {
+                option.textContent = option.getAttribute('data-' + lang);
+            }
+        });
+    }
+    
+    // Modify the existing changeLanguage function to include this page content
+    // This function should be merged with your previous implementation
+    function changeLanguage(lang) {
+        currentLanguage = lang;
+        
+        // Update active button styling
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`.lang-btn:nth-child(${lang === 'rw' ? 1 : lang === 'en' ? 2 : 3})`).classList.add('active');
+        
+        // Update menu items (from previous code)
+        const menuItems = document.querySelectorAll('#main-menu li a, #openFormButton');
+        menuItems.forEach(item => {
+            if (lang === 'en') {
+                if (item.getAttribute('data-en')) {
+                    item.textContent = item.getAttribute('data-en');
+                }
+            } else if (lang === 'fr') {
+                if (item.getAttribute('data-fr')) {
+                    item.textContent = item.getAttribute('data-fr');
+                }
+            } else {
+                // Reset to original Kinyarwanda (as in your previous implementation)
+                // (code from previous implementation)
+            }
+        });
+        
+        // Update page content (new functionality)
+        updatePageContent(lang);
+        
+        // Save language preference to localStorage
+        localStorage.setItem('preferredLanguage', lang);
+    }
+    
+    // Make sure this gets initialized on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedLanguage = localStorage.getItem('preferredLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage);
+        } else {
+            // Set default active state for language buttons
+            document.querySelector('.lang-btn:first-child')?.classList.add('active');
+        }
+    });
+</script>
+
+   <!-- Employers Section -->
+<section class="employers-section">
+    <div class="employers-container">
+        <div class="section-header">
+            <h2 data-en="Available Employers" data-fr="Employeurs Disponibles">Abakoresha Baboneka</h2>
+            <p data-en="Choose employers with jobs matching your skills" data-fr="Choisissez des employeurs avec des emplois correspondant à vos compétences">Hitamo abakoresha bafite imirimo ijyanye n'ubumenyi bwawe</p>
+        </div>
+        
+        <div class="employers-grid">
+            {% for employer in employers %}
+            <div class="employer-card fade-in">
+                <div class="employer-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="{{ employer.company }}">
+                    <div class="employer-category">{{ employer.position }}</div>
+                </div>
+                <div class="employer-content">
+                    <h3 class="employer-name">{{ employer.company }}</h3>
+                    <p class="employer-position">{{ employer.position }}</p>
+                    
+                    <div class="employer-details">
+                        <div class="employer-detail-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ employer.email }}</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-phone"></i>
+                            <span>{{ employer.phone }}</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ employer.location }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="employer-requirements">
+                        <span class="requirement-tag">{{ employer.position }}</span>
+                    </div>
+                    
+                    <button class="view-profile-button" onclick="openEmployerModal({{ employer.id }}, '{{ employer.company }}', '{{ employer.position }}', '{{ employer.email }}', '{{ employer.phone }}', '{{ employer.location }}', '{{ employer.job_description }}', '{{ employer.job_requirements }}')">
+                        <i class="fas fa-building"></i> 
+                        <span data-en="View Details" data-fr="Voir Détails">Reba Ibisobanuro</span>
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Sample Employer Cards (shown if no employers in database) -->
+            <!-- Employer Card 1 -->
+            <div class="employer-card fade-in">
+                <div class="employer-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
+                    <div class="employer-category" data-en="Information Technology" data-fr="Technologie de l'Information">Ikoranabuhanga</div>
+                </div>
+                <div class="employer-content">
+                    <h3 class="employer-name">RwandaTech Solutions</h3>
+                    <p class="employer-position">Software Developer</p>
+                    
+                    <div class="employer-details">
+                        <div class="employer-detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kigali, Rwanda</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>jobs@rwandatech.com</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+250 788 123 456</span>
+                        </div>
+                    </div>
+                    
+                    <div class="employer-requirements">
+                        <span class="requirement-tag">JavaScript</span>
+                        <span class="requirement-tag">React</span>
+                        <span class="requirement-tag">Python</span>
+                    </div>
+                    
+                    <button class="view-profile-button" onclick="openSampleEmployerModal('RwandaTech Solutions', 'Software Developer', 'jobs@rwandatech.com', '+250 788 123 456', 'Kigali', 'We are looking for a skilled software developer to join our team. You will be responsible for developing and maintaining our web applications.', 'Bachelors degree in Computer Science, 2+ years experience with JavaScript and React.')">
+                        <i class="fas fa-building"></i> 
+                        <span data-en="View Details" data-fr="Voir Détails">Reba Ibisobanuro</span>
+                    </button>
                 </div>
             </div>
             
-            <form id="employerEditForm" method="POST" action="" enctype="multipart/form-data">
-                {% csrf_token %}
-                
-                <div class="employer-modal-section">
-                    <h4>Amakuru Rusange</h4>
-                    <div class="employer-info-grid">
-                        <div class="form-group">
-                            <label for="edit_company">Izina ry'Ikigo:</label>
-                            <input type="text" id="edit_company" name="company" class="search-input" required>
+            <!-- Employer Card 2 -->
+            <div class="employer-card fade-in delay-1">
+                <div class="employer-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
+                    <div class="employer-category" data-en="Accounting" data-fr="Comptabilité">Ibaruramari</div>
+                </div>
+                <div class="employer-content">
+                    <h3 class="employer-name">Rwanda Finance Group</h3>
+                    <p class="employer-position">Senior Accountant</p>
+                    
+                    <div class="employer-details">
+                        <div class="employer-detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Musanze, Rwanda</span>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="edit_position">Umwanya:</label>
-                            <input type="text" id="edit_position" name="position" class="search-input" required>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>careers@rwandafinance.rw</span>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="edit_email">Email:</label>
-                            <input type="email" id="edit_email" name="email" class="search-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="edit_phone">Telefoni:</label>
-                            <input type="tel" id="edit_phone" name="phone" class="search-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="edit_location">Akarere:</label>
-                            <input type="text" id="edit_location" name="location" class="search-input" required>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+250 789 456 123</span>
                         </div>
                     </div>
+                    
+                    <div class="employer-requirements">
+                        <span class="requirement-tag">Financial Reporting</span>
+                        <span class="requirement-tag">Tax Planning</span>
+                        <span class="requirement-tag">Audit</span>
+                    </div>
+                    
+                    <button class="view-profile-button" onclick="openSampleEmployerModal('Rwanda Finance Group', 'Senior Accountant', 'careers@rwandafinance.rw', '+250 789 456 123', 'Musanze', 'We are seeking an experienced accountant to manage our financial operations, prepare reports, and ensure compliance with tax regulations.', 'Masters degree in Accounting or Finance, 5+ years experience, CPA certification preferred.')">
+                        <i class="fas fa-building"></i> 
+                        <span data-en="View Details" data-fr="Voir Détails">Reba Ibisobanuro</span>
+                    </button>
                 </div>
-                
-                <div class="employer-modal-section">
-                    <h4>Ibisobanuro by'Akazi</h4>
+            </div>
+            
+            <!-- Employer Card 3 -->
+            <div class="employer-card fade-in delay-2">
+                <div class="employer-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
+                    <div class="employer-category" data-en="Engineering" data-fr="Ingénierie">Ubuhanga</div>
+                </div>
+                <div class="employer-content">
+                    <h3 class="employer-name">BuildRwanda Engineering</h3>
+                    <p class="employer-position">Civil Engineer</p>
+                    
+                    <div class="employer-details">
+                        <div class="employer-detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Huye, Rwanda</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>hr@buildrwanda.com</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+250 782 345 678</span>
+                        </div>
+                    </div>
+                    
+                    <div class="employer-requirements">
+                        <span class="requirement-tag">Project Management</span>
+                        <span class="requirement-tag">AutoCAD</span>
+                        <span class="requirement-tag">Structural Design</span>
+                    </div>
+                    
+                    <button class="view-profile-button" onclick="openSampleEmployerModal('BuildRwanda Engineering', 'Civil Engineer', 'hr@buildrwanda.com', '+250 782 345 678', 'Huye', 'We are looking for a civil engineer to oversee infrastructure projects, ensure compliance with building codes, and collaborate with architects and contractors.', 'Bachelors degree in Civil Engineering, 7+ years experience in construction projects, proficiency with AutoCAD.')">
+                        <i class="fas fa-building"></i> 
+                        <span data-en="View Details" data-fr="Voir Détails">Reba Ibisobanuro</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Employer Card 4 -->
+            <div class="employer-card fade-in delay-3">
+                <div class="employer-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
+                    <div class="employer-category" data-en="Healthcare" data-fr="Santé">Ubuvuzi</div>
+                </div>
+                <div class="employer-content">
+                    <h3 class="employer-name">Kigali Medical Center</h3>
+                    <p class="employer-position">Registered Nurse</p>
+                    
+                    <div class="employer-details">
+                        <div class="employer-detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kigali, Rwanda</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>recruitment@kmc.rw</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+250 783 456 789</span>
+                        </div>
+                    </div>
+                    
+                    <div class="employer-requirements">
+                        <span class="requirement-tag">Patient Care</span>
+                        <span class="requirement-tag">Emergency Care</span>
+                        <span class="requirement-tag">Medical Records</span>
+                    </div>
+                    
+                    <button class="view-profile-button" onclick="openSampleEmployerModal('Kigali Medical Center', 'Registered Nurse', 'recruitment@kmc.rw', '+250 783 456 789', 'Kigali', 'We are seeking compassionate registered nurses to provide quality patient care in our hospital. You will be responsible for administering medication, monitoring patients, and assisting doctors.', 'Bachelors degree in Nursing, valid nursing license, minimum 3 years experience in a hospital setting.')">
+                        <i class="fas fa-building"></i> 
+                        <span data-en="View Details" data-fr="Voir Détails">Reba Ibisobanuro</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Employer Card 5 -->
+            <div class="employer-card fade-in">
+                <div class="employer-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
+                    <div class="employer-category" data-en="Education" data-fr="Éducation">Uburezi</div>
+                </div>
+                <div class="employer-content">
+                    <h3 class="employer-name">Rwanda International Academy</h3>
+                    <p class="employer-position">Mathematics Teacher</p>
+                    
+                    <div class="employer-details">
+                        <div class="employer-detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Rubavu, Rwanda</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>jobs@ria.edu.rw</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+250 784 567 890</span>
+                        </div>
+                    </div>
+                    
+                    <div class="employer-requirements">
+                        <span class="requirement-tag">Calculus</span>
+                        <span class="requirement-tag">Statistics</span>
+                        <span class="requirement-tag">Curriculum Development</span>
+                    </div>
+                    
+                    <button class="view-profile-button" onclick="openSampleEmployerModal('Rwanda International Academy', 'Mathematics Teacher', 'jobs@ria.edu.rw', '+250 784 567 890', 'Rubavu', 'We are looking for a qualified mathematics teacher to join our secondary school. You will be responsible for teaching advanced mathematics to students and developing curriculum materials.', 'Masters degree in Mathematics or Education, 5+ years teaching experience, fluency in English and Kinyarwanda.')">
+                        <i class="fas fa-building"></i> 
+                        <span data-en="View Details" data-fr="Voir Détails">Reba Ibisobanuro</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Employer Card 6 -->
+            <div class="employer-card fade-in delay-1">
+                <div class="employer-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Employer Image">
+                    <div class="employer-category" data-en="Information Technology" data-fr="Technologie de l'Information">Ikoranabuhanga</div>
+                </div>
+                <div class="employer-content">
+                    <h3 class="employer-name">Rwanda Networks Ltd</h3>
+                    <p class="employer-position">Network Administrator</p>
+                    
+                    <div class="employer-details">
+                        <div class="employer-detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kigali, Rwanda</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>careers@rwandanetworks.com</span>
+                        </div>
+                        <div class="employer-detail-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+250 785 678 901</span>
+                        </div>
+                    </div>
+                    
+                    <div class="employer-requirements">
+                        <span class="requirement-tag">Cisco</span>
+                        <span class="requirement-tag">Network Security</span>
+                        <span class="requirement-tag">Troubleshooting</span>
+                    </div>
+                    
+                    <button class="view-profile-button" onclick="openSampleEmployerModal('Rwanda Networks Ltd', 'Network Administrator', 'careers@rwandanetworks.com', '+250 785 678 901', 'Kigali', 'We are seeking a skilled network administrator to maintain our IT infrastructure, ensure network security, and provide technical support to staff.', 'Bachelors degree in IT or Computer Science, Cisco certifications, 4+ years experience in network administration.')">
+                        <i class="fas fa-building"></i> 
+                        <span data-en="View Details" data-fr="Voir Détails">Reba Ibisobanuro</span>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#"><i class="fas fa-angle-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- Login Modal -->
+<div id="formModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <h2 class="modal-title" data-en="Login" data-fr="Connexion">Login</h2>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_email" data-en="Email:" data-fr="Email:">Email:</label>
+                <input type="email" id="id_email" name="email" class="search-input" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password" data-en="Password:" data-fr="Mot de passe:">Ijambo ryibanga:</label>
+                <input type="password" id="id_password" name="password" class="search-input" required>
+            </div>
+            
+            <button type="submit" class="search-button" data-en="Sign In" data-fr="Se Connecter">Injira</button>
+        </form>
+    </div>
+</div>
+
+<!-- Employer Details Modal -->
+<div id="employerModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeEmployerModal">&times;</span>
+        <h2 class="modal-title" data-en="Employer Information" data-fr="Informations sur l'Employeur">Amakuru y'Umukoresha</h2>
+        
+        <div class="employer-modal-header">
+            <img src="{% static 'images/nature.jpg' %}" alt="Employer Profile" id="employerModalImage">
+            <div class="employer-modal-header-info">
+                <h3 id="employerModalName"></h3>
+                <p id="employerModalPosition"></p>
+            </div>
+        </div>
+        
+        <form id="employerEditForm" method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="employer-modal-section">
+                <h4 data-en="General Information" data-fr="Informations Générales">Amakuru Rusange</h4>
+                <div class="employer-info-grid">
                     <div class="form-group">
-                        <label for="edit_job_description">Ibisobanuro:</label>
-                        <textarea id="edit_job_description" name="job_description" class="search-input" rows="5" required></textarea>
+                        <label for="edit_company" data-en="Company Name:" data-fr="Nom de l'Entreprise:">Izina ry'Ikigo:</label>
+                        <input type="text" id="edit_company" name="company" class="search-input" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="edit_job_requirements">Ibisabwa:</label>
-                        <textarea id="edit_job_requirements" name="job_requirements" class="search-input" rows="5" required></textarea>
+                        <label for="edit_position" data-en="Position:" data-fr="Poste:">Umwanya:</label>
+                        <input type="text" id="edit_position" name="position" class="search-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit_email" data-en="Email:" data-fr="Email:">Email:</label>
+                        <input type="email" id="edit_email" name="email" class="search-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit_phone" data-en="Phone:" data-fr="Téléphone:">Telefoni:</label>
+                        <input type="tel" id="edit_phone" name="phone" class="search-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit_location" data-en="District:" data-fr="District:">Akarere:</label>
+                        <input type="text" id="edit_location" name="location" class="search-input" required>
                     </div>
                 </div>
-                
-                <div class="employer-modal-actions">
-                    <button type="button" class="cancel-button" id="cancelEmployerModal">Gusohoka</button>
-                    <button type="submit" class="edit-button">Hindura</button>
+            </div>
+            
+            <div class="employer-modal-section">
+                <h4 data-en="Job Description" data-fr="Description du Poste">Ibisobanuro by'Akazi</h4>
+                <div class="form-group">
+                    <label for="edit_job_description" data-en="Description:" data-fr="Description:">Ibisobanuro:</label>
+                    <textarea id="edit_job_description" name="job_description" class="search-input" rows="5" required></textarea>
                 </div>
-            </form>
-        </div>
+                
+                <div class="form-group">
+                    <label for="edit_job_requirements" data-en="Requirements:" data-fr="Exigences:">Ibisabwa:</label>
+                    <textarea id="edit_job_requirements" name="job_requirements" class="search-input" rows="5" required></textarea>
+                </div>
+            </div>
+            
+            <div class="employer-modal-actions">
+                <button type="button" class="cancel-button" id="cancelEmployerModal" data-en="Exit" data-fr="Sortir">Gusohoka</button>
+                <button type="submit" class="edit-button" data-en="Edit" data-fr="Modifier">Hindura</button>
+            </div>
+        </form>
     </div>
+</div>
+
+<script>
+    // Add these functions to update the employer modals and their content
+    function updateModalContent(lang) {
+        // Update all elements in modals with data-en or data-fr attributes
+        document.querySelectorAll('.modal [data-' + lang + ']').forEach(element => {
+            element.textContent = element.getAttribute('data-' + lang);
+        });
+    }
     
+    // Modify the existing employer modal functions to handle translations
+    // This updates the modal content when opening
+    const originalOpenEmployerModal = window.openEmployerModal;
+    window.openEmployerModal = function(id, company, position, email, phone, location, description, requirements) {
+        // Call the original function first
+        if (originalOpenEmployerModal) {
+            originalOpenEmployerModal(id, company, position, email, phone, location, description, requirements);
+        } else {
+            // If original function doesn't exist, implement basic functionality
+            document.getElementById('employerModalName').textContent = company;
+            document.getElementById('employerModalPosition').textContent = position;
+            document.getElementById('edit_company').value = company;
+            document.getElementById('edit_position').value = position;
+            document.getElementById('edit_email').value = email;
+            document.getElementById('edit_phone').value = phone;
+            document.getElementById('edit_location').value = location;
+            document.getElementById('edit_job_description').value = description;
+            document.getElementById('edit_job_requirements').value = requirements;
+            document.getElementById('employerModal').style.display = 'block';
+        }
+        
+        // Apply current language to the modal
+        const currentLang = localStorage.getItem('preferredLanguage') || 'rw';
+        updateModalContent(currentLang);
+    };
+    
+    // Do the same for sample employer modal
+    const originalOpenSampleEmployerModal = window.openSampleEmployerModal;
+    window.openSampleEmployerModal = function(company, position, email, phone, location, description, requirements) {
+        // Call the original function first
+        if (originalOpenSampleEmployerModal) {
+            originalOpenSampleEmployerModal(company, position, email, phone, location, description, requirements);
+        } else {
+            // If original function doesn't exist, implement basic functionality
+            document.getElementById('employerModalName').textContent = company;
+            document.getElementById('employerModalPosition').textContent = position;
+            document.getElementById('edit_company').value = company;
+            document.getElementById('edit_position').value = position;
+            document.getElementById('edit_email').value = email;
+            document.getElementById('edit_phone').value = phone;
+            document.getElementById('edit_location').value = location;
+            document.getElementById('edit_job_description').value = description;
+            document.getElementById('edit_job_requirements').value = requirements;
+            document.getElementById('employerModal').style.display = 'block';
+        }
+        
+        // Apply current language to the modal
+        const currentLang = localStorage.getItem('preferredLanguage') || 'rw';
+        updateModalContent(currentLang);
+    };
+    
+    // Update the existing changeLanguage function to include modals
+    function changeLanguage(lang) {
+        currentLanguage = lang;
+        
+        // Update active button styling
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`.lang-btn:nth-child(${lang === 'rw' ? 1 : lang === 'en' ? 2 : 3})`).classList.add('active');
+        
+        // Update menu items (from previous code)
+        const menuItems = document.querySelectorAll('#main-menu li a, #openFormButton');
+        menuItems.forEach(item => {
+            if (lang === 'en') {
+                if (item.getAttribute('data-en')) {
+                    item.textContent = item.getAttribute('data-en');
+                }
+            } else if (lang === 'fr') {
+                if (item.getAttribute('data-fr')) {
+                    item.textContent = item.getAttribute('data-fr');
+                }
+            } else {
+                // Reset to original Kinyarwanda (code from previous implementation)
+            }
+        });
+        
+        // Update page content
+        updatePageContent(lang);
+        
+        // Update modal content if any modals are open
+        updateModalContent(lang);
+        
+        // Save language preference to localStorage
+        localStorage.setItem('preferredLanguage', lang);
+    }
+    
+    // Extend the updatePageContent function to include the employer cards
+    function updatePageContent(lang) {
+        // Update all elements with data-en or data-fr attributes
+        document.querySelectorAll('[data-' + lang + ']').forEach(element => {
+            element.textContent = element.getAttribute('data-' + lang);
+        });
+        
+        // Handle placeholders specifically
+        document.querySelectorAll('input[data-placeholder-' + lang + ']').forEach(input => {
+            input.placeholder = input.getAttribute('data-placeholder-' + lang);
+        });
+        
+        // Update select option text
+        document.querySelectorAll('select option').forEach(option => {
+            if (option.getAttribute('data-' + lang)) {
+                option.textContent = option.getAttribute('data-' + lang);
+            }
+        });
+        
+        // Update employer category texts specifically
+        document.querySelectorAll('.employer-category').forEach(category => {
+            if (category.getAttribute('data-' + lang)) {
+                category.textContent = category.getAttribute('data-' + lang);
+            }
+        });
+        
+        // Update all button texts in employer cards
+        document.querySelectorAll('.view-profile-button span').forEach(button => {
+            if (button.getAttribute('data-' + lang)) {
+                button.textContent = button.getAttribute('data-' + lang);
+            }
+        });
+    }
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedLanguage = localStorage.getItem('preferredLanguage');
+        if (savedLanguage) {
+            changeLanguage(savedLanguage);
+        } else {
+            // Set default active state for language buttons
+            document.querySelector('.lang-btn:first-child')?.classList.add('active');
+        }
+        
+        // Set up modal event listeners if not already set
+        const formModal = document.getElementById('formModal');
+        const employerModal = document.getElementById('employerModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const closeEmployerModalBtn = document.getElementById('closeEmployerModal');
+        const cancelEmployerModalBtn = document.getElementById('cancelEmployerModal');
+        
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', function() {
+                formModal.style.display = 'none';
+            });
+        }
+        
+        if (closeEmployerModalBtn) {
+            closeEmployerModalBtn.addEventListener('click', function() {
+                employerModal.style.display = 'none';
+            });
+        }
+        
+        if (cancelEmployerModalBtn) {
+            cancelEmployerModalBtn.addEventListener('click', function() {
+                employerModal.style.display = 'none';
+            });
+        }
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === formModal) {
+                formModal.style.display = 'none';
+            }
+            if (event.target === employerModal) {
+                employerModal.style.display = 'none';
+            }
+        });
+    });
+</script>
     <!-- Footer -->
     <footer>
         <div class="footer-container">

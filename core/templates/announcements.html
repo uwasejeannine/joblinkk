@@ -702,292 +702,575 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <nav>
-                <ul>
-                    <li><a href="{% url 'home' %}">AHABANZA</a></li>
-                    <li><a href="{% url 'worker' %}">ABAKOZI</a></li>
-                    <li><a href="{% url 'employer' %}">ABAKORESHA</a></li>
-                    <li><a href="{% url 'view_worker' %}">REBA UMUKOZI</a></li>
-                    <li><a href="{% url 'view_employers' %}">REBA ABAKORESHA</a></li>
-                    <li><a href="{% url 'what_we_do' %}">IBYO DUKORA</a></li>
-                    <li><a href="{% url 'announcements' %}">AMATANGAZO</a></li>
-                </ul>
-            </nav>
+  
+
+  <!-- Header with Language Selector -->
+<header>
+    <div class="header-content">
+        <nav>
+            <ul id="navigation-menu">
+                <li><a href="{% url 'home' %}" class="nav-link" id="nav-home">AHABANZA</a></li>
+                <li><a href="{% url 'worker' %}" class="nav-link" id="nav-worker">ABAKOZI</a></li>
+                <li><a href="{% url 'employer' %}" class="nav-link" id="nav-employer">ABAKORESHA</a></li>
+                <li><a href="{% url 'view_worker' %}" class="nav-link" id="nav-view-worker">REBA UMUKOZI</a></li>
+                <li><a href="{% url 'view_employers' %}" class="nav-link" id="nav-view-employers">REBA ABAKORESHA</a></li>
+                <li><a href="{% url 'what_we_do' %}" class="nav-link" id="nav-what-we-do">IBYO DUKORA</a></li>
+                <li><a href="{% url 'announcements' %}" class="nav-link" id="nav-announcements">AMATANGAZO</a></li>
+            </ul>
+        </nav>
+        <div class="right-nav">
+            <div class="language-selector">
+                <select id="language-select">
+                    <option value="default">Kinyarwanda</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
             <a href="#" class="nav-button" id="openFormButton">login</a>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- Hero Banner -->
-    <section class="hero-banner">
-        <div class="container">
-            <h1 class="hero-title">Amatangazo</h1>
-        </div>
-    </section>
+<!-- Hero Banner -->
+<section class="hero-banner">
+    <div class="container">
+        <h1 class="hero-title" id="hero-title">Amatangazo</h1>
+    </div>
+</section>
 
-    <!-- Announcements Grid -->
-    <section class="announcements-section">
-        <div class="container">
-            <div class="announcements-grid">
-                <!-- Announcement Card 1 -->
-                <div class="announcement-card">
-                    <div class="announcement-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
-                        <div class="announcement-date">20 Dec, 2023</div>
-                        <div class="announcement-author"><i class="fas fa-user"></i> By Admin</div>
-                    </div>
-                    <div class="announcement-content">
-                        <h3 class="announcement-title">Igihugu cy'u Rwanda giteguye gahunda yo gushyiraho abakozi bashya</h3>
-                        <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
-                        <a href="#" class="read-more">READ MORE <i class="fas fa-arrow-right"></i></a>
-                    </div>
+<!-- Announcements Grid -->
+<section class="announcements-section">
+    <div class="container">
+        <div class="announcements-grid">
+            <!-- Announcement Card 1 -->
+            <div class="announcement-card">
+                <div class="announcement-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
+                    <div class="announcement-date">20 Dec, 2023</div>
+                    <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
                 </div>
-
-                <!-- Announcement Card 2 -->
-                <div class="announcement-card">
-                    <div class="announcement-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
-                        <div class="announcement-date">20 Dec, 2023</div>
-                        <div class="announcement-author"><i class="fas fa-user"></i> By Admin</div>
-                    </div>
-                    <div class="announcement-content">
-                        <h3 class="announcement-title">Imyanya y'akazi mishya iratangazwa mu rwego rw'ubuhinzi</h3>
-                        <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
-                        <a href="#" class="read-more">READ MORE <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Announcement Card 3 -->
-                <div class="announcement-card">
-                    <div class="announcement-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
-                        <div class="announcement-date">20 Dec, 2023</div>
-                        <div class="announcement-author"><i class="fas fa-user"></i> By Admin</div>
-                    </div>
-                    <div class="announcement-content">
-                        <h3 class="announcement-title">Amahugurwa y'ubuntu ku bashaka akazi mu rwego rwa IT</h3>
-                        <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
-                        <a href="#" class="read-more">READ MORE <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Announcement Card 4 -->
-                <div class="announcement-card">
-                    <div class="announcement-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
-                        <div class="announcement-date">20 Dec, 2023</div>
-                        <div class="announcement-author"><i class="fas fa-user"></i> By Admin</div>
-                    </div>
-                    <div class="announcement-content">
-                        <h3 class="announcement-title">Imyanya y'akazi mu bukerarurugendo iratangazwa</h3>
-                        <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
-                        <a href="#" class="read-more">READ MORE <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Announcement Card 5 -->
-                <div class="announcement-card">
-                    <div class="announcement-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
-                        <div class="announcement-date">20 Dec, 2023</div>
-                        <div class="announcement-author"><i class="fas fa-user"></i> By Admin</div>
-                    </div>
-                    <div class="announcement-content">
-                        <h3 class="announcement-title">Uburyo bushya bwo kwandikisha CV yawe online</h3>
-                        <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
-                        <a href="#" class="read-more">READ MORE <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Announcement Card 6 -->
-                <div class="announcement-card">
-                    <div class="announcement-image">
-                        <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
-                        <div class="announcement-date">20 Dec, 2023</div>
-                        <div class="announcement-author"><i class="fas fa-user"></i> By Admin</div>
-                    </div>
-                    <div class="announcement-content">
-                        <h3 class="announcement-title">Inama zo kwishakira akazi gahoraho mu Rwanda</h3>
-                        <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
-                        <a href="#" class="read-more">READ MORE <i class="fas fa-arrow-right"></i></a>
-                    </div>
+                <div class="announcement-content">
+                    <h3 class="announcement-title" id="announcement-title-1">Igihugu cy'u Rwanda giteguye gahunda yo gushyiraho abakozi bashya</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <a href="#" class="read-more" id="read-more-1">READ MORE <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
-            <!-- Pagination -->
-            <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#"><i class="fas fa-angle-right"></i></a>
+            <!-- Announcement Card 2 -->
+            <div class="announcement-card">
+                <div class="announcement-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
+                    <div class="announcement-date">20 Dec, 2023</div>
+                    <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
+                </div>
+                <div class="announcement-content">
+                    <h3 class="announcement-title" id="announcement-title-2">Imyanya y'akazi mishya iratangazwa mu rwego rw'ubuhinzi</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <a href="#" class="read-more" id="read-more-2">READ MORE <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Contact Info Section -->
-    <section class="contact-section">
-        <div class="contact-container">
-            <div class="section-title">
-                <h2>Twandikire</h2>
-                <p>Ntuzuyaze kubaza ikibazo cyangwa gutanga igitekerezo cyawe. Dufite iterambere ry'akazi kawe k'ubuzima!</p>
+            <!-- Announcement Card 3 -->
+            <div class="announcement-card">
+                <div class="announcement-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
+                    <div class="announcement-date">20 Dec, 2023</div>
+                    <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
+                </div>
+                <div class="announcement-content">
+                    <h3 class="announcement-title" id="announcement-title-3">Amahugurwa y'ubuntu ku bashaka akazi mu rwego rwa IT</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <a href="#" class="read-more" id="read-more-3">READ MORE <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
-            
-            <div class="contact-info-grid">
-                <div class="contact-info-card fade-in">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <h3 class="contact-info-title">Duhamagare</h3>
-                    <p class="contact-info-text">+250793487065</p>
+
+            <!-- Announcement Card 4 -->
+            <div class="announcement-card">
+                <div class="announcement-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
+                    <div class="announcement-date">20 Dec, 2023</div>
+                    <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
                 </div>
-                
-                <div class="contact-info-card fade-in delay-1">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3 class="contact-info-title">Twandikire Imeyili</h3>
-                    <p class="contact-info-text">murenzicharles24@gmail.com</p>
+                <div class="announcement-content">
+                    <h3 class="announcement-title" id="announcement-title-4">Imyanya y'akazi mu bukerarurugendo iratangazwa</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <a href="#" class="read-more" id="read-more-4">READ MORE <i class="fas fa-arrow-right"></i></a>
                 </div>
-                
-                <div class="contact-info-card fade-in delay-2">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3 class="contact-info-title">Aho Duherereye</h3>
-                    <p class="contact-info-text">Kigali, Rwanda</p>
+            </div>
+
+            <!-- Announcement Card 5 -->
+            <div class="announcement-card">
+                <div class="announcement-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
+                    <div class="announcement-date">20 Dec, 2023</div>
+                    <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
+                </div>
+                <div class="announcement-content">
+                    <h3 class="announcement-title" id="announcement-title-5">Uburyo bushya bwo kwandikisha CV yawe online</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <a href="#" class="read-more" id="read-more-5">READ MORE <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Announcement Card 6 -->
+            <div class="announcement-card">
+                <div class="announcement-image">
+                    <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
+                    <div class="announcement-date">20 Dec, 2023</div>
+                    <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
+                </div>
+                <div class="announcement-content">
+                    <h3 class="announcement-title" id="announcement-title-6">Inama zo kwishakira akazi gahoraho mu Rwanda</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <a href="#" class="read-more" id="read-more-6">READ MORE <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Login Modal -->
-    <div id="formModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <h2 class="modal-title">Login</h2>
-            
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="message">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            
-            <form method="POST">
-                {% csrf_token %}
-                
-                <div class="form-group">
-                    <label for="id_email">Email:</label>
-                    <input type="email" id="id_email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="id_password">Ijambo ryibanga:</label>
-                    <input type="password" id="id_password" name="password" required>
-                </div>
-                
-                <button type="submit" class="nav-button">Injira</button>
-            </form>
+        <!-- Pagination -->
+        <div class="pagination">
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#"><i class="fas fa-angle-right"></i></a>
         </div>
     </div>
+</section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h3>Kutwiga</h3>
-                    <div class="footer-contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <p>+250793487065</p>
-                        </div>
-                    </div>
-                    <div class="footer-contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <p>murenzicharles24@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="footer-contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <p>Kigali, Rwanda</p>
-                        </div>
-                    </div>
-                    <div class="footer-social">
-                        <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
+<!-- Contact Info Section -->
+<section class="contact-section">
+    <div class="contact-container">
+        <div class="section-title">
+            <h2 id="contact-heading">Twandikire</h2>
+            <p id="contact-subheading">Ntuzuyaze kubaza ikibazo cyangwa gutanga igitekerezo cyawe. Dufite iterambere ry'akazi kawe k'ubuzima!</p>
+        </div>
+        
+        <div class="contact-info-grid">
+            <div class="contact-info-card fade-in">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3 class="contact-info-title" id="call-us">Duhamagare</h3>
+                <p class="contact-info-text">+250793487065</p>
+            </div>
+            
+            <div class="contact-info-card fade-in delay-1">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3 class="contact-info-title" id="email-us">Twandikire Imeyili</h3>
+                <p class="contact-info-text">murenzicharles24@gmail.com</p>
+            </div>
+            
+            <div class="contact-info-card fade-in delay-2">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3 class="contact-info-title" id="our-location">Aho Duherereye</h3>
+                <p class="contact-info-text">Kigali, Rwanda</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Login Modal -->
+<div id="formModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <h2 class="modal-title" id="login-title">Login</h2>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_email" id="email-label">Email:</label>
+                <input type="email" id="id_email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password" id="password-label">Ijambo ryibanga:</label>
+                <input type="password" id="id_password" name="password" required>
+            </div>
+            
+            <button type="submit" class="nav-button" id="login-button">Injira</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3 id="about-us-footer">Kutwiga</h3>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <p>+250793487065</p>
                     </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Ahukulile</h3>
-                    <ul class="footer-links">
-                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> AHABANZA</a></li>
-                        <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> ABAKOZI</a></li>
-                        <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> ABAKORESHA</a></li>
-                        <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> REBA UMUKOZI</a></li>
-                        <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> REBA ABAKORESHA</a></li>
-                    </ul>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <p>murenzicharles24@gmail.com</p>
+                    </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Serivisi</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gushaka Abakozi</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhugura Abakozi</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guhuza Impano</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Gusuzuma Abakandida</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Kwamamaza Akazi</a></li>
-                    </ul>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <p>Kigali, Rwanda</p>
+                    </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Ibindi</h3>
-                    <ul class="footer-links">
-                        <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> IBYO DUKORA</a></li>
-                        <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> AMATANGAZO</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Politiki yo Kubungabunga Amakuru</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Amabwiriza</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
-                    </ul>
+                <div class="footer-social">
+                    <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
             
-            <div class="footer-bottom">
-                <p>&copy; 2024 JobLink - All Rights Reserved</p>
+            <div class="footer-column">
+                <h3 id="quick-links">Ahukulile</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'home' %}" class="footer-nav-link" id="footer-home"><i class="fas fa-chevron-right"></i> AHABANZA</a></li>
+                    <li><a href="{% url 'worker' %}" class="footer-nav-link" id="footer-worker"><i class="fas fa-chevron-right"></i> ABAKOZI</a></li>
+                    <li><a href="{% url 'employer' %}" class="footer-nav-link" id="footer-employer"><i class="fas fa-chevron-right"></i> ABAKORESHA</a></li>
+                    <li><a href="{% url 'view_worker' %}" class="footer-nav-link" id="footer-view-worker"><i class="fas fa-chevron-right"></i> REBA UMUKOZI</a></li>
+                    <li><a href="{% url 'view_employers' %}" class="footer-nav-link" id="footer-view-employers"><i class="fas fa-chevron-right"></i> REBA ABAKORESHA</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 id="services">Serivisi</h3>
+                <ul class="footer-links">
+                    <li><a href="#" id="service-1"><i class="fas fa-chevron-right"></i> Gushaka Abakozi</a></li>
+                    <li><a href="#" id="service-2"><i class="fas fa-chevron-right"></i> Guhugura Abakozi</a></li>
+                    <li><a href="#" id="service-3"><i class="fas fa-chevron-right"></i> Guhuza Impano</a></li>
+                    <li><a href="#" id="service-4"><i class="fas fa-chevron-right"></i> Gusuzuma Abakandida</a></li>
+                    <li><a href="#" id="service-5"><i class="fas fa-chevron-right"></i> Kwamamaza Akazi</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 id="other-links">Ibindi</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'what_we_do' %}" class="footer-nav-link" id="footer-what-we-do"><i class="fas fa-chevron-right"></i> IBYO DUKORA</a></li>
+                    <li><a href="{% url 'announcements' %}" class="footer-nav-link" id="footer-announcements"><i class="fas fa-chevron-right"></i> AMATANGAZO</a></li>
+                    <li><a href="#" id="privacy-policy"><i class="fas fa-chevron-right"></i> Politiki yo Kubungabunga Amakuru</a></li>
+                    <li><a href="#" id="terms"><i class="fas fa-chevron-right"></i> Amabwiriza</a></li>
+                    <li><a href="#" id="faqs"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 JobLink - All Rights Reserved</p>
+        </div>
+    </div>
+</footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script>
-        // Modal functionality
-        const modal = document.getElementById("formModal");
-        const openFormBtn = document.getElementById("openFormButton");
-        const closeModal = document.getElementById("closeModal");
-        
-        // Open modal
-        openFormBtn.addEventListener("click", function(e) {
-            e.preventDefault();
-            modal.style.display = "block";
-        });
-        
-        // Close modal
-        closeModal.addEventListener("click", function() {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+<script>
+    // Modal functionality
+    const modal = document.getElementById("formModal");
+    const openFormBtn = document.getElementById("openFormButton");
+    const closeModal = document.getElementById("closeModal");
+    
+    // Open modal
+    openFormBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        modal.style.display = "block";
+    });
+    
+    // Close modal
+    closeModal.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+    
+    window.addEventListener("click", function(event) {
+        if (event.target == modal) {
             modal.style.display = "none";
-        });
+        }
+    });
+
+    // Define translations
+    const translations = {
+        default: {
+            // Navigation
+            'nav-home': 'AHABANZA',
+            'nav-worker': 'ABAKOZI',
+            'nav-employer': 'ABAKORESHA',
+            'nav-view-worker': 'REBA UMUKOZI',
+            'nav-view-employers': 'REBA ABAKORESHA',
+            'nav-what-we-do': 'IBYO DUKORA',
+            'nav-announcements': 'AMATANGAZO',
+            'openFormButton': 'login',
+            'hero-title': 'Amatangazo',
+            
+            // Announcements
+            'announcement-title-1': 'Igihugu cy\'u Rwanda giteguye gahunda yo gushyiraho abakozi bashya',
+            'announcement-title-2': 'Imyanya y\'akazi mishya iratangazwa mu rwego rw\'ubuhinzi',
+            'announcement-title-3': 'Amahugurwa y\'ubuntu ku bashaka akazi mu rwego rwa IT',
+            'announcement-title-4': 'Imyanya y\'akazi mu bukerarurugendo iratangazwa',
+            'announcement-title-5': 'Uburyo bushya bwo kwandikisha CV yawe online',
+            'announcement-title-6': 'Inama zo kwishakira akazi gahoraho mu Rwanda',
+            'read-more-1': 'READ MORE',
+            'read-more-2': 'READ MORE',
+            'read-more-3': 'READ MORE',
+            'read-more-4': 'READ MORE',
+            'read-more-5': 'READ MORE',
+            'read-more-6': 'READ MORE',
+            'by-admin': 'By Admin',
+            
+            // Contact section
+            'contact-heading': 'Twandikire',
+            'contact-subheading': 'Ntuzuyaze kubaza ikibazo cyangwa gutanga igitekerezo cyawe. Dufite iterambere ry\'akazi kawe k\'ubuzima!',
+            'call-us': 'Duhamagare',
+            'email-us': 'Twandikire Imeyili',
+            'our-location': 'Aho Duherereye',
+            
+            // Login Modal
+            'login-title': 'Login',
+            'email-label': 'Email:',
+            'password-label': 'Ijambo ryibanga:',
+            'login-button': 'Injira',
+            
+            // Footer
+            'about-us-footer': 'Kutwiga',
+            'quick-links': 'Ahukulile',
+            'services': 'Serivisi',
+            'other-links': 'Ibindi',
+            'footer-home': 'AHABANZA',
+            'footer-worker': 'ABAKOZI',
+            'footer-employer': 'ABAKORESHA',
+            'footer-view-worker': 'REBA UMUKOZI',
+            'footer-view-employers': 'REBA ABAKORESHA',
+            'footer-what-we-do': 'IBYO DUKORA',
+            'footer-announcements': 'AMATANGAZO',
+            'service-1': 'Gushaka Abakozi',
+            'service-2': 'Guhugura Abakozi',
+            'service-3': 'Guhuza Impano',
+            'service-4': 'Gusuzuma Abakandida',
+            'service-5': 'Kwamamaza Akazi',
+            'privacy-policy': 'Politiki yo Kubungabunga Amakuru',
+            'terms': 'Amabwiriza',
+            'faqs': 'FAQs'
+        },
+        en: {
+            // Navigation
+            'nav-home': 'HOME',
+            'nav-worker': 'WORKERS',
+            'nav-employer': 'EMPLOYERS',
+            'nav-view-worker': 'VIEW WORKERS',
+            'nav-view-employers': 'VIEW EMPLOYERS',
+            'nav-what-we-do': 'WHAT WE DO',
+            'nav-announcements': 'ANNOUNCEMENTS',
+            'openFormButton': 'login',
+            'hero-title': 'Announcements',
+            
+            // Announcements
+            'announcement-title-1': 'Rwanda prepares program to hire new workers',
+            'announcement-title-2': 'New job positions announced in the agricultural sector',
+            'announcement-title-3': 'Free training for job seekers in the IT sector',
+            'announcement-title-4': 'Job positions in tourism sector announced',
+            'announcement-title-5': 'New way to register your CV online',
+            'announcement-title-6': 'Tips for finding permanent employment in Rwanda',
+            'read-more-1': 'READ MORE',
+            'read-more-2': 'READ MORE',
+            'read-more-3': 'READ MORE',
+            'read-more-4': 'READ MORE',
+            'read-more-5': 'READ MORE',
+            'read-more-6': 'READ MORE',
+            'by-admin': 'By Admin',
+            
+            // Contact section
+            'contact-heading': 'Contact Us',
+            'contact-subheading': 'Don\'t hesitate to ask a question or send your feedback. We have your career development at heart!',
+            'call-us': 'Call Us',
+            'email-us': 'Email Us',
+            'our-location': 'Our Location',
+            
+            // Login Modal
+            'login-title': 'Login',
+            'email-label': 'Email:',
+            'password-label': 'Password:',
+            'login-button': 'Login',
+            
+            // Footer
+            'about-us-footer': 'About Us',
+            'quick-links': 'Quick Links',
+            'services': 'Services',
+            'other-links': 'Other Links',
+            'footer-home': 'HOME',
+            'footer-worker': 'WORKERS',
+            'footer-employer': 'EMPLOYERS',
+            'footer-view-worker': 'VIEW WORKERS',
+            'footer-view-employers': 'VIEW EMPLOYERS',
+            'footer-what-we-do': 'WHAT WE DO',
+            'footer-announcements': 'ANNOUNCEMENTS',
+            'service-1': 'Worker Recruitment',
+            'service-2': 'Worker Training',
+            'service-3': 'Talent Matching',
+            'service-4': 'Candidate Assessment',
+            'service-5': 'Job Advertising',
+            'privacy-policy': 'Privacy Policy',
+            'terms': 'Terms & Conditions',
+            'faqs': 'FAQs'
+        },
+        fr: {
+            // Navigation
+            'nav-home': 'ACCUEIL',
+            'nav-worker': 'TRAVAILLEURS',
+            'nav-employer': 'EMPLOYEURS',
+            'nav-view-worker': 'VOIR TRAVAILLEURS',
+            'nav-view-employers': 'VOIR EMPLOYEURS',
+            'nav-what-we-do': 'NOS SERVICES',
+            'nav-announcements': 'ANNONCES',
+            'openFormButton': 'connexion',
+            'hero-title': 'Annonces',
+            
+            // Announcements
+            'announcement-title-1': 'Le Rwanda prépare un programme pour embaucher de nouveaux travailleurs',
+            'announcement-title-2': 'Nouveaux postes annoncés dans le secteur agricole',
+            'announcement-title-3': 'Formation gratuite pour les chercheurs d\'emploi dans le secteur IT',
+            'announcement-title-4': 'Postes dans le secteur du tourisme annoncés',
+            'announcement-title-5': 'Nouvelle façon d\'enregistrer votre CV en ligne',
+            'announcement-title-6': 'Conseils pour trouver un emploi permanent au Rwanda',
+            'read-more-1': 'LIRE PLUS',
+            'read-more-2': 'LIRE PLUS',
+            'read-more-3': 'LIRE PLUS',
+            'read-more-4': 'LIRE PLUS',
+            'read-more-5': 'LIRE PLUS',
+            'read-more-6': 'LIRE PLUS',
+            'by-admin': 'Par Admin',
+            
+            // Contact section
+            'contact-heading': 'Contactez-nous',
+            'contact-subheading': 'N\'hésitez pas à poser une question ou à envoyer vos commentaires. Nous avons à cœur le développement de votre carrière!',
+            'call-us': 'Appelez-nous',
+            'email-us': 'Envoyez-nous un Email',
+            'our-location': 'Notre Emplacement',
+            
+            // Login Modal
+            'login-title': 'Connexion',
+            'email-label': 'Email:',
+            'password-label': 'Mot de passe:',
+            'login-button': 'Connexion',
+            
+            // Footer
+            'about-us-footer': 'À Propos',
+            'quick-links': 'Liens Rapides',
+            'services': 'Services',
+            'other-links': 'Autres Liens',
+            'footer-home': 'ACCUEIL',
+            'footer-worker': 'TRAVAILLEURS',
+            'footer-employer': 'EMPLOYEURS',
+            'footer-view-worker': 'VOIR TRAVAILLEURS',
+            'footer-view-employers': 'VOIR EMPLOYEURS',
+            'footer-what-we-do': 'NOS SERVICES',
+            'footer-announcements': 'ANNONCES',
+            'service-1': 'Recrutement de Travailleurs',
+            'service-2': 'Formation de Travailleurs',
+            'service-3': 'Mise en Relation de Talents',
+            'service-4': 'Évaluation de Candidats',
+            'service-5': 'Publicité d\'Emploi',
+            'privacy-policy': 'Politique de Confidentialité',
+            'terms': 'Conditions Générales',
+            'faqs': 'FAQs'
+        }
+    };
+
+    // Function to change language
+    function changeLanguage(lang) {
+        // Get all translatable elements
+        const elements = document.querySelectorAll('[id]');
         
-        window.addEventListener("click", function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+        elements.forEach(element => {
+            const id = element.id;
+            if (translations[lang] && translations[lang][id]) {
+                // Handle elements with icons (like read more buttons)
+                if (id.startsWith('read-more')) {
+                    const icon = element.querySelector('i');
+                    if (icon) {
+                        element.innerHTML = translations[lang][id] + ' ';
+                        element.appendChild(icon);
+                    } else {
+                        element.textContent = translations[lang][id];
+                    }
+                } 
+                // Handle elements with icons in footer navigation
+                else if (element.classList.contains('footer-nav-link') || 
+                         element.id.startsWith('service-') || 
+                         element.id === 'privacy-policy' || 
+                         element.id === 'terms' || 
+                         element.id === 'faqs') {
+                    const icon = element.querySelector('i');
+                    if (icon) {
+                        const span = document.createElement('span');
+                        span.innerHTML = ' ' + translations[lang][id];
+                        element.innerHTML = '';
+                        element.appendChild(icon);
+                        element.appendChild(span);
+                    } else {
+                        element.textContent = translations[lang][id];
+                    }
+                }
+                // For all other elements, simply set the text content
+                else {
+                    element.textContent = translations[lang][id];
+                }
             }
         });
-    </script>
-</body>
-</html>
+        
+        // Handle special case for "By Admin" spans
+        const adminSpans = document.querySelectorAll('.by-admin');
+        adminSpans.forEach(span => {
+            if (translations[lang] && translations[lang]['by-admin']) {
+                span.textContent = translations[lang]['by-admin'];
+            }
+        });
+        
+        // Save language preference
+        localStorage.setItem('selectedLanguage', lang);
+    }
+    
+    // Initialize language selector
+    document.addEventListener('DOMContentLoaded', function() {
+        const languageSelect = document.getElementById('language-select');
+        
+        // Set up event listener
+        languageSelect.addEventListener('change', function() {
+            changeLanguage(this.value);
+        });
+        
+        // Load saved language preference
+        const savedLanguage = localStorage.getItem('selectedLanguage');
+        if (savedLanguage) {
+            languageSelect.value = savedLanguage;
+            changeLanguage(savedLanguage);
+        }
+    });
+</script>
+
+<style>
+    .right-nav {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .language-selector select {
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background-color: white;
+        cursor: pointer;
+    }
+</style>
