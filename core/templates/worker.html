@@ -96,7 +96,7 @@
 
         .header-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             max-width: 120000px;
             margin: 0 auto;
@@ -120,14 +120,17 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            flex-grow: 1;
+            justify-content: center;
         }
+        nav ul li {
+            margin: 0 15px;}
 
         nav ul li a {
             color: white;
             text-decoration: none;
             font-weight: 600;
-            padding: 8px 15px;
+            
             border-radius: 4px;
             transition: var(--transition);
         }
@@ -927,18 +930,7 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="header-content">
-            <div class="language-selector" style="display: flex; gap: 8px; padding: 6px; background-color: #f3f4f6; border-radius: 8px;">
-                <button id="lang-en" class="lang-btn" style="border: none; background: none; padding: 8px; font-size: 14px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: #6b7280;">
-                  <span style="font-size: 16px;">🇬🇧</span>
-                </button>
-                <button id="lang-fr" class="lang-btn" style="border: none; background: none; padding: 8px; font-size: 14px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: #6b7280;">
-                  <span style="font-size: 16px;">🇫🇷</span>
-                </button>
-                <button id="lang-rw" class="lang-btn active" style="border: none; background-color: #3b82f6; padding: 8px; font-size: 14px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: white; box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);">
-                  <span style="font-size: 16px;">🇷🇼</span>
-                </button>
-              </div>
+        <div class="header-content" style="display: flex; justify-content: space-between; align-items: center;">
             <nav>
                 <ul>
                     <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
@@ -950,50 +942,54 @@
                     <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
                 </ul>
             </nav>
-            <a href="#" class="nav-button" id="openLoginModal" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
+            
+            <div class="right-section" style="display: flex; align-items: center; gap: 20px;">
+                <div class="language-selector">
+                    <select id="language-select" style="padding: 6px; background-color: #f3f4f6; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; outline: none;">
+                        <option value="rw" selected>Kin</option>
+                        <option value="en">En</option>
+                        <option value="fr">Fr</option>
+                    </select>
+                </div>
+                <a href="#" class="nav-button" id="openLoginModal" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
+            </div>
         </div>
     </header>
     
     <script>
-    // Language switching functionality
     document.addEventListener('DOMContentLoaded', function() {
-        const langButtons = document.querySelectorAll('.lang-btn');
+        const languageSelect = document.getElementById('language-select');
         
-        // Function to change language
-        function changeLanguage(lang) {
-            // Update all elements with data attributes
-            const elements = document.querySelectorAll('[data-'+lang+']');
-            
-            elements.forEach(element => {
-                element.textContent = element.getAttribute('data-'+lang);
-            });
-            
-            // Update active button
-            langButtons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById('lang-'+lang).classList.add('active');
-            
-            // Optional: Save language preference to localStorage
-            localStorage.setItem('preferredLanguage', lang);
-        }
+        // Set the initial selected value based on current language
+        const currentLang = document.documentElement.lang || 'rw';
+        languageSelect.value = currentLang;
         
-        // Add click event listeners to language buttons
-        langButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const lang = this.id.replace('lang-', '');
-                changeLanguage(lang);
+        // Add change event listener
+        languageSelect.addEventListener('change', function() {
+            const selectedLang = this.value;
+            
+            // Update all elements with data-* attributes
+            const elementsWithLang = document.querySelectorAll('[data-en], [data-fr], [data-rw]');
+            elementsWithLang.forEach(element => {
+                if (element.hasAttribute(`data-${selectedLang}`)) {
+                    element.textContent = element.getAttribute(`data-${selectedLang}`);
+                }
             });
+            
+            // Update html lang attribute
+            document.documentElement.lang = selectedLang;
+            
+            // You could also store the language preference in localStorage
+            localStorage.setItem('preferredLanguage', selectedLang);
         });
         
-        // Load preferred language from localStorage if available
-        const savedLang = localStorage.getItem('preferredLanguage');
-        if (savedLang) {
-            changeLanguage(savedLang);
-        } else {
-            // Default language is already set by 'active' class in HTML
-            // but we explicitly set it here for consistency
-            changeLanguage('rw');
+        // Check if there's a saved language preference
+        const savedLanguage = localStorage.getItem('preferredLanguage');
+        if (savedLanguage) {
+            languageSelect.value = savedLanguage;
+            // Trigger the change event to update the page
+            const event = new Event('change');
+            languageSelect.dispatchEvent(event);
         }
     });
     </script>

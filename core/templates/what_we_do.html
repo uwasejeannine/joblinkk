@@ -39,7 +39,7 @@
         header {
             background: linear-gradient(to right, #119fa5, #0d7176);
             color: white;
-            padding: 15px 0;
+            padding: 12px 0;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -52,37 +52,28 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-        }
-        .language-container {
-            position: fixed;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            background-color: #f0f0f0;
-            padding: 15px 10px;
-            border-radius: 0 8px 8px 0;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+            padding: 0 15px;
         }
         
+        
         .language-selector {
-            display: flex;
-            gap: 8px;
-            padding: 6px;
+            padding: 6px; 
             background-color: #f3f4f6;
-            border-radius: 8px;
-            margin-right: 20px;
+             border-radius: 8px;
+              border: none;
+               cursor: pointer; 
+               font-size: 14px; 
+               outline: none;">
         }
         
         .lang-btn {
-            border: none;
+            
             background: none;
             padding: 8px;
             font-size: 14px;
-            border-radius: 50%;
+            
             cursor: pointer;
-            transition: all 0.2s ease;
+            
             display: flex;
             align-items: center;
             justify-content: center;
@@ -94,13 +85,13 @@
         .lang-btn.active {
             background-color: #3b82f6;
             color: white;
-            box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
+           
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 10px;
         }
 
         nav ul li a {
@@ -664,18 +655,8 @@
 </head>
 <body>
    <!-- Header with Language Switching Function -->
-<header>
+   <header>
     <div class="header-content">
-
-        <div class="right-content">
-            <div class="language-selector">
-                <button onclick="changeLanguage('kinyarwanda')" class="lang-btn active" id="kinyarwanda-btn">KIN</button>
-                <button onclick="changeLanguage('english')" class="lang-btn" id="english-btn">ENG</button>
-                <button onclick="changeLanguage('french')" class="lang-btn" id="french-btn">FRA</button>
-            </div>
-           
-        </div>
-    
         <nav>
             <ul id="navigation-menu">
                 <li><a href="{% url 'home' %}" data-kinyarwanda="AHABANZA" data-english="HOME" data-french="ACCUEIL">AHABANZA</a></li>
@@ -687,44 +668,51 @@
                 <li><a href="{% url 'announcements' %}" data-kinyarwanda="AMATANGAZO" data-english="ANNOUNCEMENTS" data-french="ANNONCES">AMATANGAZO</a></li>
             </ul>
         </nav>
+
+        <div class="right-elements">
+           
+            <div class="language-selector">
+                <select id="language-select">
+                    <option value="kinyarwanda" selected>Kin</option>
+                    <option value="english">En</option>
+                    <option value="french">Fr</option>
+                </select>
+            </div>
+        </div>
         <a href="#" class="nav-button" id="login-btn" data-kinyarwanda="KWINJIRA" data-english="LOGIN" data-french="CONNEXION">KWINJIRA</a>
     </div>
 </header>
 
-<!-- Add this JavaScript to your script section -->
+
 <script>
-    // Set default language (kinyarwanda is default)
-    let currentLanguage = 'kinyarwanda';
-    
-    // Function to change language
-    function changeLanguage(language) {
-        currentLanguage = language;
-        
-        // Update all navigation items
-        const menuItems = document.querySelectorAll('#navigation-menu li a');
-        menuItems.forEach(item => {
-            item.textContent = item.getAttribute(`data-${language}`);
-        });
-        
-        // Update login button
-        const loginBtn = document.getElementById('login-btn');
-        loginBtn.textContent = loginBtn.getAttribute(`data-${language}`);
-        
-        // Update active language button
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.getElementById(`${language}-btn`).classList.add('active');
-        
-        // Store language preference in local storage
-        localStorage.setItem('preferredLanguage', language);
-    }
-    
-    // Initialize language based on stored preference or default to kinyarwanda
     document.addEventListener('DOMContentLoaded', function() {
+        const languageSelect = document.getElementById('language-select');
+        
+        // Function to change language
+        function changeLanguage(language) {
+            // Update all elements with data-* attributes
+            document.querySelectorAll('[data-kinyarwanda], [data-english], [data-french]').forEach(element => {
+                if (element.hasAttribute(`data-${language}`)) {
+                    element.textContent = element.getAttribute(`data-${language}`);
+                }
+            });
+            
+            // Store language preference in local storage
+            localStorage.setItem('preferredLanguage', language);
+        }
+        
+        // Event listener for language select change
+        languageSelect.addEventListener('change', function() {
+            changeLanguage(this.value);
+        });
+        
+        // Check for saved language preference or apply default
         const savedLanguage = localStorage.getItem('preferredLanguage');
         if (savedLanguage) {
+            languageSelect.value = savedLanguage;
             changeLanguage(savedLanguage);
+        } else {
+            changeLanguage('kinyarwanda');
         }
     });
 </script>

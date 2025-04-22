@@ -116,41 +116,11 @@
             height: 40px;
             margin-right: 10px;
         }
-        .language-selector {
-        display: flex;
-        gap: 8px;
-        padding: 6px;
-        background-color: #f3f4f6;
-        border-radius: 8px;
-        margin-right: 20px;
-    }
-    
-    .lang-btn {
-        border: none;
-        background: none;
-        padding: 8px;
-        font-size: 14px;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        color: #6b7280;
-    }
-    
-    .lang-btn.active {
-        background-color: #3b82f6;
-        color: white;
-        box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
-    }
-
+       
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 10px;
         }
 
         nav ul li a {
@@ -873,17 +843,9 @@
 <body>
    <!-- Header -->
 <header>
-    <div class="header-content">
-        <div class="header-buttons">
-            <div class="language-selector">
-                <button onclick="changeLanguage('rw')" class="lang-btn">RW</button>
-                <button onclick="changeLanguage('en')" class="lang-btn">EN</button>
-                <button onclick="changeLanguage('fr')" class="lang-btn">FR</button>
-            </div>
-           
-        </div>
-        <nav>
-            <ul id="main-menu">
+    <div class="header-content" style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+        <nav style="flex: 1;">
+            <ul id="main-menu" style="display: flex; list-style: none; padding: 0; margin: 0; gap: 20px;">
                 <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL">AHABANZA</a></li>
                 <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="EMPLOYÉS">ABAKOZI</a></li>
                 <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS">ABAKORESHA</a></li>
@@ -893,77 +855,27 @@
                 <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES">AMATANGAZO</a></li>
             </ul>
         </nav>
-        <a href="#" class="nav-button" id="openFormButton" data-en="Login" data-fr="Connexion">login</a>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <!-- Language Dropdown -->
+            <div id="language-dropdown-container" style="position: relative; display: inline-block;">
+                <button id="language-dropdown-btn" style="background-color: #f3f4f6; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; display: flex; align-items: center;">
+                    <span id="current-language">RW</span>
+                    <span style="margin-left: 5px; font-size: 10px;">▼</span>
+                </button>
+                <div id="language-dropdown-menu" style="display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 100px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 10; border-radius: 4px;">
+                    <div id="lang-rw" style="color: #333; padding: 10px 12px; text-decoration: none; display: block; font-weight: 500; cursor: pointer;">RW</div>
+                    <div id="lang-en" style="color: #333; padding: 10px 12px; text-decoration: none; display: block; font-weight: 500; cursor: pointer;">EN</div>
+                    <div id="lang-fr" style="color: #333; padding: 10px 12px; text-decoration: none; display: block; font-weight: 500; cursor: pointer;">FR</div>
+                </div>
+            </div>
+            
+            <!-- Login Button -->
+            <a href="#" class="nav-button" id="openFormButton" data-en="Login" data-fr="Connexion" style="background-color: #3b82f6; color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold;">login</a>
+        </div>
     </div>
 </header>
 
-
-
-<script>
-    // Set default language (Kinyarwanda)
-    let currentLanguage = 'rw';
-    
-    // Function to change language
-    function changeLanguage(lang) {
-        currentLanguage = lang;
-        
-        // Update active button styling
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelector(`.lang-btn:nth-child(${lang === 'rw' ? 1 : lang === 'en' ? 2 : 3})`).classList.add('active');
-        
-        // Update menu items
-        const menuItems = document.querySelectorAll('#main-menu li a, #openFormButton');
-        
-        menuItems.forEach(item => {
-            if (lang === 'en') {
-                if (item.getAttribute('data-en')) {
-                    item.textContent = item.getAttribute('data-en');
-                }
-            } else if (lang === 'fr') {
-                if (item.getAttribute('data-fr')) {
-                    item.textContent = item.getAttribute('data-fr');
-                }
-            } else {
-                // Reset to original Kinyarwanda
-                if (item.id === 'openFormButton') {
-                    item.textContent = 'login'; // Default text
-                } else {
-                    // Get original text from the URL path
-                    const href = item.getAttribute('href');
-                    const urlParts = href.split('/');
-                    const pageName = urlParts[urlParts.length - 2] || 'home';
-                    
-                    switch(pageName) {
-                        case 'home': item.textContent = 'AHABANZA'; break;
-                        case 'worker': item.textContent = 'ABAKOZI'; break;
-                        case 'employer': item.textContent = 'ABAKORESHA'; break;
-                        case 'view_worker': item.textContent = 'REBA UMUKOZI'; break;
-                        case 'view_employers': item.textContent = 'REBA ABAKORESHA'; break;
-                        case 'what_we_do': item.textContent = 'IBYO DUKORA'; break;
-                        case 'announcements': item.textContent = 'AMATANGAZO'; break;
-                        default: break;
-                    }
-                }
-            }
-        });
-        
-        // Save language preference to localStorage
-        localStorage.setItem('preferredLanguage', lang);
-    }
-    
-    // Set initial language from localStorage if available
-    document.addEventListener('DOMContentLoaded', function() {
-        const savedLanguage = localStorage.getItem('preferredLanguage');
-        if (savedLanguage) {
-            changeLanguage(savedLanguage);
-        } else {
-            // Set default active state
-            document.querySelector('.lang-btn:first-child').classList.add('active');
-        }
-    });
-</script>
 
    <!-- Page Banner -->
 <section class="page-banner">
@@ -1027,73 +939,7 @@
     </div>
 </section>
 
-<script>
-    // Extend the language change function to handle these new elements
-    function updatePageContent(lang) {
-        // Update all elements with data-en or data-fr attributes
-        document.querySelectorAll('[data-' + lang + ']').forEach(element => {
-            element.textContent = element.getAttribute('data-' + lang);
-        });
-        
-        // Handle placeholders specifically
-        document.querySelectorAll('input[data-placeholder-' + lang + ']').forEach(input => {
-            input.placeholder = input.getAttribute('data-placeholder-' + lang);
-        });
-        
-        // Update select option text
-        document.querySelectorAll('select option').forEach(option => {
-            if (option.getAttribute('data-' + lang)) {
-                option.textContent = option.getAttribute('data-' + lang);
-            }
-        });
-    }
-    
-    // Modify the existing changeLanguage function to include this page content
-    // This function should be merged with your previous implementation
-    function changeLanguage(lang) {
-        currentLanguage = lang;
-        
-        // Update active button styling
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelector(`.lang-btn:nth-child(${lang === 'rw' ? 1 : lang === 'en' ? 2 : 3})`).classList.add('active');
-        
-        // Update menu items (from previous code)
-        const menuItems = document.querySelectorAll('#main-menu li a, #openFormButton');
-        menuItems.forEach(item => {
-            if (lang === 'en') {
-                if (item.getAttribute('data-en')) {
-                    item.textContent = item.getAttribute('data-en');
-                }
-            } else if (lang === 'fr') {
-                if (item.getAttribute('data-fr')) {
-                    item.textContent = item.getAttribute('data-fr');
-                }
-            } else {
-                // Reset to original Kinyarwanda (as in your previous implementation)
-                // (code from previous implementation)
-            }
-        });
-        
-        // Update page content (new functionality)
-        updatePageContent(lang);
-        
-        // Save language preference to localStorage
-        localStorage.setItem('preferredLanguage', lang);
-    }
-    
-    // Make sure this gets initialized on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const savedLanguage = localStorage.getItem('preferredLanguage');
-        if (savedLanguage) {
-            changeLanguage(savedLanguage);
-        } else {
-            // Set default active state for language buttons
-            document.querySelector('.lang-btn:first-child')?.classList.add('active');
-        }
-    });
-</script>
+
 
    <!-- Employers Section -->
 <section class="employers-section">
@@ -1480,182 +1326,7 @@
     </div>
 </div>
 
-<script>
-    // Add these functions to update the employer modals and their content
-    function updateModalContent(lang) {
-        // Update all elements in modals with data-en or data-fr attributes
-        document.querySelectorAll('.modal [data-' + lang + ']').forEach(element => {
-            element.textContent = element.getAttribute('data-' + lang);
-        });
-    }
-    
-    // Modify the existing employer modal functions to handle translations
-    // This updates the modal content when opening
-    const originalOpenEmployerModal = window.openEmployerModal;
-    window.openEmployerModal = function(id, company, position, email, phone, location, description, requirements) {
-        // Call the original function first
-        if (originalOpenEmployerModal) {
-            originalOpenEmployerModal(id, company, position, email, phone, location, description, requirements);
-        } else {
-            // If original function doesn't exist, implement basic functionality
-            document.getElementById('employerModalName').textContent = company;
-            document.getElementById('employerModalPosition').textContent = position;
-            document.getElementById('edit_company').value = company;
-            document.getElementById('edit_position').value = position;
-            document.getElementById('edit_email').value = email;
-            document.getElementById('edit_phone').value = phone;
-            document.getElementById('edit_location').value = location;
-            document.getElementById('edit_job_description').value = description;
-            document.getElementById('edit_job_requirements').value = requirements;
-            document.getElementById('employerModal').style.display = 'block';
-        }
-        
-        // Apply current language to the modal
-        const currentLang = localStorage.getItem('preferredLanguage') || 'rw';
-        updateModalContent(currentLang);
-    };
-    
-    // Do the same for sample employer modal
-    const originalOpenSampleEmployerModal = window.openSampleEmployerModal;
-    window.openSampleEmployerModal = function(company, position, email, phone, location, description, requirements) {
-        // Call the original function first
-        if (originalOpenSampleEmployerModal) {
-            originalOpenSampleEmployerModal(company, position, email, phone, location, description, requirements);
-        } else {
-            // If original function doesn't exist, implement basic functionality
-            document.getElementById('employerModalName').textContent = company;
-            document.getElementById('employerModalPosition').textContent = position;
-            document.getElementById('edit_company').value = company;
-            document.getElementById('edit_position').value = position;
-            document.getElementById('edit_email').value = email;
-            document.getElementById('edit_phone').value = phone;
-            document.getElementById('edit_location').value = location;
-            document.getElementById('edit_job_description').value = description;
-            document.getElementById('edit_job_requirements').value = requirements;
-            document.getElementById('employerModal').style.display = 'block';
-        }
-        
-        // Apply current language to the modal
-        const currentLang = localStorage.getItem('preferredLanguage') || 'rw';
-        updateModalContent(currentLang);
-    };
-    
-    // Update the existing changeLanguage function to include modals
-    function changeLanguage(lang) {
-        currentLanguage = lang;
-        
-        // Update active button styling
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelector(`.lang-btn:nth-child(${lang === 'rw' ? 1 : lang === 'en' ? 2 : 3})`).classList.add('active');
-        
-        // Update menu items (from previous code)
-        const menuItems = document.querySelectorAll('#main-menu li a, #openFormButton');
-        menuItems.forEach(item => {
-            if (lang === 'en') {
-                if (item.getAttribute('data-en')) {
-                    item.textContent = item.getAttribute('data-en');
-                }
-            } else if (lang === 'fr') {
-                if (item.getAttribute('data-fr')) {
-                    item.textContent = item.getAttribute('data-fr');
-                }
-            } else {
-                // Reset to original Kinyarwanda (code from previous implementation)
-            }
-        });
-        
-        // Update page content
-        updatePageContent(lang);
-        
-        // Update modal content if any modals are open
-        updateModalContent(lang);
-        
-        // Save language preference to localStorage
-        localStorage.setItem('preferredLanguage', lang);
-    }
-    
-    // Extend the updatePageContent function to include the employer cards
-    function updatePageContent(lang) {
-        // Update all elements with data-en or data-fr attributes
-        document.querySelectorAll('[data-' + lang + ']').forEach(element => {
-            element.textContent = element.getAttribute('data-' + lang);
-        });
-        
-        // Handle placeholders specifically
-        document.querySelectorAll('input[data-placeholder-' + lang + ']').forEach(input => {
-            input.placeholder = input.getAttribute('data-placeholder-' + lang);
-        });
-        
-        // Update select option text
-        document.querySelectorAll('select option').forEach(option => {
-            if (option.getAttribute('data-' + lang)) {
-                option.textContent = option.getAttribute('data-' + lang);
-            }
-        });
-        
-        // Update employer category texts specifically
-        document.querySelectorAll('.employer-category').forEach(category => {
-            if (category.getAttribute('data-' + lang)) {
-                category.textContent = category.getAttribute('data-' + lang);
-            }
-        });
-        
-        // Update all button texts in employer cards
-        document.querySelectorAll('.view-profile-button span').forEach(button => {
-            if (button.getAttribute('data-' + lang)) {
-                button.textContent = button.getAttribute('data-' + lang);
-            }
-        });
-    }
-    
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const savedLanguage = localStorage.getItem('preferredLanguage');
-        if (savedLanguage) {
-            changeLanguage(savedLanguage);
-        } else {
-            // Set default active state for language buttons
-            document.querySelector('.lang-btn:first-child')?.classList.add('active');
-        }
-        
-        // Set up modal event listeners if not already set
-        const formModal = document.getElementById('formModal');
-        const employerModal = document.getElementById('employerModal');
-        const closeModalBtn = document.getElementById('closeModal');
-        const closeEmployerModalBtn = document.getElementById('closeEmployerModal');
-        const cancelEmployerModalBtn = document.getElementById('cancelEmployerModal');
-        
-        if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', function() {
-                formModal.style.display = 'none';
-            });
-        }
-        
-        if (closeEmployerModalBtn) {
-            closeEmployerModalBtn.addEventListener('click', function() {
-                employerModal.style.display = 'none';
-            });
-        }
-        
-        if (cancelEmployerModalBtn) {
-            cancelEmployerModalBtn.addEventListener('click', function() {
-                employerModal.style.display = 'none';
-            });
-        }
-        
-        // Close modals when clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === formModal) {
-                formModal.style.display = 'none';
-            }
-            if (event.target === employerModal) {
-                employerModal.style.display = 'none';
-            }
-        });
-    });
-</script>
+
     <!-- Footer -->
     <footer>
         <div class="footer-container">
@@ -1727,111 +1398,414 @@
             </div>
         </div>
     </footer>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
-        // Login Modal functionality
-        const loginModal = document.getElementById("formModal");
-        const openLoginBtn = document.getElementById("openFormButton");
-        const closeLoginModal = document.getElementById("closeModal");
+  // Define functions outside of event listeners for global scope access
+let currentLanguage = localStorage.getItem('preferredLanguage') || 'rw';
+
+// Update modal content function - needs to be globally accessible
+function updateModalContent(lang) {
+    // Update all elements in modals with data-en or data-fr attributes
+    document.querySelectorAll('.modal [data-' + lang + ']').forEach(element => {
+        element.textContent = element.getAttribute('data-' + lang);
+    });
+}
+
+// Update page content function
+function updatePageContent(lang) {
+    // Update all elements with data-en or data-fr attributes
+    document.querySelectorAll('[data-' + lang + ']').forEach(element => {
+        element.textContent = element.getAttribute('data-' + lang);
+    });
+    
+    // Handle placeholders specifically
+    document.querySelectorAll('input[data-placeholder-' + lang + ']').forEach(input => {
+        input.placeholder = input.getAttribute('data-placeholder-' + lang);
+    });
+    
+    // Update select option text
+    document.querySelectorAll('select option').forEach(option => {
+        if (option.getAttribute('data-' + lang)) {
+            option.textContent = option.getAttribute('data-' + lang);
+        }
+    });
+    
+    // Update employer category texts specifically
+    document.querySelectorAll('.employer-category').forEach(category => {
+        if (category.getAttribute('data-' + lang)) {
+            category.textContent = category.getAttribute('data-' + lang);
+        }
+    });
+    
+    // Update all button texts in employer cards
+    document.querySelectorAll('.view-profile-button span').forEach(button => {
+        if (button.getAttribute('data-' + lang)) {
+            button.textContent = button.getAttribute('data-' + lang);
+        }
+    });
+    
+    // Update footer elements
+    updateFooterContent(lang);
+}
+
+// Function to update footer content based on language
+function updateFooterContent(lang) {
+    // Footer titles
+    const footerTitles = {
+        en: ["Kutwiga", "Quick Links", "Services", "More Info"],
+        fr: ["Kutwiga", "Liens Rapides", "Services", "Plus d'infos"],
+        rw: ["Kutwiga", "Ahukulile", "Serivisi", "Ibindi"]
+    };
+    
+    // Footer links
+    const footerLinks = {
+        en: {
+            quickLinks: ["HOME", "WORKERS", "EMPLOYERS", "VIEW WORKER", "VIEW EMPLOYERS"],
+            services: ["Find Workers", "Train Workers", "Match Talents", "Candidate Screening", "Job Advertising"],
+            moreInfo: ["WHAT WE DO", "ANNOUNCEMENTS", "Privacy Policy", "Terms & Conditions", "FAQs"]
+        },
+        fr: {
+            quickLinks: ["ACCUEIL", "EMPLOYÉS", "EMPLOYEURS", "VOIR EMPLOYÉ", "VOIR EMPLOYEURS"],
+            services: ["Trouver des Employés", "Former des Employés", "Mettre en Relation", "Sélection de Candidats", "Publicité d'Emploi"],
+            moreInfo: ["NOS SERVICES", "ANNONCES", "Politique de Confidentialité", "Conditions Générales", "FAQs"]
+        },
+        rw: {
+            quickLinks: ["AHABANZA", "ABAKOZI", "ABAKORESHA", "REBA UMUKOZI", "REBA ABAKORESHA"],
+            services: ["Gushaka Abakozi", "Guhugura Abakozi", "Guhuza Impano", "Gusuzuma Abakandida", "Kwamamaza Akazi"],
+            moreInfo: ["IBYO DUKORA", "AMATANGAZO", "Politiki yo Kubungabunga Amakuru", "Amabwiriza", "FAQs"]
+        }
+    };
+    
+    // Get footer columns
+    const footerColumns = document.querySelectorAll('.footer-column');
+    
+    // Update footer titles
+    if (footerColumns.length >= 4) {
+        footerColumns[0].querySelector('h3').textContent = footerTitles[lang][0];
+        footerColumns[1].querySelector('h3').textContent = footerTitles[lang][1];
+        footerColumns[2].querySelector('h3').textContent = footerTitles[lang][2];
+        footerColumns[3].querySelector('h3').textContent = footerTitles[lang][3];
         
-        // Employer Details Modal functionality
-        const employerModal = document.getElementById("employerModal");
-        const closeEmployerModal = document.getElementById("closeEmployerModal");
-        const cancelEmployerModal = document.getElementById("cancelEmployerModal");
-        const employerEditForm = document.getElementById("employerEditForm");
+        // Update quick links
+        const quickLinksContainer = footerColumns[1].querySelector('.footer-links');
+        if (quickLinksContainer) {
+            const quickLinks = quickLinksContainer.querySelectorAll('li a');
+            quickLinks.forEach((link, index) => {
+                if (index < footerLinks[lang].quickLinks.length) {
+                    // Keep the icon and update only the text
+                    const icon = link.querySelector('i');
+                    link.innerHTML = '';
+                    if (icon) link.appendChild(icon);
+                    link.innerHTML += ' ' + footerLinks[lang].quickLinks[index];
+                }
+            });
+        }
         
-        // Open login modal
+        // Update services
+        const servicesContainer = footerColumns[2].querySelector('.footer-links');
+        if (servicesContainer) {
+            const services = servicesContainer.querySelectorAll('li a');
+            services.forEach((link, index) => {
+                if (index < footerLinks[lang].services.length) {
+                    // Keep the icon and update only the text
+                    const icon = link.querySelector('i');
+                    link.innerHTML = '';
+                    if (icon) link.appendChild(icon);
+                    link.innerHTML += ' ' + footerLinks[lang].services[index];
+                }
+            });
+        }
+        
+        // Update more info
+        const moreInfoContainer = footerColumns[3].querySelector('.footer-links');
+        if (moreInfoContainer) {
+            const moreInfo = moreInfoContainer.querySelectorAll('li a');
+            moreInfo.forEach((link, index) => {
+                if (index < footerLinks[lang].moreInfo.length) {
+                    // Keep the icon and update only the text
+                    const icon = link.querySelector('i');
+                    link.innerHTML = '';
+                    if (icon) link.appendChild(icon);
+                    link.innerHTML += ' ' + footerLinks[lang].moreInfo[index];
+                }
+            });
+        }
+    }
+    
+    // Update footer copyright
+    const footerCopyright = document.querySelector('.footer-bottom p');
+    if (footerCopyright) {
+        const copyrightText = {
+            en: "© 2024 JobLink - All Rights Reserved",
+            fr: "© 2024 JobLink - Tous Droits Réservés",
+            rw: "© 2024 JobLink - Uburenganzira Bwose Bwabugenewe"
+        };
+        footerCopyright.textContent = copyrightText[lang];
+    }
+}
+
+// Apply language changes to menu items
+function applyLanguage(lang) {
+    // Update current language display
+    const currentLanguageSpan = document.getElementById('current-language');
+    if (currentLanguageSpan) {
+        currentLanguageSpan.textContent = lang.toUpperCase();
+    }
+    
+    // Update menu items
+    const menuItems = document.querySelectorAll('#main-menu li a, #openFormButton');
+    
+    menuItems.forEach(item => {
+        if (lang === 'en') {
+            if (item.getAttribute('data-en')) {
+                item.textContent = item.getAttribute('data-en');
+            }
+        } else if (lang === 'fr') {
+            if (item.getAttribute('data-fr')) {
+                item.textContent = item.getAttribute('data-fr');
+            }
+        } else {
+            // Reset to original Kinyarwanda
+            if (item.id === 'openFormButton') {
+                item.textContent = 'Kwinjira'; // Kinyarwanda for "login"
+            } else {
+                // Get original text from the URL path
+                const href = item.getAttribute('href');
+                if (href) {
+                    const urlParts = href.split('/');
+                    const pageName = urlParts[urlParts.length - 2] || 'home';
+                    
+                    switch(pageName) {
+                        case 'home': item.textContent = 'AHABANZA'; break;
+                        case 'worker': item.textContent = 'ABAKOZI'; break;
+                        case 'employer': item.textContent = 'ABAKORESHA'; break;
+                        case 'view_worker': item.textContent = 'REBA UMUKOZI'; break;
+                        case 'view_employers': item.textContent = 'REBA ABAKORESHA'; break;
+                        case 'what_we_do': item.textContent = 'IBYO DUKORA'; break;
+                        case 'announcements': item.textContent = 'AMATANGAZO'; break;
+                        default: break;
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Change language function - MAIN function for language change
+function changeLanguage(lang) {
+    currentLanguage = lang;
+    
+    // Update active button styling if exists
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const activeLangBtn = document.querySelector(`.lang-btn:nth-child(${lang === 'rw' ? 1 : lang === 'en' ? 2 : 3})`);
+    if (activeLangBtn) {
+        activeLangBtn.classList.add('active');
+    }
+    
+    // Apply all language changes
+    applyLanguage(lang);
+    updatePageContent(lang);
+    updateModalContent(lang);
+    
+    // Save language preference to localStorage
+    localStorage.setItem('preferredLanguage', lang);
+}
+
+// Open employer modal functions
+function openEmployerModal(id, company, position, email, phone, location, job_description, job_requirements) {
+    const employerEditForm = document.getElementById("employerEditForm");
+    if (!employerEditForm) return;
+    
+    // Set action URL for the form - handle Django URL format
+    let actionUrl = employerEditForm.action;
+    // Extracting the base path
+    let urlParts = actionUrl.split('/');
+    // Check if the last part is a digit and replace it
+    if (/^\d+$/.test(urlParts[urlParts.length - 2])) {
+        urlParts[urlParts.length - 2] = id;
+    } else {
+        // If using the edit_employer URL pattern
+        const editEmployerPath = 'edit_employer';
+        const index = urlParts.indexOf(editEmployerPath);
+        if (index !== -1 && index < urlParts.length - 1) {
+            urlParts[index + 1] = id;
+        }
+    }
+    employerEditForm.action = urlParts.join('/');
+    
+    // Fill in the form fields
+    document.getElementById("edit_company").value = company;
+    document.getElementById("edit_position").value = position;
+    document.getElementById("edit_email").value = email;
+    document.getElementById("edit_phone").value = phone;
+    document.getElementById("edit_location").value = location;
+    document.getElementById("edit_job_description").value = job_description;
+    document.getElementById("edit_job_requirements").value = job_requirements;
+    
+    // Set display data
+    document.getElementById("employerModalName").textContent = company;
+    document.getElementById("employerModalPosition").textContent = position;
+    
+    // Apply current language to the modal
+    updateModalContent(currentLanguage);
+    
+    // Show the modal
+    document.getElementById("employerModal").style.display = "block";
+}
+
+// Open sample employer modal function
+function openSampleEmployerModal(company, position, email, phone, location, job_description, job_requirements) {
+    const employerEditForm = document.getElementById("employerEditForm");
+    if (!employerEditForm) return;
+    
+    // Fill in the form fields
+    document.getElementById("edit_company").value = company;
+    document.getElementById("edit_position").value = position;
+    document.getElementById("edit_email").value = email;
+    document.getElementById("edit_phone").value = phone;
+    document.getElementById("edit_location").value = location;
+    document.getElementById("edit_job_description").value = job_description;
+    document.getElementById("edit_job_requirements").value = job_requirements;
+    
+    // Set display data
+    document.getElementById("employerModalName").textContent = company;
+    document.getElementById("employerModalPosition").textContent = position;
+    
+    // Change form action for sample employers
+    let urlParts = employerEditForm.action.split('/');
+    // Find and replace the edit_employer part if it exists
+    const editIndex = urlParts.indexOf('edit_employer');
+    if (editIndex !== -1) {
+        urlParts[editIndex] = 'employer';
+        // Remove the ID parameter
+        if (editIndex + 1 < urlParts.length) {
+            urlParts.splice(editIndex + 1, 1);
+        }
+    }
+    employerEditForm.action = urlParts.join('/');
+    
+    // Apply current language to the modal
+    updateModalContent(currentLanguage);
+    
+    // Show the modal
+    document.getElementById("employerModal").style.display = "block";
+}
+
+// Initialize everything when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Language dropdown elements
+    const dropdownBtn = document.getElementById('language-dropdown-btn');
+    const dropdownMenu = document.getElementById('language-dropdown-menu');
+    const langRw = document.getElementById('lang-rw');
+    const langEn = document.getElementById('lang-en');
+    const langFr = document.getElementById('lang-fr');
+    
+    // Toggle dropdown if the elements exist
+    if (dropdownBtn && dropdownMenu) {
+        dropdownBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+    }
+    
+    // Language selection event listeners
+    if (langRw) {
+        langRw.addEventListener('click', function() {
+            changeLanguage('rw');
+            dropdownMenu.style.display = 'none';
+        });
+    }
+    
+    if (langEn) {
+        langEn.addEventListener('click', function() {
+            changeLanguage('en');
+            dropdownMenu.style.display = 'none';
+        });
+    }
+    
+    if (langFr) {
+        langFr.addEventListener('click', function() {
+            changeLanguage('fr');
+            dropdownMenu.style.display = 'none';
+        });
+    }
+    
+    // Apply the saved language or default
+    applyLanguage(currentLanguage);
+    updatePageContent(currentLanguage);
+    
+    // Modal elements
+    const loginModal = document.getElementById("formModal");
+    const openLoginBtn = document.getElementById("openFormButton");
+    const closeLoginModal = document.getElementById("closeModal");
+    
+    const employerModal = document.getElementById("employerModal");
+    const closeEmployerModal = document.getElementById("closeEmployerModal");
+    const cancelEmployerModal = document.getElementById("cancelEmployerModal");
+    
+    // Open login modal
+    if (openLoginBtn && loginModal) {
         openLoginBtn.addEventListener("click", function(e) {
             e.preventDefault();
             loginModal.style.display = "block";
         });
-        
-        // Close login modal
+    }
+    
+    // Close login modal
+    if (closeLoginModal && loginModal) {
         closeLoginModal.addEventListener("click", function() {
             loginModal.style.display = "none";
         });
-        
-        // Close employer modal
+    }
+    
+    // Close employer modal via X button
+    if (closeEmployerModal && employerModal) {
         closeEmployerModal.addEventListener("click", function() {
             employerModal.style.display = "none";
         });
-        
-        // Cancel employer modal
+    }
+    
+    // Close employer modal via Cancel button
+    if (cancelEmployerModal && employerModal) {
         cancelEmployerModal.addEventListener("click", function() {
             employerModal.style.display = "none";
         });
-        
-        // Close modals when clicking outside
-        window.addEventListener("click", function(event) {
-            if (event.target == loginModal) {
-                loginModal.style.display = "none";
-            }
-            if (event.target == employerModal) {
-                employerModal.style.display = "none";
-            }
-        });
-        
-        // Open employer modal for real employers
-        function openEmployerModal(id, company, position, email, phone, location, job_description, job_requirements) {
-            // Set action URL for the form
-            employerEditForm.action = "{% url 'edit_employer' 0 %}".replace('0', id);
-            
-            // Fill in the form fields
-            document.getElementById("edit_company").value = company;
-            document.getElementById("edit_position").value = position;
-            document.getElementById("edit_email").value = email;
-            document.getElementById("edit_phone").value = phone;
-            document.getElementById("edit_location").value = location;
-            document.getElementById("edit_job_description").value = job_description;
-            document.getElementById("edit_job_requirements").value = job_requirements;
-            
-            // Set display data
-            document.getElementById("employerModalName").textContent = company;
-            document.getElementById("employerModalPosition").textContent = position;
-            
-            // Show the modal
-            employerModal.style.display = "block";
+    }
+    
+    // Close modals when clicking outside
+    window.addEventListener("click", function(event) {
+        if (loginModal && event.target == loginModal) {
+            loginModal.style.display = "none";
         }
-        
-        // Open employer modal for sample employers
-        function openSampleEmployerModal(company, position, email, phone, location, job_description, job_requirements) {
-            // Fill in the form fields
-            document.getElementById("edit_company").value = company;
-            document.getElementById("edit_position").value = position;
-            document.getElementById("edit_email").value = email;
-            document.getElementById("edit_phone").value = phone;
-            document.getElementById("edit_location").value = location;
-            document.getElementById("edit_job_description").value = job_description;
-            document.getElementById("edit_job_requirements").value = job_requirements;
-            
-            // Set display data
-            document.getElementById("employerModalName").textContent = company;
-            document.getElementById("employerModalPosition").textContent = position;
-            
-            // Change form action to sample mode
-            employerEditForm.action = "{% url 'employer' %}";
-            
-            // Show the modal
-            employerModal.style.display = "block";
+        if (employerModal && event.target == employerModal) {
+            employerModal.style.display = "none";
         }
-        
-        // Fade-in animation
-        document.addEventListener("DOMContentLoaded", function() {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            fadeElements.forEach(element => {
-                observer.observe(element);
+    });
+    
+    // Set up fade-in animation
+    const fadeElements = document.querySelectorAll('.fade-in');
+    if (fadeElements.length > 0 && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
             });
+        }, { threshold: 0.1 });
+        
+        fadeElements.forEach(element => {
+            observer.observe(element);
         });
-    </script>
+    }
+});
+</script>
 </body>
 </html>>

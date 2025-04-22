@@ -844,11 +844,7 @@
     <!-- Header -->
 <header>
     <div class="header-content">
-        <div class="language-selector">
-            <button id="lang-en" class="lang-btn">EN</button>
-            <button id="lang-fr" class="lang-btn">FR</button>
-            <button id="lang-rw" class="lang-btn active">RW</button>
-        </div>
+        
         <nav>
             <ul>
                 <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
@@ -860,87 +856,85 @@
                 <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
             </ul>
         </nav>
+        
+        
+        <div class="language-selector">
+            <select id="languageSelect" class="language-dropdown">
+                <option value="en">En</option>
+                <option value="fr">Fr</option>
+                <option value="rw">Kin</option>
+            </select>
+        </div>
         <a href="#" class="nav-button" id="openFormButton" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
     </div>
 </header>
 
 <script>
-// Language switching functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const langButtons = document.querySelectorAll('.lang-btn');
-    
-    // Function to change language
-    function changeLanguage(lang) {
-        // Update all elements with data attributes
-        const elements = document.querySelectorAll('[data-'+lang+']');
+    // Function to change language on the page
+    document.addEventListener('DOMContentLoaded', function() {
+        const languageSelect = document.getElementById('languageSelect');
         
-        elements.forEach(element => {
-            element.textContent = element.getAttribute('data-'+lang);
+        // Function to change language
+        function changeLanguage(lang) {
+            // Update all elements with data attributes
+            const elements = document.querySelectorAll('[data-' + lang + ']');
+            
+            elements.forEach(element => {
+                element.textContent = element.getAttribute('data-' + lang);
+            });
+            
+            // Save language preference to localStorage
+            localStorage.setItem('preferredLanguage', lang);
+        }
+        
+        // Add change event listener to language dropdown
+        languageSelect.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            changeLanguage(selectedLanguage);
         });
         
-        // Update active button
-        langButtons.forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.getElementById('lang-'+lang).classList.add('active');
-        
-        // Save language preference to localStorage
-        localStorage.setItem('preferredLanguage', lang);
-    }
-    
-    // Add click event listeners to language buttons
-    langButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const lang = this.id.replace('lang-', '');
-            changeLanguage(lang);
-        });
+        // Load preferred language from localStorage if available
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang) {
+            languageSelect.value = savedLang;
+            changeLanguage(savedLang);
+        } else {
+            // Default language (can be set to your preference)
+            changeLanguage('rw');
+        }
     });
-    
-    // Load preferred language from localStorage if available
-    const savedLang = localStorage.getItem('preferredLanguage');
-    if (savedLang) {
-        changeLanguage(savedLang);
-    } else {
-        // Default language is Kinyarwanda
-        changeLanguage('rw');
-    }
-});
-</script>
+    </script>
 
-<style>
-/* Basic styling for language selector */
-.language-selector {
-    display: flex;
-    gap: 8px;
-    padding: 6px;
-    background-color: #f3f4f6;
-    border-radius: 8px;
-    margin-right: 20px;
-}
-
-.lang-btn {
-    border: none;
-    background: none;
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    color: #6b7280;
-}
-
-.lang-btn.active {
-    background-color: #3b82f6;
-    color: white;
-    box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
-}
-
-</style>
+    <style>
+        .language-selector { 
+            padding: 0.5px 0.5px;  
+            background-color: #f3f4f6; 
+            border-radius: 3px; 
+            border: none; 
+            cursor: pointer;  
+            font-size: 4px;  
+            outline: none;
+        } 
+         
+        .lang-btn { 
+            background: none; 
+            padding: 0.5px 0.5px; 
+            font-size: 4px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 8px; 
+            height: 8px; 
+            color: #6b7280; 
+        } 
+        
+        .lang-btn.active { 
+            background-color: #3b82f6; 
+            color: white; 
+        }
+        </style>
+        
 
     <!-- Page Banner -->
     <section class="page-banner">

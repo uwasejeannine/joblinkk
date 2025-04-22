@@ -82,25 +82,7 @@
             
         }
 
-        #login-btn {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            position: absolute;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        #login-btn:hover {
-            background-color: #d97c18;
-            transform: translateY(-50%) scale(1.05);
-        }
+       
 
         /* Hero Section with improved transparency */
         .hero {
@@ -783,22 +765,12 @@
                 font-size: 1.5rem;
             }
         }
-    </style></head>
+    </style>
+</head>
+
     <body>
         <!-- Navigation -->
         <nav id="navbar" style="display: flex; justify-content: flex-end; align-items: center; background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); position: sticky; top: 0; z-index: 100;">
-            <div class="language-selector" style="display: flex; gap: 8px; padding: 6px; background-color: #f3f4f6; border-radius: 8px;">
-                <button id="lang-en" class="lang-btn" style="border: none; background: none; padding: 8px; font-size: 14px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: #6b7280;">
-                  <span style="font-size: 16px;">🇬🇧</span>
-                </button>
-                <button id="lang-fr" class="lang-btn" style="border: none; background: none; padding: 8px; font-size: 14px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: #6b7280;">
-                  <span style="font-size: 16px;">🇫🇷</span>
-                </button>
-                <button id="lang-rw" class="lang-btn active" style="border: none; background-color: #3b82f6; padding: 8px; font-size: 14px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: white; box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);">
-                  <span style="font-size: 16px;">🇷🇼</span>
-                </button>
-              </div>
-          
             <ul>
                 <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
                 <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
@@ -808,7 +780,19 @@
                 <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
                 <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
             </ul>
-            <button id="login-btn" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</button>
+            
+            <div class="navbar-right" style="display: flex; align-items: center; gap: 16px;">
+                <div class="language-selector" style="position: relative;">
+                    <select id="language-select" style="appearance: none; background-color: #f3f4f6; border: none; padding: 8px 32px 5px 16px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500; color: #4b5563; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                        <option value="en">Eng</option>
+                        <option value="fr">Fr</option>
+                        <option value="rw" selected>Kin</option>
+                    </select>
+                    
+                </div>
+            </div>
+            
+            <button id="login-btn" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA" style="background-color: #3b82f6; color: white; border: none; padding: 8px 13px; border-radius: 10px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);">KWINJIRA</button>
         </nav>
     
         <!-- Hero Section with improved transparency -->
@@ -948,69 +932,55 @@
                 </div>
             </div>
         </section>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const langEnBtn = document.getElementById('lang-en');
-        const langFrBtn = document.getElementById('lang-fr');
-        const langRwBtn = document.getElementById('lang-rw');
-        const navLinks = document.querySelectorAll('#navbar a');
-        const loginBtn = document.getElementById('login-btn');
-        const translatableElements = document.querySelectorAll('.translatable');
-        
-        // Function to change language
-        function changeLanguage(lang) {
-            // Update navigation links
-            navLinks.forEach(link => {
-                if (link.dataset[lang]) {
-                    link.textContent = link.dataset[lang];
-                }
-            });
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSelect = document.getElementById('language-select');
+            const navLinks = document.querySelectorAll('#navbar a');
+            const loginBtn = document.getElementById('login-btn');
+            const translatableElements = document.querySelectorAll('.translatable');
             
-            // Update login button
-            if (loginBtn.dataset[lang]) {
-                loginBtn.textContent = loginBtn.dataset[lang];
+            // Function to change language
+            function changeLanguage(lang) {
+                // Update navigation links
+                navLinks.forEach(link => {
+                    if (link.dataset[lang]) {
+                        link.textContent = link.dataset[lang];
+                    }
+                });
+                
+                // Update login button
+                if (loginBtn.dataset[lang]) {
+                    loginBtn.textContent = loginBtn.dataset[lang];
+                }
+                
+                // Update all other translatable elements
+                translatableElements.forEach(element => {
+                    if (element.dataset[lang]) {
+                        // Handle elements with HTML content (like spans with styling)
+                        element.innerHTML = element.dataset[lang];
+                    }
+                });
+                
+                // Update the dropdown selection
+                languageSelect.value = lang;
+                
+                // Save language preference
+                localStorage.setItem('preferredLanguage', lang);
             }
             
-            // Update all other translatable elements
-            translatableElements.forEach(element => {
-                if (element.dataset[lang]) {
-                    // Handle elements with HTML content (like spans with styling)
-                    element.innerHTML = element.dataset[lang];
-                }
+            // Event listener for language dropdown
+            languageSelect.addEventListener('change', function() {
+                const selectedLang = this.value;
+                changeLanguage(selectedLang);
             });
             
-            // Update active button state
-            langEnBtn.classList.toggle('active', lang === 'en');
-            langFrBtn.classList.toggle('active', lang === 'fr');
-            langRwBtn.classList.toggle('active', lang === 'rw');
-            
-            // Save language preference
-            localStorage.setItem('preferredLanguage', lang);
-        }
-        
-        // Event listeners for language buttons
-        langEnBtn.addEventListener('click', function() {
-            changeLanguage('en');
+            // Check for saved language preference
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                changeLanguage(savedLang);
+            }
         });
-        
-        langFrBtn.addEventListener('click', function() {
-            changeLanguage('fr');
-        });
-        
-        langRwBtn.addEventListener('click', function() {
-            changeLanguage('rw');
-        });
-        
-        // Check for saved language preference
-        const savedLang = localStorage.getItem('preferredLanguage');
-        if (savedLang) {
-            changeLanguage(savedLang);
-        }
-    });
     </script>
-    </body>
-    
 
     <!-- Statistics Section -->
 <section class="statistics">

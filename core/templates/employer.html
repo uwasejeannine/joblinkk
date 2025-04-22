@@ -50,36 +50,6 @@
     align-items: center;
 }
 
-.language-selector {
-    display: flex;
-    gap: 8px;
-    padding: 6px;
-    background-color: #f3f4f6;
-    border-radius: 8px;
-    margin-right: 20px;
-}
-
-.lang-btn {
-    border: none;
-    background: none;
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    color: #6b7280;
-}
-
-.lang-btn.active {
-    background-color: #3b82f6;
-    color: white;
-    box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
-}
 
 nav ul {
     display: flex;
@@ -149,6 +119,7 @@ nav ul li a:hover {
         text-align: center;
     }
 }
+
         /* Hero Section */
         .hero-section {
             background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/nature.jpg"%}');
@@ -865,94 +836,100 @@ nav ul li a:hover {
     
     <nav>
         <div class="header-content">
-            <div class="language-selector">
-                <button id="lang-en" class="lang-btn">
-                    <span style="font-size: 16px;">🇬🇧</span>
-                </button>
-                <button id="lang-fr" class="lang-btn">
-                    <span style="font-size: 16px;">🇫🇷</span>
-                </button>
-                <button id="lang-rw" class="lang-btn active">
-                    <span style="font-size: 16px;">🇷🇼</span>
-                </button>
+            <ul>
+                <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
+                <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
+                <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
+                <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKERS" data-fr="VOIR TRAVAILLEURS" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
+                <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
+                <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
+                <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
+            </ul>
+            
+            <div class="right-nav-elements">
+               
+                
+                <div class="language-selector">
+                    <select id="language-select" style="padding: 6px; background-color: #f3f4f6; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; outline: none; margin-left: 15px;">
+                        <option value="en">En</option>
+                        <option value="fr">Fr</option>
+                        <option value="rw" selected>Kin</option>
+                    </select>
+                </div>
+                <a href="#" class="nav-button" id="openFormButton" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
             </div>
         </div>
-        
-        <ul>
-            <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
-            <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
-            <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
-            <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKERS" data-fr="VOIR TRAVAILLEURS" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
-            <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
-            <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
-            <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
-        </ul>
-        
-        <a href="#" class="nav-button" id="openFormButton" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
     </nav>
-
-
-<script>
+    
+    <style>
+        nav .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav ul li {
+            margin-right: 20px;
+        }
+        
+        .right-nav-elements {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+    
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const langEnBtn = document.getElementById('lang-en');
-        const langFrBtn = document.getElementById('lang-fr');
-        const langRwBtn = document.getElementById('lang-rw');
-        const navLinks = document.querySelectorAll('#navbar a');
-        const loginBtn = document.getElementById('login-btn');
-        const translatableElements = document.querySelectorAll('.translatable');
+        const languageSelect = document.getElementById('language-select');
         
         // Function to change language
         function changeLanguage(lang) {
-            // Update navigation links
-            navLinks.forEach(link => {
-                if (link.dataset[lang]) {
-                    link.textContent = link.dataset[lang];
+            // Update all elements with data attributes
+            document.querySelectorAll('[data-en], [data-fr], [data-rw]').forEach(element => {
+                if (element.dataset[lang]) {
+                    element.textContent = element.dataset[lang];
                 }
             });
             
-            // Update login button
-            if (loginBtn.dataset[lang]) {
-                loginBtn.textContent = loginBtn.dataset[lang];
-            }
-            
             // Update all other translatable elements
-            translatableElements.forEach(element => {
+            document.querySelectorAll('.translatable').forEach(element => {
                 if (element.dataset[lang]) {
                     // Handle elements with HTML content (like spans with styling)
                     element.innerHTML = element.dataset[lang];
                 }
             });
             
-            // Update active button state
-            langEnBtn.classList.toggle('active', lang === 'en');
-            langFrBtn.classList.toggle('active', lang === 'fr');
-            langRwBtn.classList.toggle('active', lang === 'rw');
-            
             // Save language preference
             localStorage.setItem('preferredLanguage', lang);
+            
+            // Debug
+            console.log('Language changed to:', lang);
         }
         
-        // Event listeners for language buttons
-        langEnBtn.addEventListener('click', function() {
-            changeLanguage('en');
+        // Event listener for language select change
+        languageSelect.addEventListener('change', function() {
+            changeLanguage(this.value);
         });
         
-        langFrBtn.addEventListener('click', function() {
-            changeLanguage('fr');
-        });
-        
-        langRwBtn.addEventListener('click', function() {
-            changeLanguage('rw');
-        });
-        
-        // Check for saved language preference
+        // Check for saved language preference or apply default
         const savedLang = localStorage.getItem('preferredLanguage');
         if (savedLang) {
+            languageSelect.value = savedLang;
             changeLanguage(savedLang);
+        } else {
+            // Apply the selected default language (rw)
+            changeLanguage('rw');
         }
     });
     </script>
-
     <!-- Hero Section -->
 <section class="hero-section">
     <div class="hero-content">
