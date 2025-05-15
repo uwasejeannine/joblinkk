@@ -63,7 +63,7 @@
               border: none;
                cursor: pointer; 
                font-size: 14px; 
-               outline: none;">
+               outline: none;
         }
         
         .lang-btn {
@@ -123,7 +123,16 @@
             transform: translateY(-2px);
         }
        
-
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            margin-left: 10px;
+        }
         /* Hero Banner */
         .hero-banner {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/nature.jpg"%}');
@@ -651,38 +660,95 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+/* Responsive Header */
+@media (max-width: 992px) {
+    .header-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 10px 15px;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        order: 1;
+    }
+
+    nav {
+        order: 3;
+        width: 100%;
+        display: none;
+    }
+
+    nav.show {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 5px;
+        padding: 10px 0;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 10px 15px;
+    }
+
+    .right-elements {
+        order: 2;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
     </style>
 </head>
 <body>
-   <!-- Header with Language Switching Function -->
-   <header>
-    <div class="header-content">
-        <nav>
-            <ul id="navigation-menu">
-                <li><a href="{% url 'home' %}" data-kinyarwanda="AHABANZA" data-english="HOME" data-french="ACCUEIL">AHABANZA</a></li>
-                <li><a href="{% url 'worker' %}" data-kinyarwanda="ABAKOZI" data-english="WORKERS" data-french="TRAVAILLEURS">ABAKOZI</a></li>
-                <li><a href="{% url 'employer' %}" data-kinyarwanda="ABAKORESHA" data-english="EMPLOYERS" data-french="EMPLOYEURS">ABAKORESHA</a></li>
-                <li><a href="{% url 'view_worker' %}" data-kinyarwanda="REBA UMUKOZI" data-english="VIEW WORKER" data-french="VOIR TRAVAILLEUR">REBA UMUKOZI</a></li>
-                <li><a href="{% url 'view_employers' %}" data-kinyarwanda="REBA ABAKORESHA" data-english="VIEW EMPLOYERS" data-french="VOIR EMPLOYEURS">REBA ABAKORESHA</a></li>
-                <li><a href="{% url 'what_we_do' %}" data-kinyarwanda="IBYO DUKORA" data-english="WHAT WE DO" data-french="CE QUE NOUS FAISONS">IBYO DUKORA</a></li>
-                <li><a href="{% url 'announcements' %}" data-kinyarwanda="AMATANGAZO" data-english="ANNOUNCEMENTS" data-french="ANNONCES">AMATANGAZO</a></li>
-            </ul>
-        </nav>
-
-        <div class="right-elements">
-           
-            <div class="language-selector">
-                <select id="language-select">
-                    <option value="kinyarwanda" selected>Kin</option>
-                    <option value="english">En</option>
-                    <option value="french">Fr</option>
-                </select>
+    <header>
+        <div class="header-content">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="mainNav">
+               <ul id="navigation-menu">
+    <li><a href="{% url 'home' %}" data-kinyarwanda="AHABANZA" data-english="HOME" data-french="ACCUEIL">AHABANZA</a></li>
+    <li><a href="{% url 'worker' %}" data-kinyarwanda="ABAKOZI" data-english="WORKERS" data-french="TRAVAILLEURS">ABAKOZI</a></li>
+    <li><a href="{% url 'employer' %}" data-kinyarwanda="ABAKORESHA" data-english="EMPLOYERS" data-french="EMPLOYEURS">ABAKORESHA</a></li>
+    <li><a href="{% url 'view_worker' %}" data-kinyarwanda="REBA UMUKOZI" data-english="VIEW WORKER" data-french="VOIR EMPLOYÉ">REBA UMUKOZI</a></li>
+    <li><a href="{% url 'view_employers' %}" data-kinyarwanda="REBA ABAKORESHA" data-english="VIEW EMPLOYERS" data-french="VOIR EMPLOYEURS">REBA ABAKORESHA</a></li>
+    <li><a href="{% url 'what_we_do' %}" data-kinyarwanda="IBYO DUKORA" data-english="WHAT WE DO" data-french="NOS SERVICES">IBYO DUKORA</a></li>
+    <li><a href="{% url 'announcements' %}" data-kinyarwanda="AMATANGAZO" data-english="ANNOUNCEMENTS" data-french="ANNONCES">AMATANGAZO</a></li>
+</ul>
+            </nav>
+    
+            <div class="right-elements">
+                <div class="language-selector">
+                    <select id="language-select">
+                        <option value="kinyarwanda" selected>Kin</option>
+                        <option value="english">En</option>
+                        <option value="french">Fr</option>
+                    </select>
+                </div>
+               
             </div>
+             <a href="#" class="nav-button" data-kinyarwanda="KWINJIRA" data-english="LOGIN" data-french="CONNEXION">KWINJIRA</a>
         </div>
-        <a href="#" class="nav-button" id="login-btn" data-kinyarwanda="KWINJIRA" data-english="LOGIN" data-french="CONNEXION">KWINJIRA</a>
-    </div>
-</header>
-
+    </header>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -715,6 +781,41 @@
             changeLanguage('kinyarwanda');
         }
     });
+     // Mobile menu toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mainNav = document.getElementById('mainNav');
+    const navIcon = mobileMenuToggle.querySelector('i');
+    
+    if (mobileMenuToggle && mainNav) {
+        mobileMenuToggle.addEventListener('click', function() {
+            mainNav.classList.toggle('show');
+            navIcon.classList.toggle('fa-bars');
+            navIcon.classList.toggle('fa-times');
+        });
+        
+        // Close menu when clicking on a link
+        const navLinks = mainNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 992) {
+                    mainNav.classList.remove('show');
+                    navIcon.classList.remove('fa-times');
+                    navIcon.classList.add('fa-bars');
+                }
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mainNav.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+                mainNav.classList.remove('show');
+                navIcon.classList.remove('fa-times');
+                navIcon.classList.add('fa-bars');
+            }
+        });
+    }
+});
 </script>
 
     <!-- Hero Banner -->
@@ -935,6 +1036,9 @@
             changeLanguage(savedLanguage);
         }
     });
+    
+       
+        
 </script>
 
    <!-- Contact Section -->

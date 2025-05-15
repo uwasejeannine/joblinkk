@@ -89,6 +89,15 @@
             background-color: #d97c18;
             transform: translateY(-2px);
         }
+        /* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+}
 
         /* Hero Banner */
         .hero-banner {
@@ -699,6 +708,75 @@
                 font-size: 2rem;
             }
         }
+        /* Responsive Styles */
+@media (max-width: 992px) {
+    .mobile-menu-toggle {
+        display: block;
+        order: 1;
+    }
+    
+    .header-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    nav {
+        order: 3;
+        width: 100%;
+        display: none;
+    }
+    
+    nav.show {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+    
+    #navigation-menu {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 0;
+    }
+    
+    #navigation-menu li {
+        margin: 0;
+    }
+    
+    #navigation-menu li a {
+        display: block;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .right-nav {
+        order: 2;
+        margin-left: auto;
+    }
+    
+    .announcements-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .announcements-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
     </style>
 </head>
 <body>
@@ -1257,6 +1335,67 @@
             changeLanguage(savedLanguage);
         }
     });
+    // Mobile menu toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Create mobile menu toggle button
+    const headerContent = document.querySelector('.header-content');
+    const navigation = document.querySelector('nav');
+    
+    // Create mobile menu toggle button if it doesn't exist
+    if (!document.querySelector('.mobile-menu-toggle')) {
+        const mobileMenuToggle = document.createElement('button');
+        mobileMenuToggle.className = 'mobile-menu-toggle';
+        mobileMenuToggle.id = 'mobileMenuToggle';
+        mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        
+        // Insert the toggle button at the beginning of header content
+        headerContent.insertBefore(mobileMenuToggle, headerContent.firstChild);
+    }
+    
+    // Get the toggle button (whether it was just created or already existed)
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navIcon = mobileMenuToggle.querySelector('i');
+    
+    // Add toggle functionality
+    mobileMenuToggle.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent event from bubbling up
+        navigation.classList.toggle('show');
+        navIcon.classList.toggle('fa-bars');
+        navIcon.classList.toggle('fa-times');
+    });
+    
+    // Close menu when clicking on a link
+    const navLinks = navigation.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 992) {
+                navigation.classList.remove('show');
+                navIcon.classList.remove('fa-times');
+                navIcon.classList.add('fa-bars');
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (navigation.classList.contains('show') && 
+            !navigation.contains(event.target) && 
+            !mobileMenuToggle.contains(event.target)) {
+            navigation.classList.remove('show');
+            navIcon.classList.remove('fa-times');
+            navIcon.classList.add('fa-bars');
+        }
+    });
+    
+    // Responsive adjustments on window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 992 && navigation.classList.contains('show')) {
+            navigation.classList.remove('show');
+            navIcon.classList.remove('fa-times');
+            navIcon.classList.add('fa-bars');
+        }
+    });
+});
 </script>
 
 <style>

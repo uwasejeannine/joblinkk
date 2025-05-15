@@ -35,123 +35,8 @@
             overflow-x: hidden;
         }
 
-        /* Top Bar */
-        .top-bar {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 0;
-            font-size: 0.9rem;
-        }
-
-        .top-bar-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .contact-info {
-            display: flex;
-            gap: 20px;
-        }
-
-        .contact-info a {
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .contact-info i {
-            margin-right: 5px;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-icons a:hover {
-            color: var(--dark-primary);
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: white;
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 15px;
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-button {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .nav-button:hover {
-            background-color: #d97c18;
-            transform: translateY(-2px);
-        }
-
+        
+       
         /* Page Banner */
         .page-banner {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/nature.jpg"%}');
@@ -839,14 +724,16 @@
             }
         }
     </style>
-</head>
-<body>
-    <!-- Header -->
 <header>
     <div class="header-content">
+        <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" aria-expanded="false">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
         
-        <nav>
-            <ul>
+        <nav aria-label="Main navigation" class="main-nav">
+            <ul class="nav-menu" id="nav-menu">
                 <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
                 <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
                 <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
@@ -857,84 +744,544 @@
             </ul>
         </nav>
         
-        
-        <div class="language-selector">
-            <select id="languageSelect" class="language-dropdown">
-                <option value="en">En</option>
-                <option value="fr">Fr</option>
-                <option value="rw">Kin</option>
-            </select>
+        <div class="header-actions">
+            <div class="language-selector">
+                <select id="languageSelect" class="language-dropdown" aria-label="Select language">
+                    <option value="en">En</option>
+                    <option value="fr">Fr</option>
+                    <option value="rw">Kin</option>
+                </select>
+            </div>
+            <a href="#" class="nav-button" id="openFormButton" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
         </div>
-        <a href="#" class="nav-button" id="openFormButton" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
     </div>
 </header>
 
+
 <script>
-    // Function to change language on the page
-    document.addEventListener('DOMContentLoaded', function() {
-        const languageSelect = document.getElementById('languageSelect');
-        
-        // Function to change language
-        function changeLanguage(lang) {
-            // Update all elements with data attributes
-            const elements = document.querySelectorAll('[data-' + lang + ']');
+/**
+ * Main application functionality for multilingual worker platform
+ * Handles menu interactions, language switching, worker profile management
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize core functionality
+    initMobileMenu();
+    initLanguageSelector();
+    initModals();
+    initWorkerInteractions();
+    initFormValidation();
+    initAnimations();
+    
+    // Handle window resize events
+    handleWindowResize();
+});
+
+/**
+ * Initialize mobile menu functionality
+ */
+function initMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobile-menu');
+    const mainNav = document.querySelector('.main-nav');
+    
+    if (mobileMenuBtn && mainNav) {
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.body.classList.toggle('menu-open');
+            mainNav.classList.toggle('active');
             
-            elements.forEach(element => {
-                element.textContent = element.getAttribute('data-' + lang);
-            });
-            
-            // Save language preference to localStorage
-            localStorage.setItem('preferredLanguage', lang);
-        }
+            const isExpanded = mainNav.classList.contains('active');
+            mobileMenuBtn.setAttribute('aria-expanded', isExpanded);
+        });
+    }
+}
+
+/**
+ * Initialize language selector and translation system
+ */
+function initLanguageSelector() {
+    const languageSelect = document.getElementById('languageSelect');
+    if (languageSelect) {
+        // Set initial language based on user preference or default
+        const initialLanguage = localStorage.getItem('preferredLanguage') || 'rw'; // Default to Kinyarwanda
+        languageSelect.value = initialLanguage;
         
-        // Add change event listener to language dropdown
+        // Initial page translation
+        translatePage(initialLanguage);
+        
+        // Add change event listener
         languageSelect.addEventListener('change', function() {
             const selectedLanguage = this.value;
-            changeLanguage(selectedLanguage);
+            localStorage.setItem('preferredLanguage', selectedLanguage);
+            translatePage(selectedLanguage);
         });
-        
-        // Load preferred language from localStorage if available
-        const savedLang = localStorage.getItem('preferredLanguage');
-        if (savedLang) {
-            languageSelect.value = savedLang;
-            changeLanguage(savedLang);
-        } else {
-            // Default language (can be set to your preference)
-            changeLanguage('rw');
+    }
+}
+
+/**
+ * Translate the entire page content
+ * @param {string} language - The language code to translate to ('en', 'fr', 'rw')
+ */
+function translatePage(language) {
+    // 1. Translate elements with data attributes
+    translateDataAttributes(language);
+    
+    // 2. Translate form elements
+    translateFormElements(language);
+    
+    // 3. Translate static content with specific language classes
+    translateStaticContent(language);
+    
+    // 4. Update page-specific elements
+    updatePageSpecificElements(language);
+}
+
+/**
+ * Translate elements with data language attributes
+ * @param {string} language - The language code
+ */
+function translateDataAttributes(language) {
+    const elementsWithLang = document.querySelectorAll('[data-en], [data-fr], [data-rw]');
+    elementsWithLang.forEach(function(element) {
+        const langText = element.getAttribute('data-' + language);
+        if (langText) {
+            element.textContent = langText;
         }
     });
-    </script>
+}
 
-    <style>
-        .language-selector { 
-            padding: 0.5px 0.5px;  
-            background-color: #f3f4f6; 
-            border-radius: 3px; 
-            border: none; 
-            cursor: pointer;  
-            font-size: 4px;  
-            outline: none;
-        } 
-         
-        .lang-btn { 
-            background: none; 
-            padding: 0.5px 0.5px; 
-            font-size: 4px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 8px; 
-            height: 8px; 
-            color: #6b7280; 
-        } 
-        
-        .lang-btn.active { 
-            background-color: #3b82f6; 
-            color: white; 
+/**
+ * Translate form elements including labels, options, placeholders, and buttons
+ * @param {string} language - The language code
+ */
+function translateFormElements(language) {
+    // Translation dictionaries
+    const translations = {
+        'en': {
+            'Icyiciro cy\'akazi': 'Job Category',
+            'Hitamo icyiciro': 'Select category',
+            'Ikoranabuhanga': 'Information Technology',
+            'Ibaruramari': 'Accounting',
+            'Ubuhanga': 'Engineering',
+            'Ubuvuzi': 'Healthcare',
+            'Uburezi': 'Education',
+            'Akarere': 'Location',
+            'Hitamo akarere': 'Select location',
+            'Uburambe': 'Experience',
+            'Hitamo uburambe': 'Select experience',
+            'Umwaka': 'Year',
+            'Imyaka': 'Years',
+            'Shakisha': 'Search',
+            'Reba Umwirondoro': 'View Profile',
+            'AHABANZA': 'HOME',
+            'REBA UMUKOZI': 'FIND WORKER',
+            'Abakozi Baboneka': 'Available Workers',
+            'Hitamo umukozi uhuye n\'ibyo ukeneye kandi ufite ubumenyi bukenewe n\'ikigo cyawe': 
+                'Choose a worker that matches your needs and has the skills required by your organization',
+            'Amakuru y\'Umukozi': 'Worker Information',
+            'Amakuru Rusange': 'General Information',
+            'Amazina': 'Names',
+            'Umwanya': 'Position',
+            'Telefoni': 'Phone',
+            'Ubumenyi n\'Uburambe': 'Skills and Experience',
+            'Imyaka y\'Uburambe': 'Years of Experience',
+            'Gusohoka': 'Exit',
+            'Hindura': 'Edit',
+            'Ijambo ryibanga': 'Password',
+            'Injira': 'Login'
+        },
+        'fr': {
+            'Icyiciro cy\'akazi': 'Catégorie d\'emploi',
+            'Hitamo icyiciro': 'Sélectionnez une catégorie',
+            'Ikoranabuhanga': 'Technologie de l\'information',
+            'Ibaruramari': 'Comptabilité',
+            'Ubuhanga': 'Ingénierie',
+            'Ubuvuzi': 'Soins de santé',
+            'Uburezi': 'Éducation',
+            'Akarere': 'Emplacement',
+            'Hitamo akarere': 'Sélectionnez un emplacement',
+            'Uburambe': 'Expérience',
+            'Hitamo uburambe': 'Sélectionnez l\'expérience',
+            'Umwaka': 'An',
+            'Imyaka': 'Ans',
+            'Shakisha': 'Rechercher',
+            'Reba Umwirondoro': 'Voir le Profil',
+            'AHABANZA': 'ACCUEIL',
+            'REBA UMUKOZI': 'TROUVER UN TRAVAILLEUR',
+            'Abakozi Baboneka': 'Travailleurs Disponibles',
+            'Hitamo umukozi uhuye n\'ibyo ukeneye kandi ufite ubumenyi bukenewe n\'ikigo cyawe': 
+                'Choisissez un travailleur qui correspond à vos besoins et possède les compétences requises par votre organisation',
+            'Amakuru y\'Umukozi': 'Informations sur le Travailleur',
+            'Amakuru Rusange': 'Informations Générales',
+            'Amazina': 'Noms',
+            'Umwanya': 'Poste',
+            'Telefoni': 'Téléphone',
+            'Ubumenyi n\'Uburambe': 'Compétences et Expérience',
+            'Imyaka y\'Uburambe': 'Années d\'Expérience',
+            'Gusohoka': 'Sortir',
+            'Hindura': 'Modifier',
+            'Ijambo ryibanga': 'Mot de passe',
+            'Injira': 'Connexion'
+        },
+        'rw': {
+            // Default language, no need to translate
         }
-        </style>
+    };
+    
+    // Skip if current language is Kinyarwanda (default)
+    if (language === 'rw') return;
+    
+    // Translate form labels
+    document.querySelectorAll('label').forEach(function(label) {
+        const originalText = label.textContent.trim();
+        if (translations[language][originalText]) {
+            label.textContent = translations[language][originalText];
+        }
+    });
+    
+    // Translate select options
+    document.querySelectorAll('select').forEach(function(select) {
+        Array.from(select.options).forEach(function(option) {
+            const originalText = option.textContent.trim();
+            
+            // First check for direct translation
+            if (translations[language][originalText]) {
+                option.textContent = translations[language][originalText];
+            } else {
+                // Handle composite texts like "0-1 Umwaka"
+                let translatedText = originalText;
+                
+                // Check for Umwaka/Imyaka and replace if found
+                if (originalText.includes('Umwaka')) {
+                    translatedText = translatedText.replace('Umwaka', translations[language]['Umwaka']);
+                }
+                if (originalText.includes('Imyaka')) {
+                    translatedText = translatedText.replace('Imyaka', translations[language]['Imyaka']);
+                }
+                
+                // Only update if we made a change
+                if (translatedText !== originalText) {
+                    option.textContent = translatedText;
+                }
+            }
+        });
+    });
+    
+    // Translate buttons
+    document.querySelectorAll('button').forEach(function(button) {
+        // Extract text without icon
+        let buttonText = '';
+        const icon = button.querySelector('i');
         
+        if (icon) {
+            // Create a clone to work with
+            const clone = button.cloneNode(true);
+            clone.querySelector('i').remove();
+            buttonText = clone.textContent.trim();
+        } else {
+            buttonText = button.textContent.trim();
+        }
+        
+        if (translations[language][buttonText]) {
+            // Handle buttons with icons
+            if (icon) {
+                const translatedText = translations[language][buttonText];
+                button.innerHTML = ''; // Clear current content
+                button.appendChild(icon.cloneNode(true)); // Add back the icon
+                button.appendChild(document.createTextNode(' ' + translatedText)); // Add space and translated text
+            } else {
+                button.textContent = translations[language][buttonText];
+            }
+        }
+    });
+
+    // Translate other static text elements (h2, p, etc.)
+    const textElements = document.querySelectorAll('h2, h3, h4, p:not(.worker-position), span:not(.skill-tag)');
+    textElements.forEach(function(element) {
+        const originalText = element.textContent.trim();
+        if (translations[language][originalText]) {
+            element.textContent = translations[language][originalText];
+        }
+    });
+}
+
+/**
+ * Translate static content with specific language classes
+ * @param {string} language - The language code
+ */
+function translateStaticContent(language) {
+    document.querySelectorAll('.lang-content').forEach(function(container) {
+        container.querySelectorAll('.lang-item').forEach(function(item) {
+            item.style.display = 'none';
+        });
+        const activeContent = container.querySelector('.lang-' + language);
+        if (activeContent) {
+            activeContent.style.display = 'block';
+        }
+    });
+}
+
+/**
+ * Update page-specific elements like page title and breadcrumb
+ * @param {string} language - The language code
+ */
+function updatePageSpecificElements(language) {
+    // Skip if current language is Kinyarwanda (default)
+    if (language === 'rw') return;
+
+    // Page title translations
+    const pageTitleTranslations = {
+        'en': {
+            'Reba': 'Find',
+            'Abakozi': 'Workers',
+            'Babereye': 'Available'
+        },
+        'fr': {
+            'Reba': 'Voir',
+            'Abakozi': 'Travailleurs',
+            'Babereye': 'Disponibles'
+        }
+    };
+    
+    // Update page title - handle the special case with the colored span
+    const pageTitle = document.querySelector('.page-title');
+    if (pageTitle) {
+        // Get the span with special styling
+        const spanElement = pageTitle.querySelector('span');
+        
+        if (spanElement) {
+            // Get original text in each part
+            const beforeSpan = pageTitle.childNodes[0].nodeValue?.trim() || '';
+            const spanText = spanElement.textContent.trim();
+            const afterSpan = pageTitle.childNodes[2] ? pageTitle.childNodes[2].nodeValue?.trim() || '' : '';
+            
+            // Translate each part
+            let translatedBeforeSpan = beforeSpan;
+            let translatedSpanText = spanText;
+            let translatedAfterSpan = afterSpan;
+            
+            // Apply translations for each part
+            if (pageTitleTranslations[language][beforeSpan]) {
+                translatedBeforeSpan = pageTitleTranslations[language][beforeSpan];
+            }
+            
+            if (pageTitleTranslations[language][spanText]) {
+                translatedSpanText = pageTitleTranslations[language][spanText];
+            }
+            
+            if (afterSpan && pageTitleTranslations[language][afterSpan]) {
+                translatedAfterSpan = pageTitleTranslations[language][afterSpan];
+            }
+            
+            // Reconstruct the title with translations
+            pageTitle.childNodes[0].nodeValue = translatedBeforeSpan + ' ';
+            spanElement.textContent = translatedSpanText;
+            if (pageTitle.childNodes[2]) {
+                pageTitle.childNodes[2].nodeValue = ' ' + translatedAfterSpan;
+            }
+        } else {
+            // Simple case - no span
+            const titleText = pageTitle.textContent;
+            let translatedTitle = titleText;
+            
+            // Apply all possible translations
+            Object.entries(pageTitleTranslations[language]).forEach(([key, value]) => {
+                translatedTitle = translatedTitle.replace(key, value);
+            });
+            
+            pageTitle.textContent = translatedTitle;
+        }
+    }
+    
+    // Update breadcrumb navigation
+    const breadcrumb = document.querySelector('.breadcrumb');
+    if (breadcrumb) {
+        const translations = {
+            'en': {
+                'AHABANZA': 'HOME',
+                'REBA UMUKOZI': 'FIND WORKER'
+            },
+            'fr': {
+                'AHABANZA': 'ACCUEIL',
+                'REBA UMUKOZI': 'TROUVER UN TRAVAILLEUR'
+            }
+        };
+        
+        // Get all text nodes and elements in the breadcrumb
+        const breadcrumbNodes = Array.from(breadcrumb.childNodes);
+        
+        breadcrumbNodes.forEach(node => {
+            // Handle links
+            if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'A') {
+                const originalText = node.textContent.trim();
+                if (translations[language][originalText]) {
+                    node.textContent = translations[language][originalText];
+                }
+            } 
+            // Handle any other elements that might contain translatable text
+            else if (node.nodeType === Node.ELEMENT_NODE) {
+                const originalText = node.textContent.trim();
+                if (translations[language][originalText]) {
+                    node.textContent = translations[language][originalText];
+                }
+            }
+        });
+    }
+}
+
+/**
+ * Initialize modals for login and worker details
+ */
+function initModals() {
+    // Login modal
+    const formModal = document.getElementById('formModal');
+    const closeModal = document.getElementById('closeModal');
+    
+    if (formModal && closeModal) {
+        closeModal.addEventListener('click', function() {
+            formModal.style.display = 'none';
+        });
+    }
+    
+    // Worker details modal
+    const workerModal = document.getElementById('workerModal');
+    const closeWorkerModal = document.getElementById('closeWorkerModal');
+    const cancelWorkerModal = document.getElementById('cancelWorkerModal');
+    
+    if (workerModal && closeWorkerModal && cancelWorkerModal) {
+        closeWorkerModal.addEventListener('click', function() {
+            workerModal.style.display = 'none';
+        });
+        
+        cancelWorkerModal.addEventListener('click', function() {
+            workerModal.style.display = 'none';
+        });
+    }
+    
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === formModal) {
+            formModal.style.display = 'none';
+        }
+        
+        if (event.target === workerModal) {
+            workerModal.style.display = 'none';
+        }
+    });
+}
+
+/**
+ * Initialize worker interactions (view profile, edit worker)
+ */
+function initWorkerInteractions() {
+    // Global function for opening worker modal 
+    window.openWorkerModal = function(id, name, position, email, phone, experience) {
+        const workerModal = document.getElementById('workerModal');
+        const modalTitle = workerModal.querySelector('.modal-title');
+        const workerName = document.getElementById('workerModalName');
+        const workerPosition = document.getElementById('workerModalPosition');
+        const editForm = document.getElementById('workerEditForm');
+        
+        // Update modal content
+        const language = localStorage.getItem('preferredLanguage') || 'rw';
+        
+        if (language === 'en') {
+            modalTitle.textContent = 'Worker Information';
+        } else if (language === 'fr') {
+            modalTitle.textContent = 'Informations sur le Travailleur';
+        } else {
+            modalTitle.textContent = 'Amakuru y\'Umukozi';
+        }
+        
+        workerName.textContent = name;
+        workerPosition.textContent = position;
+        
+        // Update form fields
+        document.getElementById('edit_name').value = name;
+        document.getElementById('edit_position').value = position;
+        document.getElementById('edit_email').value = email;
+        document.getElementById('edit_phone').value = phone;
+        document.getElementById('edit_experience').value = experience;
+        
+        // Update form action with worker ID
+        editForm.action = `/worker/${id}/edit/`;
+        
+        // Show modal
+        workerModal.style.display = 'block';
+    };
+    
+    // For sample workers
+    window.openSampleWorkerModal = function(name, position, email, phone, experience) {
+        window.openWorkerModal('sample', name, position, email, phone, experience);
+    };
+}
+
+/**
+ * Initialize form validation for search and worker forms
+ */
+function initFormValidation() {
+    const searchForm = document.querySelector('.search-form');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            // Basic validation can be added here
+            // For now, let the form submit normally
+        });
+    }
+    
+    const workerEditForm = document.getElementById('workerEditForm');
+    if (workerEditForm) {
+        workerEditForm.addEventListener('submit', function(e) {
+            // Add validation logic if needed
+            const phoneInput = document.getElementById('edit_phone');
+            const phonePattern = /^\+\d{3}\s\d{3}\s\d{3}\s\d{3}$/;
+            
+            if (phoneInput && !phonePattern.test(phoneInput.value)) {
+                e.preventDefault();
+                alert('Please enter a valid phone number in the format: +250 7XX XXX XXX');
+                return false;
+            }
+        });
+    }
+}
+
+/**
+ * Initialize animations for worker cards and UI elements
+ */
+function initAnimations() {
+    // Add animation classes when scrolling
+    const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.fade-in:not(.animated)');
+        
+        elements.forEach(function(element) {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add('animated');
+            }
+        });
+    };
+    
+    // Initial check and add scroll listener
+    animateOnScroll();
+    window.addEventListener('scroll', animateOnScroll);
+}
+
+/**
+ * Handle window resize events
+ */
+function handleWindowResize() {
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            const mainNav = document.querySelector('.main-nav');
+            const mobileMenuBtn = document.getElementById('mobile-menu');
+            
+            document.body.classList.remove('menu-open');
+            if (mainNav) mainNav.classList.remove('active');
+            if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+</script>
 
     <!-- Page Banner -->
     <section class="page-banner">
@@ -1443,8 +1790,407 @@
     </div>
 </footer>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script>
+   <header>
+    <div class="header-content">
+        <div class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" aria-expanded="false">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        
+        <nav aria-label="Main navigation">
+            <ul class="nav-menu" aria-hidden="true">
+                <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
+                <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
+                <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
+                <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKERS" data-fr="VOIR TRAVAILLEURS" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
+                <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
+                <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
+                <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
+            </ul>
+        </nav>
+        
+        <div class="header-actions">
+            <div class="language-selector">
+                <select id="languageSelect" class="language-dropdown" aria-label="Select language">
+                    <option value="en">En</option>
+                    <option value="fr">Fr</option>
+                    <option value="rw">Kin</option>
+                </select>
+            </div>
+            <a href="#" class="nav-button" id="openFormButton" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
+        </div>
+    </div>
+</header>
+
+<!-- Font Awesome CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+<style>
+    /* Reset and base styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    :root {
+        --primary-color: #3182ce;
+        --primary-hover: #2c5282;
+        --secondary-color: #f7fafc;
+        --text-color: #2d3748;
+        --text-light: #718096;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+        --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+        --radius-sm: 4px;
+        --radius-md: 6px;
+        --transition: all 0.3s ease;
+    }
+    
+    body {
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        color: var(--text-color);
+        line-height: 1.5;
+        font-size: 16px;
+        background-color: #ffffff;
+    }
+    
+    /* Header styles */
+    header {
+        background: linear-gradient(to right, #119fa5, #0d7176);
+        box-shadow: var(--shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    
+    /* Navigation */
+    nav {
+        flex-grow: 1;
+        margin: 0 20px;
+    }
+    
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 24px;
+        justify-content: center;
+    }
+    
+    .nav-menu li a {
+        text-decoration: none;
+        color:white;
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 0.3px;
+        transition: var(--transition);
+        padding: 6px 2px;
+        position: relative;
+    }
+    
+    .nav-menu li a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary-color);
+        transition: var(--transition);
+    }
+    
+    .nav-menu li a:hover {
+        color: white;
+    }
+    
+    .nav-menu li a:hover::after {
+        width: 100%;
+    }
+    
+    /* Header actions (language and login) */
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+    
+    /* Language selector */
+    .language-selector {
+        position: relative;
+    }
+    
+    .language-dropdown {
+        padding: 8px 14px;
+        background-color: var(--secondary-color);
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(0,0,0,0.08);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-color);
+        transition: var(--transition);
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232d3748' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        padding-right: 28px;
+    }
+    
+    .language-dropdown:hover, 
+    .language-dropdown:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 1px rgba(49,130,206,0.2);
+        outline: none;
+    }
+    
+    /* Login button */
+    .nav-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 9px 18px;
+        background-color: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        border-radius: var(--radius-md);
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: 0.3px;
+        transition: var(--transition);
+        border: none;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .nav-button:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .nav-button:active {
+        transform: translateY(0);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    /* Mobile menu toggle */
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24px;
+        height: 18px;
+        cursor: pointer;
+        z-index: 1001;
+        transition: var(--transition);
+    }
+    
+    .bar {
+        height: 2px;
+        width: 100%;
+        background-color: var(--text-color);
+        border-radius: 5px;
+        transition: var(--transition);
+    }
+    
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    
+    /* Responsive styles */
+    @media screen and (max-width: 1024px) {
+        .nav-menu {
+            gap: 16px;
+        }
+        
+        .nav-menu li a {
+            font-size: 14px;
+        }
+        
+        .header-content {
+            padding: 15px 4%;
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        .menu-toggle {
+            display: flex;
+        }
+        
+        .nav-menu {
+            position: fixed;
+            left: -100%;
+            top: 0;
+            flex-direction: column;
+            background-color: white;
+            width: 100%;
+            height: 100vh;
+            padding: 100px 0 30px;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 32px;
+        }
+        
+        .nav-menu.active {
+            left: 0;
+        }
+        
+        .nav-menu li a {
+            font-size: 18px;
+            padding: 10px;
+        }
+        
+        .nav-menu li a::after {
+            display: none;
+        }
+        
+        .header-content {
+            padding: 15px 5%;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .header-actions {
+            gap: 10px;
+        }
+        
+        .language-dropdown {
+            padding: 7px 10px 7px 12px;
+            font-size: 13px;
+            background-position: right 8px center;
+            padding-right: 24px;
+        }
+        
+        .nav-button {
+            padding: 7px 14px;
+            font-size: 13px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        /*
+         * Language selection functionality
+         */
+        const languageSelect = document.getElementById('languageSelect');
+        
+        // Function to change language
+        function changeLanguage(lang) {
+            // Update all elements with data attributes
+            const elements = document.querySelectorAll('[data-' + lang + ']');
+            
+            elements.forEach(element => {
+                element.textContent = element.getAttribute('data-' + lang);
+            });
+            
+            // Save language preference to localStorage
+            localStorage.setItem('preferredLanguage', lang);
+        }
+        
+        // Add change event listener to language dropdown
+        languageSelect.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            changeLanguage(selectedLanguage);
+        });
+        
+        // Load preferred language from localStorage if available
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang) {
+            languageSelect.value = savedLang;
+            changeLanguage(savedLang);
+        } else {
+            // Default language
+            changeLanguage('rw');
+        }
+        
+        /*
+         * Mobile menu functionality
+         */
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        // Toggle mobile menu function
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            // Disable scrolling when menu is open
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            
+            // Add aria attributes for accessibility
+            const expanded = mobileMenu.classList.contains('active');
+            mobileMenu.setAttribute('aria-expanded', expanded);
+            navMenu.setAttribute('aria-hidden', !expanded);
+        }
+        
+        // Toggle menu on click
+        mobileMenu.addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleMobileMenu();
+        });
+        
+        // Close mobile menu when clicking on a nav link
+        const navLinks = document.querySelectorAll('.nav-menu li a');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navMenu.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideMenu = navMenu.contains(event.target);
+            const isClickOnToggle = mobileMenu.contains(event.target);
+            
+            if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+        
+        // Close menu on ESC key press
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+        
+        // Handle resize events
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+        
+        /*
+         * Modal functionality
+         */
         // Login Modal functionality
         const loginModal = document.getElementById("formModal");
         const openLoginBtn = document.getElementById("openFormButton");
@@ -1457,38 +2203,48 @@
         const workerEditForm = document.getElementById("workerEditForm");
         
         // Open login modal
-        openLoginBtn.addEventListener("click", function(e) {
-            e.preventDefault();
-            loginModal.style.display = "block";
-        });
+        if (openLoginBtn) {
+            openLoginBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                loginModal.style.display = "block";
+            });
+        }
         
         // Close login modal
-        closeLoginModal.addEventListener("click", function() {
-            loginModal.style.display = "none";
-        });
+        if (closeLoginModal) {
+            closeLoginModal.addEventListener("click", function() {
+                loginModal.style.display = "none";
+            });
+        }
         
         // Close worker modal
-        closeWorkerModal.addEventListener("click", function() {
-            workerModal.style.display = "none";
-        });
+        if (closeWorkerModal) {
+            closeWorkerModal.addEventListener("click", function() {
+                workerModal.style.display = "none";
+            });
+        }
         
         // Cancel worker modal
-        cancelWorkerModal.addEventListener("click", function() {
-            workerModal.style.display = "none";
-        });
+        if (cancelWorkerModal) {
+            cancelWorkerModal.addEventListener("click", function() {
+                workerModal.style.display = "none";
+            });
+        }
         
         // Close modals when clicking outside
         window.addEventListener("click", function(event) {
-            if (event.target == loginModal) {
+            if (loginModal && event.target == loginModal) {
                 loginModal.style.display = "none";
             }
-            if (event.target == workerModal) {
+            if (workerModal && event.target == workerModal) {
                 workerModal.style.display = "none";
             }
         });
         
-        // Open worker modal for real employees
-        function openWorkerModal(id, name, position, email, phone, experience) {
+        // Expose modal functions to global scope
+        window.openWorkerModal = function(id, name, position, email, phone, experience) {
+            if (!workerEditForm) return;
+            
             // Set action URL for the form
             workerEditForm.action = "{% url 'edit_employee' 0 %}".replace('0', id);
             
@@ -1505,10 +2261,11 @@
             
             // Show the modal
             workerModal.style.display = "block";
-        }
+        };
         
-        // Open worker modal for sample employees
-        function openSampleWorkerModal(name, position, email, phone, experience) {
+        window.openSampleWorkerModal = function(name, position, email, phone, experience) {
+            if (!workerEditForm) return;
+            
             // Fill in the form fields
             document.getElementById("edit_name").value = name;
             document.getElementById("edit_position").value = position;
@@ -1525,12 +2282,14 @@
             
             // Show the modal
             workerModal.style.display = "block";
-        }
+        };
         
-        // Fade-in animation
-        document.addEventListener("DOMContentLoaded", function() {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
+        /*
+         * Fade-in animation
+         */
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        if (fadeElements.length > 0) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1542,7 +2301,8 @@
             fadeElements.forEach(element => {
                 observer.observe(element);
             });
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>

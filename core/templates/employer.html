@@ -66,12 +66,12 @@ nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
     transition: all 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #3b82f6;
+    color:rgb(240, 242, 245);
 }
 
 .nav-button {
@@ -86,7 +86,7 @@ nav ul li a:hover {
 
 .nav-button:hover {
     background-color: #2563eb;
-    transform: translateY(-2px);
+    
 }
 
 /* Media queries for responsiveness */
@@ -834,276 +834,463 @@ nav ul li a:hover {
 </head>
 <body>
     
-    <nav>
-        <div class="header-content">
-            <ul>
-                <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
-                <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
-                <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
-                <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKERS" data-fr="VOIR TRAVAILLEURS" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
-                <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
-                <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
-                <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
-            </ul>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Job Portal</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <style>
+            /* Your original CSS remains intact */
+            nav .header-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
             
-            <div class="right-nav-elements">
-               
+            nav ul {
+                display: flex;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            
+            nav ul li {
+                margin-right: 20px;
+            }
+            
+            .right-nav-elements {
+                display: flex;
+                align-items: center;
+            }
+    
+            /* Added Responsive CSS */
+            * {
+                box-sizing: border-box;
+            }
+    
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+    
+            /* Mobile menu toggle button - initially hidden */
+            .mobile-menu-toggle {
+                display: none;
+                font-size: 24px;
+                cursor: pointer;
+            }
+    
+            /* Navigation responsiveness */
+            @media screen and (max-width: 960px) {
+                nav .header-content {
+                    flex-direction: column;
+                    padding: 10px;
+                    position: relative;
+                }
                 
-                <div class="language-selector">
-                    <select id="language-select" style="padding: 6px; background-color: #f3f4f6; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; outline: none; margin-left: 15px;">
-                        <option value="en">En</option>
-                        <option value="fr">Fr</option>
-                        <option value="rw" selected>Kin</option>
-                    </select>
+                nav ul {
+                    flex-direction: column;
+                    width: 100%;
+                    text-align: center;
+                    margin-bottom: 15px;
+                    display: none;
+                }
+                
+                nav ul.active {
+                    display: flex;
+                }
+                
+                nav ul li {
+                    margin-right: 0;
+                    margin-bottom: 10px;
+                }
+                
+                .right-nav-elements {
+                    width: 100%;
+                    justify-content: center;
+                    margin-top: 10px;
+                }
+    
+                .mobile-menu-toggle {
+                    display: block;
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                }
+            }
+    
+            /* Hero section responsiveness */
+            @media screen and (max-width: 768px) {
+                .hero-content {
+                    padding: 40px 20px;
+                    text-align: center;
+                }
+                
+                .hero-title {
+                    font-size: 28px;
+                }
+                
+                .hero-description {
+                    font-size: 16px;
+                }
+                
+                .hero-buttons {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                
+                .hero-buttons a {
+                    width: 100%;
+                    margin: 5px 0;
+                }
+            }
+    
+            /* Features section responsiveness */
+            @media screen and (max-width: 960px) {
+                .features-grid {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 20px;
+                }
+            }
+    
+            @media screen and (max-width: 600px) {
+                .features-grid {
+                    grid-template-columns: 1fr;
+                }
+                
+                .section-title h2 {
+                    font-size: 24px;
+                }
+            }
+    
+            /* About section responsiveness */
+            @media screen and (max-width: 960px) {
+                .about-container {
+                    flex-direction: column;
+                }
+                
+                .about-image, .about-content {
+                    width: 100%;
+                    padding: 20px;
+                }
+            }
+    
+            /* Services section responsiveness */
+            @media screen and (max-width: 960px) {
+                .services-grid {
+                    grid-template-columns: 1fr;
+                    gap: 30px;
+                }
+                
+                .service-card {
+                    flex-direction: column;
+                }
+                
+                .service-image, .service-content {
+                    width: 100%;
+                }
+                
+                .service-image {
+                    height: 200px;
+                }
+            }
+    
+            /* Stats section responsiveness */
+            @media screen and (max-width: 960px) {
+                .stats-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+    
+            @media screen and (max-width: 600px) {
+                .stats-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <div class="header-content">
+                <ul>
+                    <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
+                    <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
+                    <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
+                    <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKERS" data-fr="VOIR TRAVAILLEURS" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
+                    <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
+                    <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
+                    <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
+                </ul>
+                
+                <div class="right-nav-elements">
+                    <div class="language-selector">
+                        <select id="language-select" style="padding: 6px; background-color: #f3f4f6; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; outline: none; margin-left: 15px;">
+                            <option value="en">En</option>
+                            <option value="fr">Fr</option>
+                            <option value="rw" selected>Kin</option>
+                        </select>
+                    </div>
+                    <a href="#" class="nav-button" id="openFormButton" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
                 </div>
-                <a href="#" class="nav-button" id="openFormButton" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
             </div>
-        </div>
-    </nav>
+        </nav>
+        
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title" data-en="Start Your Journey to Find the Right Staff for Your Business" data-fr="Commencez Votre Parcours Pour Trouver le Personnel Idéal Pour Votre Entreprise" data-rw="Tangiza Urugendo RwoKubona Abakozi Babereye Ikigo Cyawe">Tangiza Urugendo Rwo Kubona Abakozi Babereye Ikigo Cyawe</h1>
+                <p class="hero-description" data-en="We help employers find professional staff. Share your job openings on our platform and find the right employees for your work." data-fr="Nous aidons les employeurs à trouver du personnel professionnel. Partagez vos offres d'emploi sur notre plateforme et trouvez les bons employés pour votre travail." data-rw="Dufasha abakoresha kubona abakozi b'umwuga. Sangiza imyanya y'akazi yawe kuri urubuga rwacu kandi ubone abakozi babereye akazi kawe.">Dufasha abakoresha kubona abakozi b'umwuga. Sangiza imyanya y'akazi yawe kuri urubuga rwacu kandi ubone abakozi babereye akazi kawe.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="primary-button" id="openFormBtn" data-en="Submit Employer Information" data-fr="Soumettre les Informations de l'Employeur" data-rw="Tanga Amakuru y'Umukoresha">Tanga Amakuru y'Umukoresha</a>
+                    <a href="{% url 'view_worker' %}" class="outline-button" data-en="View Workers" data-fr="Voir les Travailleurs" data-rw="Reba Abakozi">Reba Abakozi</a>
+                </div>
+            </div>
+        </section>
     
-    <style>
-        nav .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        nav ul li {
-            margin-right: 20px;
-        }
-        
-        .right-nav-elements {
-            display: flex;
-            align-items: center;
-        }
-    </style>
+        <!-- Feature Cards Section -->
+        <section class="features-section">
+            <div class="section-title">
+                <h2 data-en="What You Need As an Employer" data-fr="Ce Dont Vous Avez Besoin En Tant qu'Employeur" data-rw="Ibyo Ukeneye Nk'umukoresha">Ibyo Ukeneye Nk'umukoresha</h2>
+                <p data-en="Quality services to help employers find suitable staff for their businesses" data-fr="Des services de qualité pour aider les employeurs à trouver du personnel adapté à leurs entreprises" data-rw="Serivisi zinoze zo gufasha abakoresha kubona abakozi babereye ibigo byabo">Serivisi zinoze zo gufasha abakoresha kubona abakozi babereye ibigo byabo</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-number">01</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 data-en="Support Staff" data-fr="Personnel de Soutien" data-rw="Shyigikira Abakozi">Shyigikira Abakozi</h3>
+                        <p data-en="We help employers find staff with proven skills who can improve productivity and promote a positive work culture." data-fr="Nous aidons les employeurs à trouver du personnel avec des compétences avérées qui peut améliorer la productivité et promouvoir une culture de travail positive." data-rw="Dufasha abakoresha kubona abakozi bafite ubumenyi buhamye, bashobora guteza imbere umusaruro no guteza imbere umuco mwiza w'akazi.">Dufasha abakoresha kubona abakozi bafite ubumenyi buhamye, bashobora guteza imbere umusaruro no guteza imbere umuco mwiza w'akazi.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-number">02</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 data-en="Promote Opportunities" data-fr="Promouvoir les Opportunités" data-rw="Kwamamaza Amahirwe">Kwamamaza Amahirwe</h3>
+                        <p data-en="Share your job openings with many people to attract ideal and talented candidates." data-fr="Partagez vos offres d'emploi avec de nombreuses personnes pour attirer des candidats idéaux et talentueux." data-rw="Sangiza imyanya y'akazi yawe ku bantu benshi kugira ngo ukurure abakandida b'icyitegererezo kandi b'impano.">Sangiza imyanya y'akazi yawe ku bantu benshi kugira ngo ukurure abakandida b'icyitegererezo kandi b'impano.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-number">03</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 data-en="Vetted Candidates" data-fr="Candidats Vérifiés" data-rw="Abakandida Basuzumwe">Abakandida Basuzumwe</h3>
+                        <p data-en="We thoroughly screen candidates to identify only those with skills and experience that match your requirements." data-fr="Nous examinons soigneusement les candidats pour identifier uniquement ceux dont les compétences et l'expérience correspondent à vos exigences." data-rw="Dusuzuma abakandida byimbitse kugira ngo tugaragaze gusa abafite ubumenyi n'ubunararibonye bihuye n'ibikenewe byawe.">Dusuzuma abakandida byimbitse kugira ngo tugaragaze gusa abafite ubumenyi n'ubunararibonye bihuye n'ibikenewe byawe.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card fade-in delay-3">
+                    <div class="feature-number">04</div>
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 data-en="Flexible Solutions" data-fr="Solutions Flexibles" data-rw="Ibisubizo Bihinduka">Ibisubizo Bihinduka</h3>
+                        <p data-en="Adapt your employment approach to meet changing business needs." data-fr="Adaptez votre approche d'emploi pour répondre aux besoins changeants de l'entreprise." data-rw="Hindura uburyo bwo gukoresha abakozi bwawe kugira ngo buhuze n'ibikenewe by'ubucuruzi bihindagurika.">Hindura uburyo bwo gukoresha abakozi bwawe kugira ngo buhuze n'ibikenewe by'ubucuruzi bihindagurika.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const languageSelect = document.getElementById('language-select');
-        
-        // Function to change language
-        function changeLanguage(lang) {
-            // Update all elements with data attributes
-            document.querySelectorAll('[data-en], [data-fr], [data-rw]').forEach(element => {
-                if (element.dataset[lang]) {
-                    element.textContent = element.dataset[lang];
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="about-container">
+                <div class="about-image fade-in">
+                    <img src="{% static 'images/nature.jpg' %}" alt="About JobLink">
+                </div>
+                
+                <div class="about-content fade-in delay-2">
+                    <h2 data-en="Partnering With Us Ensures <span>Finding the Right Staff</span>" data-fr="Collaborer Avec Nous Garantit <span>Trouver le Bon Personnel</span>" data-rw="Kutwiga Biratuma Ubona <span>Abakozi Babereye</span>">Kutwiga Biratuma Ubona <span>Abakozi Babereye</span></h2>
+                    <p data-en="With 25+ years of experience, we have provided many employers with suitable staff. We value working with employers to understand their needs and help them find the right staff." data-fr="Avec plus de 25 ans d'expérience, nous avons fourni à de nombreux employeurs du personnel adapté. Nous apprécions de travailler avec les employeurs pour comprendre leurs besoins et les aider à trouver le personnel adéquat." data-rw="Mu gihe cy'imyaka 25+ y'uburambe, twahaye abakoresha benshi abakozi babereye. Duha agaciro gukorera hamwe n'abakoresha kugira ngo tumve neza ibikenewe kandi tubafashe kubona abakozi bakwiye.">Mu gihe cy'imyaka 25+ y'uburambe, twahaye abakoresha benshi abakozi babereye. Duha agaciro gukorera hamwe n'abakoresha kugira ngo tumve neza ibikenewe kandi tubafashe kubona abakozi bakwiye.</p>
+                    
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p data-en="Helping employers reduce time and costs associated with recruitment" data-fr="Aider les employeurs à réduire le temps et les coûts associés au recrutement" data-rw="Gufasha abakoresha kugabanya igihe n'amafaranga bijyana no gushaka abakozi">Gufasha abakoresha kugabanya igihe n'amafaranga bijyana no gushaka abakozi</p>
+                    </div>
+                    
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p data-en="Helping employees quickly find work matching their skills" data-fr="Aider les employés à trouver rapidement un travail correspondant à leurs compétences" data-rw="Gufasha abakozi kwihutisha kubona akazi gahuje n'ubushobozi bwabo">Gufasha abakozi kwihutisha kubona akazi gahuje n'ubushobozi bwabo</p>
+                    </div>
+                    
+                    <a href="#" class="primary-button" id="aboutFormBtn" data-en="Submit Employer Information" data-fr="Soumettre les Informations de l'Employeur" data-rw="Tanga Amakuru y'Umukoresha">Tanga Amakuru y'Umukoresha</a>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Services Section -->
+        <section class="services-section">
+            <div class="services-container">
+                <div class="section-title">
+                    <h2 data-en="Our Services" data-fr="Nos Services" data-rw="Serivisi Zacu">Serivisi Zacu</h2>
+                    <p data-en="We help employers find professional staff through these services" data-fr="Nous aidons les employeurs à trouver du personnel professionnel grâce à ces services" data-rw="Dufasha abakoresha kubona abakozi b'umwuga binyuze muri izi serivisi">Dufasha abakoresha kubona abakozi b'umwuga binyuze muri izi serivisi</p>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card fade-in">
+                        <div class="service-image">
+                            <img src="{% static 'images/nature.jpg' %}" alt="Gushaka Abakozi">
+                        </div>
+                        <div class="service-content">
+                            <h3 data-en="Recruitment" data-fr="Recrutement" data-rw="Gushaka Abakozi">Gushaka Abakozi</h3>
+                            <p data-en="We recruit capable employees for employers with the necessary knowledge and qualifications. We screen candidates to select the most capable." data-fr="Nous recrutons des employés capables pour les employeurs avec les connaissances et qualifications nécessaires. Nous évaluons les candidats pour sélectionner les plus compétents." data-rw="Dushakira abakoresha abakozi bashoboye kandi bafite ubumenyi n'impamyabushobozi zikenewe. Dusuzuma abakandida kugira ngo dutoranyemo abashoboye.">Dushakira abakoresha abakozi bashoboye kandi bafite ubumenyi n'impamyabushobozi zikenewe. Dusuzuma abakandida kugira ngo dutoranyemo abashoboye.</p>
+                            <a href="#" class="read-more" data-en="Read More" data-fr="Lire Plus" data-rw="Soma Byinshi">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card fade-in delay-1">
+                        <div class="service-image">
+                            <img src="{% static 'images/nature.jpg' %}" alt="Guhugura Abakozi">
+                        </div>
+                        <div class="service-content">
+                            <h3 data-en="Staff Training" data-fr="Formation du Personnel" data-rw="Guhugura Abakozi">Guhugura Abakozi</h3>
+                            <p data-en="We organize staff training programs according to organizational needs, enabling employees to have the skills required to be more productive." data-fr="Nous organisons des programmes de formation du personnel en fonction des besoins de l'organisation, permettant aux employés d'acquérir les compétences nécessaires pour être plus productifs." data-rw="Dutegura gahunda zo guhugura abakozi zikurikije ibikenewe n'ikigo, bityo bigatuma abakozi bagira ubushobozi bukenewe kugira ngo barusheho kugira umusaruro.">Dutegura gahunda zo guhugura abakozi zikurikije ibikenewe n'ikigo, bityo bigatuma abakozi bagira ubushobozi bukenewe kugira ngo barusheho kugira umusaruro.</p>
+                            <a href="#" class="read-more" data-en="Read More" data-fr="Lire Plus" data-rw="Soma Byinshi">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card fade-in delay-2">
+                        <div class="service-image">
+                            <img src="{% static 'images/nature.jpg' %}" alt="Guhuza Impano">
+                        </div>
+                        <div class="service-content">
+                            <h3 data-en="Talent Matching" data-fr="Correspondance de Talents" data-rw="Guhuza Impano">Guhuza Impano</h3>
+                            <p data-en="We conduct thorough reviews for employers to match them with employees who have talents aligned with organizational needs and desires to achieve business goals." data-fr="Nous effectuons des examens approfondis pour les employeurs afin de les associer à des employés dont les talents correspondent aux besoins et aux désirs de l'organisation pour atteindre les objectifs commerciaux." data-rw="Dukorera abakoresha igenzura ryimbitse kugira ngo tubahuze n'abakozi bafite impano zihuye n'ibikenewe n'ibyifuzo by'ikigo kugira ngo bagere ku ntego z'ubucuruzi.">Dukorera abakoresha igenzura ryimbitse kugira ngo tubahuze n'abakozi bafite impano zihuye n'ibikenewe n'ibyifuzo by'ikigo kugira ngo bagere ku ntego z'ubucuruzi.</p>
+                            <a href="#" class="read-more" data-en="Read More" data-fr="Lire Plus" data-rw="Soma Byinshi">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-container">
+                <div class="stats-grid">
+                    <div class="stat-item fade-in">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-number">25+</div>
+                        <div class="stat-label" data-en="Years of Experience" data-fr="Années d'Expérience" data-rw="Imyaka y'Uburambe">Imyaka y'Uburambe</div>
+                    </div>
+                    
+                    <div class="stat-item fade-in delay-1">
+                        <div class="stat-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label" data-en="Employers Helped" data-fr="Employeurs Aidés" data-rw="Abakoresha Twafashije">Abakoresha Twafashije</div>
+                    </div>
+                    
+                    <div class="stat-item fade-in delay-2">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="stat-number">5,000+</div>
+                        <div class="stat-label" data-en="Workers Placed" data-fr="Travailleurs Placés" data-rw="Abakozi Bashakiwe Akazi">Abakozi Bashakiwe Akazi</div>
+                    </div>
+                    
+                    <div class="stat-item fade-in delay-3">
+                        <div class="stat-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label" data-en="Employer Satisfaction Rate" data-fr="Taux de Satisfaction des Employeurs" data-rw="Abakoresha Baduha Amanota">Abakoresha Baduha Amanota</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <script>
+        // Language switching functionality - original code
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSelect = document.getElementById('language-select');
+            
+            // Function to change language
+            function changeLanguage(lang) {
+                // Update all elements with data attributes
+                document.querySelectorAll('[data-en], [data-fr], [data-rw]').forEach(element => {
+                    if (element.dataset[lang]) {
+                        element.textContent = element.dataset[lang];
+                    }
+                });
+                
+                // Update all other translatable elements
+                document.querySelectorAll('.translatable').forEach(element => {
+                    if (element.dataset[lang]) {
+                        // Handle elements with HTML content (like spans with styling)
+                        element.innerHTML = element.dataset[lang];
+                    }
+                });
+                
+                // Save language preference
+                localStorage.setItem('preferredLanguage', lang);
+                
+                // Debug
+                console.log('Language changed to:', lang);
+            }
+            
+            // Event listener for language select change
+            languageSelect.addEventListener('change', function() {
+                changeLanguage(this.value);
+            });
+            
+            // Check for saved language preference or apply default
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                languageSelect.value = savedLang;
+                changeLanguage(savedLang);
+            } else {
+                // Apply the selected default language (rw)
+                changeLanguage('rw');
+            }
+    
+            // Create mobile menu toggle button
+            const nav = document.querySelector('nav');
+            const navMenu = document.querySelector('nav ul');
+            
+            // Create mobile menu toggle
+            const mobileMenuToggle = document.createElement('div');
+            mobileMenuToggle.className = 'mobile-menu-toggle';
+            mobileMenuToggle.innerHTML = '☰';
+            nav.querySelector('.header-content').prepend(mobileMenuToggle);
+            
+            // Mobile menu functionality
+            mobileMenuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                mobileMenuToggle.innerHTML = navMenu.classList.contains('active') ? '✕' : '☰';
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 960) {
+                    navMenu.classList.remove('active');
+                    mobileMenuToggle.innerHTML = '☰';
                 }
             });
             
-            // Update all other translatable elements
-            document.querySelectorAll('.translatable').forEach(element => {
-                if (element.dataset[lang]) {
-                    // Handle elements with HTML content (like spans with styling)
-                    element.innerHTML = element.dataset[lang];
+            // Hide mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!nav.contains(event.target) && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    mobileMenuToggle.innerHTML = '☰';
                 }
             });
-            
-            // Save language preference
-            localStorage.setItem('preferredLanguage', lang);
-            
-            // Debug
-            console.log('Language changed to:', lang);
-        }
-        
-        // Event listener for language select change
-        languageSelect.addEventListener('change', function() {
-            changeLanguage(this.value);
         });
-        
-        // Check for saved language preference or apply default
-        const savedLang = localStorage.getItem('preferredLanguage');
-        if (savedLang) {
-            languageSelect.value = savedLang;
-            changeLanguage(savedLang);
-        } else {
-            // Apply the selected default language (rw)
-            changeLanguage('rw');
-        }
-    });
-    </script>
-    <!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-content">
-        <h1 class="hero-title" data-en="Start Your Journey to Find the Right Staff for Your Business" data-fr="Commencez Votre Parcours Pour Trouver le Personnel Idéal Pour Votre Entreprise" data-rw="Tangiza Urugendo RwoKubona Abakozi Babereye Ikigo Cyawe">Tangiza Urugendo Rwo Kubona Abakozi Babereye Ikigo Cyawe</h1>
-        <p class="hero-description" data-en="We help employers find professional staff. Share your job openings on our platform and find the right employees for your work." data-fr="Nous aidons les employeurs à trouver du personnel professionnel. Partagez vos offres d'emploi sur notre plateforme et trouvez les bons employés pour votre travail." data-rw="Dufasha abakoresha kubona abakozi b'umwuga. Sangiza imyanya y'akazi yawe kuri urubuga rwacu kandi ubone abakozi babereye akazi kawe.">Dufasha abakoresha kubona abakozi b'umwuga. Sangiza imyanya y'akazi yawe kuri urubuga rwacu kandi ubone abakozi babereye akazi kawe.</p>
-        <div class="hero-buttons">
-            <a href="#" class="primary-button" id="openFormBtn" data-en="Submit Employer Information" data-fr="Soumettre les Informations de l'Employeur" data-rw="Tanga Amakuru y'Umukoresha">Tanga Amakuru y'Umukoresha</a>
-            <a href="{% url 'view_worker' %}" class="outline-button" data-en="View Workers" data-fr="Voir les Travailleurs" data-rw="Reba Abakozi">Reba Abakozi</a>
-        </div>
-    </div>
-</section>
-
-<!-- Feature Cards Section -->
-<section class="features-section">
-    <div class="section-title">
-        <h2 data-en="What You Need As an Employer" data-fr="Ce Dont Vous Avez Besoin En Tant qu'Employeur" data-rw="Ibyo Ukeneye Nk'umukoresha">Ibyo Ukeneye Nk'umukoresha</h2>
-        <p data-en="Quality services to help employers find suitable staff for their businesses" data-fr="Des services de qualité pour aider les employeurs à trouver du personnel adapté à leurs entreprises" data-rw="Serivisi zinoze zo gufasha abakoresha kubona abakozi babereye ibigo byabo">Serivisi zinoze zo gufasha abakoresha kubona abakozi babereye ibigo byabo</p>
-    </div>
-    <div class="features-grid">
-        <div class="feature-card fade-in">
-            <div class="feature-number">01</div>
-            <div class="feature-icon">
-                <i class="fas fa-users"></i>
-            </div>
-            <div class="feature-content">
-                <h3 data-en="Support Staff" data-fr="Personnel de Soutien" data-rw="Shyigikira Abakozi">Shyigikira Abakozi</h3>
-                <p data-en="We help employers find staff with proven skills who can improve productivity and promote a positive work culture." data-fr="Nous aidons les employeurs à trouver du personnel avec des compétences avérées qui peut améliorer la productivité et promouvoir une culture de travail positive." data-rw="Dufasha abakoresha kubona abakozi bafite ubumenyi buhamye, bashobora guteza imbere umusaruro no guteza imbere umuco mwiza w'akazi.">Dufasha abakoresha kubona abakozi bafite ubumenyi buhamye, bashobora guteza imbere umusaruro no guteza imbere umuco mwiza w'akazi.</p>
-            </div>
-        </div>
-        
-        <div class="feature-card fade-in delay-1">
-            <div class="feature-number">02</div>
-            <div class="feature-icon">
-                <i class="fas fa-bullhorn"></i>
-            </div>
-            <div class="feature-content">
-                <h3 data-en="Promote Opportunities" data-fr="Promouvoir les Opportunités" data-rw="Kwamamaza Amahirwe">Kwamamaza Amahirwe</h3>
-                <p data-en="Share your job openings with many people to attract ideal and talented candidates." data-fr="Partagez vos offres d'emploi avec de nombreuses personnes pour attirer des candidats idéaux et talentueux." data-rw="Sangiza imyanya y'akazi yawe ku bantu benshi kugira ngo ukurure abakandida b'icyitegererezo kandi b'impano.">Sangiza imyanya y'akazi yawe ku bantu benshi kugira ngo ukurure abakandida b'icyitegererezo kandi b'impano.</p>
-            </div>
-        </div>
-        
-        <div class="feature-card fade-in delay-2">
-            <div class="feature-number">03</div>
-            <div class="feature-icon">
-                <i class="fas fa-user-check"></i>
-            </div>
-            <div class="feature-content">
-                <h3 data-en="Vetted Candidates" data-fr="Candidats Vérifiés" data-rw="Abakandida Basuzumwe">Abakandida Basuzumwe</h3>
-                <p data-en="We thoroughly screen candidates to identify only those with skills and experience that match your requirements." data-fr="Nous examinons soigneusement les candidats pour identifier uniquement ceux dont les compétences et l'expérience correspondent à vos exigences." data-rw="Dusuzuma abakandida byimbitse kugira ngo tugaragaze gusa abafite ubumenyi n'ubunararibonye bihuye n'ibikenewe byawe.">Dusuzuma abakandida byimbitse kugira ngo tugaragaze gusa abafite ubumenyi n'ubunararibonye bihuye n'ibikenewe byawe.</p>
-            </div>
-        </div>
-        
-        <div class="feature-card fade-in delay-3">
-            <div class="feature-number">04</div>
-            <div class="feature-icon">
-                <i class="fas fa-cogs"></i>
-            </div>
-            <div class="feature-content">
-                <h3 data-en="Flexible Solutions" data-fr="Solutions Flexibles" data-rw="Ibisubizo Bihinduka">Ibisubizo Bihinduka</h3>
-                <p data-en="Adapt your employment approach to meet changing business needs." data-fr="Adaptez votre approche d'emploi pour répondre aux besoins changeants de l'entreprise." data-rw="Hindura uburyo bwo gukoresha abakozi bwawe kugira ngo buhuze n'ibikenewe by'ubucuruzi bihindagurika.">Hindura uburyo bwo gukoresha abakozi bwawe kugira ngo buhuze n'ibikenewe by'ubucuruzi bihindagurika.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- About Section -->
-<section class="about-section">
-    <div class="about-container">
-        <div class="about-image fade-in">
-            <img src="{% static 'images/nature.jpg' %}" alt="About JobLink">
-        </div>
-        
-        <div class="about-content fade-in delay-2">
-            <h2 data-en="Partnering With Us Ensures <span>Finding the Right Staff</span>" data-fr="Collaborer Avec Nous Garantit <span>Trouver le Bon Personnel</span>" data-rw="Kutwiga Biratuma Ubona <span>Abakozi Babereye</span>">Kutwiga Biratuma Ubona <span>Abakozi Babereye</span></h2>
-            <p data-en="With 25+ years of experience, we have provided many employers with suitable staff. We value working with employers to understand their needs and help them find the right staff." data-fr="Avec plus de 25 ans d'expérience, nous avons fourni à de nombreux employeurs du personnel adapté. Nous apprécions de travailler avec les employeurs pour comprendre leurs besoins et les aider à trouver le personnel adéquat." data-rw="Mu gihe cy'imyaka 25+ y'uburambe, twahaye abakoresha benshi abakozi babereye. Duha agaciro gukorera hamwe n'abakoresha kugira ngo tumve neza ibikenewe kandi tubafashe kubona abakozi bakwiye.">Mu gihe cy'imyaka 25+ y'uburambe, twahaye abakoresha benshi abakozi babereye. Duha agaciro gukorera hamwe n'abakoresha kugira ngo tumve neza ibikenewe kandi tubafashe kubona abakozi bakwiye.</p>
-            
-            <div class="about-feature">
-                <i class="fas fa-check-circle"></i>
-                <p data-en="Helping employers reduce time and costs associated with recruitment" data-fr="Aider les employeurs à réduire le temps et les coûts associés au recrutement" data-rw="Gufasha abakoresha kugabanya igihe n'amafaranga bijyana no gushaka abakozi">Gufasha abakoresha kugabanya igihe n'amafaranga bijyana no gushaka abakozi</p>
-            </div>
-            
-            <div class="about-feature">
-                <i class="fas fa-check-circle"></i>
-                <p data-en="Helping employees quickly find work matching their skills" data-fr="Aider les employés à trouver rapidement un travail correspondant à leurs compétences" data-rw="Gufasha abakozi kwihutisha kubona akazi gahuje n'ubushobozi bwabo">Gufasha abakozi kwihutisha kubona akazi gahuje n'ubushobozi bwabo</p>
-            </div>
-            
-            <a href="#" class="primary-button" id="aboutFormBtn" data-en="Submit Employer Information" data-fr="Soumettre les Informations de l'Employeur" data-rw="Tanga Amakuru y'Umukoresha">Tanga Amakuru y'Umukoresha</a>
-        </div>
-    </div>
-</section>
-
-<!-- Services Section -->
-<section class="services-section">
-    <div class="services-container">
-        <div class="section-title">
-            <h2 data-en="Our Services" data-fr="Nos Services" data-rw="Serivisi Zacu">Serivisi Zacu</h2>
-            <p data-en="We help employers find professional staff through these services" data-fr="Nous aidons les employeurs à trouver du personnel professionnel grâce à ces services" data-rw="Dufasha abakoresha kubona abakozi b'umwuga binyuze muri izi serivisi">Dufasha abakoresha kubona abakozi b'umwuga binyuze muri izi serivisi</p>
-        </div>
-        
-        <div class="services-grid">
-            <div class="service-card fade-in">
-                <div class="service-image">
-                    <img src="{% static 'images/nature.jpg' %}" alt="Gushaka Abakozi">
-                </div>
-                <div class="service-content">
-                    <h3 data-en="Recruitment" data-fr="Recrutement" data-rw="Gushaka Abakozi">Gushaka Abakozi</h3>
-                    <p data-en="We recruit capable employees for employers with the necessary knowledge and qualifications. We screen candidates to select the most capable." data-fr="Nous recrutons des employés capables pour les employeurs avec les connaissances et qualifications nécessaires. Nous évaluons les candidats pour sélectionner les plus compétents." data-rw="Dushakira abakoresha abakozi bashoboye kandi bafite ubumenyi n'impamyabushobozi zikenewe. Dusuzuma abakandida kugira ngo dutoranyemo abashoboye.">Dushakira abakoresha abakozi bashoboye kandi bafite ubumenyi n'impamyabushobozi zikenewe. Dusuzuma abakandida kugira ngo dutoranyemo abashoboye.</p>
-                    <a href="#" class="read-more" data-en="Read More" data-fr="Lire Plus" data-rw="Soma Byinshi">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <div class="service-card fade-in delay-1">
-                <div class="service-image">
-                    <img src="{% static 'images/nature.jpg' %}" alt="Guhugura Abakozi">
-                </div>
-                <div class="service-content">
-                    <h3 data-en="Staff Training" data-fr="Formation du Personnel" data-rw="Guhugura Abakozi">Guhugura Abakozi</h3>
-                    <p data-en="We organize staff training programs according to organizational needs, enabling employees to have the skills required to be more productive." data-fr="Nous organisons des programmes de formation du personnel en fonction des besoins de l'organisation, permettant aux employés d'acquérir les compétences nécessaires pour être plus productifs." data-rw="Dutegura gahunda zo guhugura abakozi zikurikije ibikenewe n'ikigo, bityo bigatuma abakozi bagira ubushobozi bukenewe kugira ngo barusheho kugira umusaruro.">Dutegura gahunda zo guhugura abakozi zikurikije ibikenewe n'ikigo, bityo bigatuma abakozi bagira ubushobozi bukenewe kugira ngo barusheho kugira umusaruro.</p>
-                    <a href="#" class="read-more" data-en="Read More" data-fr="Lire Plus" data-rw="Soma Byinshi">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <div class="service-card fade-in delay-2">
-                <div class="service-image">
-                    <img src="{% static 'images/nature.jpg' %}" alt="Guhuza Impano">
-                </div>
-                <div class="service-content">
-                    <h3 data-en="Talent Matching" data-fr="Correspondance de Talents" data-rw="Guhuza Impano">Guhuza Impano</h3>
-                    <p data-en="We conduct thorough reviews for employers to match them with employees who have talents aligned with organizational needs and desires to achieve business goals." data-fr="Nous effectuons des examens approfondis pour les employeurs afin de les associer à des employés dont les talents correspondent aux besoins et aux désirs de l'organisation pour atteindre les objectifs commerciaux." data-rw="Dukorera abakoresha igenzura ryimbitse kugira ngo tubahuze n'abakozi bafite impano zihuye n'ibikenewe n'ibyifuzo by'ikigo kugira ngo bagere ku ntego z'ubucuruzi.">Dukorera abakoresha igenzura ryimbitse kugira ngo tubahuze n'abakozi bafite impano zihuye n'ibikenewe n'ibyifuzo by'ikigo kugira ngo bagere ku ntego z'ubucuruzi.</p>
-                    <a href="#" class="read-more" data-en="Read More" data-fr="Lire Plus" data-rw="Soma Byinshi">Soma Byinshi <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Stats Section -->
-<section class="stats-section">
-    <div class="stats-container">
-        <div class="stats-grid">
-            <div class="stat-item fade-in">
-                <div class="stat-icon">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <div class="stat-number">25+</div>
-                <div class="stat-label" data-en="Years of Experience" data-fr="Années d'Expérience" data-rw="Imyaka y'Uburambe">Imyaka y'Uburambe</div>
-            </div>
-            
-            <div class="stat-item fade-in delay-1">
-                <div class="stat-icon">
-                    <i class="fas fa-building"></i>
-                </div>
-                <div class="stat-number">500+</div>
-                <div class="stat-label" data-en="Employers Helped" data-fr="Employeurs Aidés" data-rw="Abakoresha Twafashije">Abakoresha Twafashije</div>
-            </div>
-            
-            <div class="stat-item fade-in delay-2">
-                <div class="stat-icon">
-                    <i class="fas fa-user-tie"></i>
-                </div>
-                <div class="stat-number">5,000+</div>
-                <div class="stat-label" data-en="Workers Placed" data-fr="Travailleurs Placés" data-rw="Abakozi Bashakiwe Akazi">Abakozi Bashakiwe Akazi</div>
-            </div>
-            
-            <div class="stat-item fade-in delay-3">
-                <div class="stat-icon">
-                    <i class="fas fa-award"></i>
-                </div>
-                <div class="stat-number">98%</div>
-                <div class="stat-label" data-en="Employer Satisfaction Rate" data-fr="Taux de Satisfaction des Employeurs" data-rw="Abakoresha Baduha Amanota">Abakoresha Baduha Amanota</div>
-            </div>
-        </div>
-    </div>
-</section>
+        </script>
+    
 
 <!-- Call to Action -->
 <section class="cta-section">

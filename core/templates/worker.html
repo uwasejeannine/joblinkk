@@ -35,73 +35,26 @@
             overflow-x: hidden;
         }
 
-        /* Top Bar */
-        .top-bar {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 0;
-            font-size: 0.9rem;
-        }
-
-        .top-bar-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .contact-info {
-            display: flex;
-            gap: 20px;
-        }
-
-        .contact-info a {
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .contact-info i {
-            margin-right: 5px;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-icons a:hover {
-            color: var(--dark-primary);
-        }
-
+       
         /* Header & Navigation */
-        header {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: white;
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+       header {
+    background: linear-gradient(to right, #119fa5, #0d7176);
+    color: white;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-        .header-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 120000px;
-            margin: 0 auto;
-            padding: 0 10px;
-        }
+.header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px; /* Fixed typo: was 12000px */
+    margin: 0 auto;
+    padding: 0 10px;
+}
 
         .logo {
             font-size: 1.8rem;
@@ -925,6 +878,186 @@
                 width: 100%;
             }
         }
+        /* Existing CSS remains the same until the media queries section */
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .header-content {
+        padding: 0 30px;
+    }
+    
+    .features-grid {
+        gap: 20px;
+    }
+    
+    .service-card {
+        width: 300px;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .journey-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .feature-card {
+        width: 100%;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .service-card {
+        width: 100%;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+    }
+    
+    nav ul li {
+        margin: 5px 0;
+    }
+    
+    .right-section {
+        margin-top: 15px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .primary-button, 
+    .outline-button {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .stat-item {
+        width: 45%;
+        margin-bottom: 30px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .footer-column {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .top-bar-content {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .contact-info {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    
+    .features-grid,
+    .services-grid,
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-item {
+        width: 100%;
+    }
+    
+    .journey-item {
+        padding-left: 60px;
+    }
+    
+    .journey-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .modal-content {
+        margin: 20px auto;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-bottom {
+        padding-top: 20px;
+    }
+}
+
+/* Mobile menu toggle for smaller screens */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    
+    nav ul {
+        display: none;
+        width: 100%;
+    }
+    
+    nav ul.show {
+        display: flex;
+    }
+}
     </style>
 </head>
 <body>
@@ -943,6 +1076,10 @@
                 </ul>
             </nav>
             
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
             <div class="right-section" style="display: flex; align-items: center; gap: 20px;">
                 <div class="language-selector">
                     <select id="language-select" style="padding: 6px; background-color: #f3f4f6; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; outline: none;">
@@ -992,6 +1129,15 @@
             languageSelect.dispatchEvent(event);
         }
     });
+    // Mobile menu toggle
+const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+const navMenu = document.querySelector('nav ul');
+
+if (mobileMenuToggle && navMenu) {
+    mobileMenuToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('show');
+    });
+}
     </script>
     
     
@@ -999,7 +1145,7 @@
    <!-- Hero Section -->
 <section class="hero-section">
     <div class="hero-content">
-        <h1 class="hero-title" data-en="Welcome to JobLink <span>Find the Perfect Job" data-fr="Bienvenue à JobLink Trouvez l'Emploi Parfait" data-rw="Ikaze muri JobLink Shaka Akazi Kakunyuze">Ikaze muri JobLink Shaka Akazi Kakunyuze</span></h1>
+        <h1 class="hero-title" data-en="Welcome to JobLink Find the Perfect Job" data-fr="Bienvenue à JobLink Trouvez l'Emploi Parfait" data-rw="Ikaze muri JobLink Shaka Akazi Kakunyuze">Ikaze muri JobLink Shaka Akazi Kakunyuze</span></h1>
         
         <p class="hero-description" data-en="At JobLink, we connect talented individuals with outstanding employers to help you find the perfect job. Explore opportunities, apply for positions, and start your career today." data-fr="Chez JobLink, nous connectons des individus talentueux avec des employeurs exceptionnels pour vous aider à trouver l'emploi parfait. Explorez les opportunités, postulez et commencez votre carrière dès aujourd'hui." data-rw="Muri JobLink, duhura abantu bafite impano n'abakoresha b'icyitegererezo kugirango tugufashe kubona akazi kanyuze. Sura amahirwe, usabe akazi, tangira umwuga wawe nanjye.">Muri JobLink, duhura abantu bafite impano n'abakoresha b'icyitegererezo kugirango tugufashe kubona akazi kanyuze. Sura amahirwe, usabe akazi, tangira umwuga wawe nanjye.</p>
         

@@ -35,122 +35,9 @@
             overflow-x: hidden;
         }
 
-        /* Top Bar */
-        .top-bar {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 0;
-            font-size: 0.9rem;
-        }
-
-        .top-bar-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .contact-info {
-            display: flex;
-            gap: 20px;
-        }
-
-        .contact-info a {
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .contact-info i {
-            margin-right: 5px;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-icons a:hover {
-            color: var(--dark-primary);
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: white;
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 10px;
-        }
 
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 15px;
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-button {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .nav-button:hover {
-            background-color: #d97c18;
-            transform: translateY(-2px);
-        }
+       
 
         /* Page Banner */
         .page-banner {
@@ -839,42 +726,401 @@
             }
         }
     </style>
-</head>
-<body>
-   <!-- Header -->
+
+<!-- Header -->
 <header>
-    <div class="header-content" style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
-        <nav style="flex: 1;">
-            <ul id="main-menu" style="display: flex; list-style: none; padding: 0; margin: 0; gap: 20px;">
-                <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL">AHABANZA</a></li>
-                <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="EMPLOYÉS">ABAKOZI</a></li>
-                <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS">ABAKORESHA</a></li>
-                <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKER" data-fr="VOIR EMPLOYÉ">REBA UMUKOZI</a></li>
-                <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS">REBA ABAKORESHA</a></li>
-                <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES">IBYO DUKORA</a></li>
-                <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES">AMATANGAZO</a></li>
+    <div class="header-content">
+        <!-- Mobile Hamburger Menu Button -->
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        
+        <nav>
+            <ul id="main-menu" class="main-menu">
+                <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
+                <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="EMPLOYÉS" data-rw="ABAKOZI">ABAKOZI</a></li>
+                <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
+                <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKER" data-fr="VOIR EMPLOYÉ" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
+                <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
+                <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
+                <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
             </ul>
         </nav>
         
-        <div style="display: flex; align-items: center; gap: 15px;">
+        <div class="header-actions">
             <!-- Language Dropdown -->
-            <div id="language-dropdown-container" style="position: relative; display: inline-block;">
-                <button id="language-dropdown-btn" style="background-color: #f3f4f6; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; display: flex; align-items: center;">
+            <div id="language-dropdown-container" class="language-dropdown-container">
+                <button id="language-dropdown-btn" class="language-dropdown-btn">
                     <span id="current-language">RW</span>
-                    <span style="margin-left: 5px; font-size: 10px;">▼</span>
+                    <span class="dropdown-arrow">▼</span>
                 </button>
-                <div id="language-dropdown-menu" style="display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 100px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 10; border-radius: 4px;">
-                    <div id="lang-rw" style="color: #333; padding: 10px 12px; text-decoration: none; display: block; font-weight: 500; cursor: pointer;">RW</div>
-                    <div id="lang-en" style="color: #333; padding: 10px 12px; text-decoration: none; display: block; font-weight: 500; cursor: pointer;">EN</div>
-                    <div id="lang-fr" style="color: #333; padding: 10px 12px; text-decoration: none; display: block; font-weight: 500; cursor: pointer;">FR</div>
+                <div id="language-dropdown-menu" class="language-dropdown-menu">
+                    <div id="lang-rw" class="language-option">RW</div>
+                    <div id="lang-en" class="language-option">EN</div>
+                    <div id="lang-fr" class="language-option">FR</div>
                 </div>
             </div>
             
             <!-- Login Button -->
-            <a href="#" class="nav-button" id="openFormButton" data-en="Login" data-fr="Connexion" style="background-color: #3b82f6; color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold;">login</a>
+            <a href="#" class="nav-button" id="openFormButton" data-en="Login" data-fr="Connexion" data-rw="KWINJIRA">KWINJIRA</a>
         </div>
     </div>
 </header>
+
+<style>
+/* Base styles for header */
+header {
+    width: 100%;
+    background: linear-gradient(to right, #119fa5, #0d7176);
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 70px;
+}
+
+/* Navigation styles */
+nav {
+    flex: 1;
+    
+}
+
+.main-menu {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 25px;
+}
+
+.main-menu li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.main-menu li a:hover {
+    color:rgb(245, 246, 248);
+}
+
+/* Header actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Language dropdown styles */
+.language-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.language-dropdown-btn {
+    background-color: #f3f4f6;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-arrow {
+    margin-left: 5px;
+    font-size: 10px;
+}
+
+.language-dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10;
+    border-radius: 4px;
+}
+
+.language-dropdown-menu.show {
+    display: block;
+}
+
+.language-option {
+    color: #333;
+    padding: 10px 12px;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.language-option:hover {
+    background-color: #f3f4f6;
+}
+
+/* Login button styles */
+.nav-button {
+    background-color: #3b82f6;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #2563eb;
+}
+
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.mobile-menu-toggle .bar {
+    height: 3px;
+    width: 100%;
+    background-color: white; /* Changed from #333 to white */
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 1024px) {
+    .main-menu {
+        gap: 15px;
+    }
+    
+    .main-menu li a {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+        order: 1;
+    }
+    
+    nav {
+        position: absolute;
+        color:#333;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s ease;
+        transform: translateY(-10px);
+    }
+    
+    nav.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .main-menu {
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 0;
+    }
+    
+    .main-menu li {
+        width: 100%;
+    }
+    
+    .main-menu li a {
+        display: block;
+        padding: 15px 20px;
+        border-bottom: 1px solid #f3f4f6;
+        font-size: 16px;
+    }
+    
+    .header-content {
+        justify-content: space-between;
+    }
+    
+    .header-actions {
+        order: 2;
+    }
+    
+    /* Hamburger to X animation */
+    .mobile-menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+    
+    .mobile-menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .mobile-menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header-content {
+        padding: 0 15px;
+    }
+    
+    .language-dropdown-btn {
+        padding: 6px 10px;
+    }
+    
+    .nav-button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle functionality
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const nav = document.querySelector('nav');
+    
+    if (mobileMenuToggle && nav) {
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileMenuToggle.classList.toggle('active');
+            nav.classList.toggle('active');
+            console.log('Mobile menu toggled');
+        });
+    }
+    
+    // Language dropdown functionality - USING DIV STRUCTURE
+    const languageDropdownBtn = document.getElementById('language-dropdown-btn');
+    const languageDropdownMenu = document.getElementById('language-dropdown-menu');
+    const currentLanguage = document.getElementById('current-language');
+    const langRw = document.getElementById('lang-rw');
+    const langEn = document.getElementById('lang-en');
+    const langFr = document.getElementById('lang-fr');
+    
+    // Toggle dropdown visibility
+    if (languageDropdownBtn && languageDropdownMenu) {
+        languageDropdownBtn.addEventListener('click', function() {
+            languageDropdownMenu.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(event) {
+            if (!event.target.matches('.language-dropdown-btn') && 
+                !event.target.matches('#current-language') && 
+                !event.target.matches('.dropdown-arrow')) {
+                if (languageDropdownMenu.classList.contains('show')) {
+                    languageDropdownMenu.classList.remove('show');
+                }
+            }
+        });
+    }
+    
+    // Language selection function
+    function setLanguage(lang) {
+        console.log('Setting language to:', lang); // Debug
+        
+        if (currentLanguage) {
+            currentLanguage.textContent = lang.toUpperCase();
+        }
+        
+        // Change text for all elements with data attributes
+        const elementsWithLang = document.querySelectorAll('[data-' + lang.toLowerCase() + ']');
+        console.log('Found elements with language attributes:', elementsWithLang.length); // Debug
+        
+        elementsWithLang.forEach(function(element) {
+            const langText = element.getAttribute('data-' + lang.toLowerCase());
+            if (langText) {
+                console.log('Changing text for element:', element, 'to:', langText); // Debug
+                element.textContent = langText;
+            }
+        });
+        
+        // Close dropdown after selection
+        if (languageDropdownMenu) {
+            languageDropdownMenu.classList.remove('show');
+        }
+    }
+    
+    // Add click events for language options
+    if (langRw) {
+        langRw.addEventListener('click', function() {
+            console.log('RW language clicked'); // Debug
+            setLanguage('rw');
+        });
+    }
+    
+    if (langEn) {
+        langEn.addEventListener('click', function() {
+            console.log('EN language clicked'); // Debug
+            setLanguage('en');
+        });
+    }
+    
+    if (langFr) {
+        langFr.addEventListener('click', function() {
+            console.log('FR language clicked'); // Debug
+            setLanguage('fr');
+        });
+    }
+    
+    // Support for original dropdown if it exists
+    const languageSelect = document.getElementById('languageSelect');
+    if (languageSelect) {
+        languageSelect.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            console.log('Select dropdown changed to:', selectedLanguage); // Debug
+            setLanguage(selectedLanguage);
+        });
+    }
+    
+    // Window resize handling
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            // Reset mobile menu when screen is large enough
+            if (mobileMenuToggle && mobileMenuToggle.classList.contains('active')) {
+                mobileMenuToggle.classList.remove('active');
+            }
+            
+            if (nav && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+            }
+        }
+        
+        // Close language dropdown on resize
+        if (languageDropdownMenu && languageDropdownMenu.classList.contains('show')) {
+            languageDropdownMenu.classList.remove('show');
+        }
+    });
+});
+</script>
 
 
    <!-- Page Banner -->
