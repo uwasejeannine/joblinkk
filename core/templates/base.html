@@ -1,5 +1,301 @@
-<header>
-</header>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}JobLink{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- GLOBAL VARIABLES --- */
+        :root {
+            --primary-color: #119fa5;
+            --secondary-color: #ef8f20;
+            --dark-primary: #194e4f;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: var(--text-color); }
+        
+        /* HEADER */
+        header { width: 100%; background: linear-gradient(to right, #119fa5, #0d7176); color: white; position: fixed; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; padding: 10px 2rem; max-width: 1400px; margin: 0 auto; height: 70px; }
+        
+        /* LOGO */
+        .logo { font-weight: 800; font-size: 1.5rem; color: white; text-decoration: none; }
+
+        /* NAVIGATION */
+        nav { flex: 1; }
+        .main-menu { display: flex; list-style: none; gap: 15px; justify-content: center; margin: 0; padding: 0; }
+        .main-menu li a { text-decoration: none; color: white; font-weight: 600; font-size: 14px; padding: 8px 12px; border-radius: 5px; transition: 0.3s; white-space: nowrap; }
+        .main-menu li a:hover { background-color: rgba(255,255,255,0.2); }
+        
+        /* HEADER ACTIONS (Language + Auth) */
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+        
+        /* Language Selector Styling */
+        .lang-select {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            outline: none;
+        }
+        .lang-select option { color: black; } /* Options need black text */
+
+        .nav-button { padding: 8px 16px; background-color: #3b82f6; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; border:none; cursor: pointer; font-size: 13px; white-space: nowrap; }
+        .nav-button:hover { background-color: #2563eb; }
+        .signup-btn { background-color: var(--secondary-color); }
+        .signup-btn:hover { background-color: #d97c18; }
+        .logout-btn { background-color: #ef4444; }
+        .logout-btn:hover { background-color: #dc2626; }
+        
+        /* MODALS */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.6); }
+        .modal-content { background-color: white; margin: 10% auto; padding: 30px; border-radius: 8px; width: 90%; max-width: 450px; position: relative; animation: slideDown 0.3s; }
+        @keyframes slideDown { from {opacity: 0; transform: translateY(-50px);} to {opacity: 1; transform: translateY(0);} }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #666; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
+        .search-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .search-button { width: 100%; padding: 12px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        
+        .modal-footer { margin-top: 20px; text-align: center; font-size: 0.9rem; }
+        .modal-footer a { color: var(--primary-color); text-decoration: none; font-weight: bold; cursor: pointer; }
+        
+        /* ALERTS */
+        .alert-container { position: fixed; top: 80px; right: 20px; z-index: 2000; }
+        .alert { padding: 15px 25px; margin-bottom: 10px; border-radius: 5px; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); animation: slideIn 0.5s; }
+        .alert.success { background-color: #10b981; }
+        .alert.error { background-color: #ef4444; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+        /* FOOTER */
+        footer { background: linear-gradient(to right, #119fa5, #0d7176); color: #ddd; padding: 40px 0; margin-top: 0; text-align: center; }
+
+        /* MOBILE MENU */
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: white; }
+
+        @media (max-width: 992px) {
+            .main-menu { display: none; position: absolute; top: 70px; left: 0; width: 100%; background-color: white; flex-direction: column; padding: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
+            .main-menu.active { display: flex; }
+            .main-menu li a { color: #333; display: block; width: 100%; padding: 10px; text-align: center; }
+            .mobile-toggle { display: block; }
+            .header-actions { margin-left: auto; margin-right: 15px; }
+        }
+
+        {% block style %}{% endblock %}
+    </style>
+</head>
 <body>
-    {% block content %} {% endblock content %}
+
+    <div class="alert-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <header>
+        <div class="header-content">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a href="{% url 'home' %}" class="logo">JobLink</a>
+            
+            <nav>
+                <ul class="main-menu" id="main-menu">
+                    <li><a href="{% url 'home' %}" data-rw="AHABANZA" data-en="HOME" data-fr="ACCUEIL">AHABANZA</a></li>
+                    
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'worker' %}" data-rw="ABAKOZI" data-en="WORKERS" data-fr="TRAVAILLEURS">ABAKOZI</a></li>
+                        <li><a href="{% url 'employer' %}" data-rw="ABAKORESHA" data-en="EMPLOYERS" data-fr="EMPLOYEURS">ABAKORESHA</a></li>
+                        <li><a href="{% url 'view_worker' %}" data-rw="REBA UMUKOZI" data-en="VIEW WORKER" data-fr="VOIR TRAVAILLEUR">REBA UMUKOZI</a></li>
+                        <li><a href="{% url 'view_employers' %}" data-rw="REBA ABAKORESHA" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS">REBA ABAKORESHA</a></li>
+                        <li><a href="{% url 'what_we_do' %}" data-rw="IBYO DUKORA" data-en="WHAT WE DO" data-fr="NOS SERVICES">IBYO DUKORA</a></li>
+                        <li><a href="{% url 'announcements' %}" data-rw="AMATANGAZO" data-en="ANNOUNCEMENTS" data-fr="ANNONCES">AMATANGAZO</a></li>
+                        <li><a href="{% url 'contact' %}" data-rw="TWANDIKIRE" data-en="CONTACT" data-fr="CONTACT">TWANDIKIRE</a></li>
+                    {% else %}
+                        <li><a href="#" onclick="alert('Please login first / Banza winjire')" data-rw="ABAKOZI" data-en="WORKERS" data-fr="TRAVAILLEURS">ABAKOZI</a></li>
+                    {% endif %}
+                </ul>
+
+                <ul class="main-menu" id="main-menu">
+       
+        {% if user.is_superuser %}
+            <li>
+                <a href="/admin/" target="_blank" style="background-color: #333; border-radius: 5px;">
+                    <i class="fas fa-user-shield"></i> ADMIN
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <select id="languageSelect" class="lang-select">
+                    <option value="rw">Kin</option>
+                    <option value="en">Eng</option>
+                    <option value="fr">Fr</option>
+                </select>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="nav-button logout-btn" data-rw="Sohoka" data-en="Logout" data-fr="Déconnexion">Sohoka</a>
+                {% else %}
+                    <button id="openLoginBtn" class="nav-button" data-rw="KWINJIRA" data-en="LOGIN" data-fr="CONNEXION">KWINJIRA</button>
+                    <button id="openSignupBtn" class="nav-button signup-btn" data-rw="IYANDIKISHE" data-en="SIGN UP" data-fr="S'INSCRIRE">IYANDIKISHE</button>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main style="padding-top: 0;">
+        {% block content %}{% endblock %}
+    </main>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeLogin">&times;</span>
+            <h2 style="text-align: center; color: var(--dark-primary);" data-rw="Injira" data-en="Login" data-fr="Connexion">Injira</h2>
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Username / Izina</label>
+                    <input type="text" name="username" class="search-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Password / Ijambo ryibanga</label>
+                    <input type="password" name="password" class="search-input" required>
+                </div>
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                <button type="submit" class="search-button">Injira</button>
+            </form>
+            <div class="modal-footer">
+                Nta konti ufite? <a id="switchToSignup">Iyandikishe hano</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSignup">&times;</span>
+            <h2 style="text-align: center; color: var(--dark-primary);" data-rw="Iyandikishe" data-en="Sign Up" data-fr="S'inscrire">Iyandikishe</h2>
+            <form method="POST" action="{% url 'signup' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Username / Izina</label>
+                    <input type="text" name="username" class="search-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Password / Ijambo ryibanga</label>
+                    <input type="password" name="password" class="search-input" required>
+                </div>
+                 <div class="form-group">
+                    <label>Confirm Password / Emeza</label>
+                    <input type="password" name="password_confirm" class="search-input" required>
+                </div>
+                <button type="submit" class="search-button" style="background-color: var(--secondary-color);">Iyandikishe</button>
+            </form>
+            <div class="modal-footer">
+                Ufite konti? <a id="switchToLogin">Injira hano</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; {% now "Y" %} JobLink - All Rights Reserved</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- LANGUAGE LOGIC ---
+            const languageSelect = document.getElementById('languageSelect');
+            
+            function changeLanguage(lang) {
+                // Select elements with specific language data attributes
+                const elements = document.querySelectorAll(`[data-${lang}]`);
+                
+                elements.forEach(el => {
+                    // Update text, preserving HTML if needed (for colors in hero)
+                    el.innerHTML = el.getAttribute(`data-${lang}`);
+                });
+
+                if(languageSelect) {
+                    languageSelect.value = lang;
+                }
+                localStorage.setItem('preferredLanguage', lang);
+            }
+
+            if(languageSelect) {
+                languageSelect.addEventListener('change', function() {
+                    changeLanguage(this.value);
+                });
+            }
+
+            // Load saved language
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                changeLanguage(savedLang);
+            } else {
+                changeLanguage('rw'); // Default
+            }
+
+            // --- MOBILE MENU ---
+            const mobileBtn = document.getElementById('mobile-toggle');
+            const menu = document.getElementById('main-menu');
+            if(mobileBtn && menu){
+                mobileBtn.addEventListener('click', () => {
+                    menu.classList.toggle('active');
+                });
+            }
+
+            // --- MODALS ---
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const openLoginBtn = document.getElementById('openLoginBtn');
+            const openSignupBtn = document.getElementById('openSignupBtn');
+            const closeLogin = document.getElementById('closeLogin');
+            const closeSignup = document.getElementById('closeSignup');
+            const switchToSignup = document.getElementById('switchToSignup');
+            const switchToLogin = document.getElementById('switchToLogin');
+
+            function hideAll() {
+                if(loginModal) loginModal.style.display = 'none';
+                if(signupModal) signupModal.style.display = 'none';
+            }
+
+            if(openLoginBtn) openLoginBtn.onclick = () => { hideAll(); loginModal.style.display = 'block'; }
+            if(openSignupBtn) openSignupBtn.onclick = () => { hideAll(); signupModal.style.display = 'block'; }
+            
+            if(closeLogin) closeLogin.onclick = hideAll;
+            if(closeSignup) closeSignup.onclick = hideAll;
+
+            if(switchToSignup) switchToSignup.onclick = () => { hideAll(); signupModal.style.display = 'block'; }
+            if(switchToLogin) switchToLogin.onclick = () => { hideAll(); loginModal.style.display = 'block'; }
+
+            window.onclick = (e) => {
+                if(e.target == loginModal || e.target == signupModal) hideAll();
+            }
+            
+            // Auto hide alerts
+            setTimeout(() => {
+                const alerts = document.querySelector('.alert-container');
+                if(alerts) alerts.style.display = 'none';
+            }, 5000);
+        });
+    </script>
+    
+    {% block scripts %}{% endblock %}
 </body>
+</html>

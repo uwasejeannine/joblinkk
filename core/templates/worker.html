@@ -1,1163 +1,179 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobLink - ABAKOZI</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #119fa5;
-            --secondary-color: #ef8f20;
-            --accent-color: #0d7176;
-            --dark-primary: #194e4f;
-            --text-color: #333;
-            --light-text: #f8f9fa;
-            --light-bg: #f9f9f9;
-            --border-radius: 30px;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+{% block title %}JobLink - ABAKOZI{% endblock %}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-
-       
-        /* Header & Navigation */
-       header {
-    background: linear-gradient(to right, #119fa5, #0d7176);
-    color: white;
-    padding: 15px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.header-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 1200px; /* Fixed typo: was 12000px */
-    margin: 0 auto;
-    padding: 0 10px;
-}
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            flex-grow: 1;
-            justify-content: center;
-        }
-        nav ul li {
-            margin: 0 15px;}
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-button {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .nav-button:hover {
-            background-color: #d97c18;
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/nature.jpg"%}');
-            background-size: cover;
-            background-position: center;
-            padding: 120px 0;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .hero-title {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .hero-title span {
-            color: var(--secondary-color);
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .primary-button {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-block;
-        }
-
-        .primary-button:hover {
-            background-color: #d97c18;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .outline-button {
-            background-color: transparent;
-            color: white;
-            padding: 12px 25px;
-            border: 2px solid white;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-block;
-        }
-
-        .outline-button:hover {
-            background-color: white;
-            color: var(--primary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Feature Cards */
-        .features-section {
-            padding: 80px 0;
-            background-color: #f9f9f9;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 2.2rem;
-            color: var(--dark-primary);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2:after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--secondary-color);
-        }
-
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .feature-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            width: 260px;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px auto;
-            color: white;
-            font-size: 28px;
-        }
-
-        .feature-content {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .feature-content h3 {
-            color: var(--dark-primary);
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-
-        .feature-content p {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .feature-number {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: var(--secondary-color);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        /* Journey Section */
-        .journey-section {
-            padding: 80px 0;
-            background-color: white;
-        }
-
-        .journey-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .journey-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .journey-item {
-            position: relative;
-            padding-left: 70px;
-            margin-bottom: 40px;
-        }
-
-        .journey-number {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 50px;
-            height: 50px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .journey-content h3 {
-            color: var(--dark-primary);
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-        }
-
-        .journey-content p {
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        /* Services Section */
-        .services-section {
-            padding: 80px 0;
-            background-color: #f9f9f9;
-        }
-
-        .services-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .services-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .service-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            width: 350px;
-            transition: var(--transition);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .service-image {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .service-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .service-card:hover .service-image img {
-            transform: scale(1.1);
-        }
-
-        .service-content {
-            padding: 20px;
-        }
-
-        .service-content h3 {
-            color: var(--dark-primary);
-            margin-bottom: 10px;
-            font-size: 1.4rem;
-        }
-
-        .service-content p {
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .read-more {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .read-more i {
-            margin-left: 5px;
-            transition: var(--transition);
-        }
-
-        .read-more:hover {
-            color: var(--secondary-color);
-        }
-
-        .read-more:hover i {
-            transform: translateX(5px);
-        }
-
-        /* Testimonials Section */
-        .testimonials-section {
-            padding: 80px 0;
-            background-color: white;
-        }
-
-        .testimonials-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .testimonial-card {
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .testimonial-content {
-            font-style: italic;
-            color: #555;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .testimonial-content::before {
-            content: """;
-            font-size: 4rem;
-            color: var(--primary-color);
-            opacity: 0.2;
-            position: absolute;
-            top: -20px;
-            left: -15px;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-
-        .testimonial-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-            overflow: hidden;
-        }
-
-        .testimonial-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .testimonial-info h4 {
-            color: var(--dark-primary);
-            margin-bottom: 5px;
-        }
-
-        .testimonial-info p {
-            color: #777;
-            font-size: 0.9rem;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            background: linear-gradient(rgba(17, 159, 165, 0.9), rgba(13, 113, 118, 0.9)), url('{% static "images/nature.jpg"%}');
-            background-size: cover;
-            background-position: center;
-            padding: 80px 0;
-            color: white;
-        }
-
-        .stats-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .stats-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            gap: 30px;
-        }
-
-        .stat-item {
-            text-align: center;
-            width: 220px;
-        }
-
-        .stat-icon {
-            width: 70px;
-            height: 70px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 30px;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--secondary-color);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 1.2rem;
-        }
-
-        /* Call to Action */
-        .cta-section {
-            padding: 80px 0;
-            text-align: center;
-            background-color: white;
-        }
-
-        .cta-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .cta-container h2 {
-            font-size: 2.5rem;
-            color: var(--dark-primary);
-            margin-bottom: 20px;
-        }
-
-        .cta-container p {
-            margin-bottom: 30px;
-            color: #555;
-            font-size: 1.1rem;
-        }
-
-        /* Modal Popups */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 50px auto;
-            padding: 30px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 700px;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
-            animation: modalfade 0.3s;
-        }
-
-        @keyframes modalfade {
-            from {opacity: 0; transform: translateY(-30px);}
-            to {opacity: 1; transform: translateY(0);}
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #666;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .close-modal:hover {
-            color: #000;
-        }
-
-        .modal-title {
-            color: var(--dark-primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--secondary-color);
-        }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #444;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="file"],
-        input[type="number"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: var(--transition);
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(17, 159, 165, 0.1);
-        }
-
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .submit-button {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: block;
-            margin: 0 auto;
-            min-width: 150px;
-        }
-
-        .submit-button:hover {
-            background-color: var(--dark-primary);
-            transform: translateY(-3px);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: #ddd;
-            padding: 60px 0 20px;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .footer-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .footer-column h3 {
-            color: white;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--secondary-color);
-        }
-
-        .footer-contact-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .footer-contact-item i {
-            color: var(--secondary-color);
-            margin-right: 10px;
-            margin-top: 5px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: #ddd;
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-        }
-
-        .footer-links a i {
-            margin-right: 8px;
-            font-size: 12px;
-            color: var(--secondary-color);
-        }
-
-        .footer-links a:hover {
-            color: var(--secondary-color);
-            padding-left: 5px;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-
-        .footer-social a:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #333;
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .fade-in.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        .delay-4 { transition-delay: 0.4s; }
-        .delay-5 { transition-delay: 0.5s; }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .journey-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-            
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .stat-item {
-                width: 45%;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .feature-card,
-            .service-card {
-                width: 100%;
-            }
-            
-            .stat-item {
-                width: 100%;
-            }
-        }
-        /* Existing CSS remains the same until the media queries section */
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .header-content {
-        padding: 0 30px;
-    }
+{% block style %}
+<style>
+    /* --- PAGE SPECIFIC STYLES --- */
+    /* Copied exactly from your code, but removed Header/Footer styles to avoid conflicts */
     
-    .features-grid {
-        gap: 20px;
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/nature.jpg"%}');
+        background-size: cover;
+        background-position: center;
+        padding: 120px 0;
+        text-align: center;
+        color: white;
+        position: relative;
     }
-    
-    .service-card {
-        width: 300px;
-    }
-}
 
-@media (max-width: 992px) {
-    .hero-title {
-        font-size: 2.5rem;
-    }
+    .hero-content { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    .hero-title { font-size: 2.8rem; margin-bottom: 15px; font-weight: 700; line-height: 1.2; }
+    .hero-title span { color: var(--secondary-color); }
+    .hero-description { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; }
     
-    .journey-grid {
-        grid-template-columns: 1fr;
+    .hero-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
+
+    .primary-button {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: var(--transition);
+        display: inline-block;
     }
-    
-    .features-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .primary-button:hover { background-color: #d97c18; transform: translateY(-3px); }
+
+    .outline-button {
+        background-color: transparent;
+        color: white;
+        padding: 12px 25px;
+        border: 2px solid white;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: var(--transition);
+        display: inline-block;
     }
+    .outline-button:hover { background-color: white; color: var(--primary-color); transform: translateY(-3px); }
+
+    /* Features Section */
+    .features-section { padding: 80px 0; background-color: #f9f9f9; }
+    .section-title { text-align: center; margin-bottom: 50px; }
+    .section-title h2 { font-size: 2.2rem; color: var(--dark-primary); margin-bottom: 15px; position: relative; display: inline-block; }
+    .section-title h2:after { content: ""; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background-color: var(--secondary-color); }
+    .section-title p { color: #666; max-width: 700px; margin: 0 auto; }
+
+    .features-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
     
     .feature-card {
-        width: 100%;
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        width: 260px;
+        transition: var(--transition);
+        position: relative;
     }
-    
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .service-card {
-        width: 100%;
-    }
-    
-    .testimonials-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+    .feature-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+    .feature-number { position: absolute; top: 10px; left: 10px; background-color: var(--secondary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+    .feature-icon { width: 60px; height: 60px; background-color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 20px auto; color: white; font-size: 28px; }
+    .feature-content { padding: 20px; text-align: center; }
+    .feature-content h3 { color: var(--dark-primary); margin-bottom: 10px; font-size: 1.3rem; }
+    .feature-content p { color: #666; font-size: 0.9rem; margin-bottom: 20px; }
 
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px 20px;
-    }
-    
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 0;
-    }
-    
-    nav ul li {
-        margin: 5px 0;
-    }
-    
-    .right-section {
-        margin-top: 15px;
-    }
-    
-    .hero-title {
-        font-size: 2rem;
-    }
-    
-    .hero-description {
-        font-size: 1rem;
-    }
-    
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .primary-button, 
-    .outline-button {
-        width: 100%;
-        text-align: center;
-    }
-    
-    .stat-item {
-        width: 45%;
-        margin-bottom: 30px;
-    }
-    
-    .modal-content {
-        width: 95%;
-        padding: 20px;
-    }
-    
-    .footer-column {
-        min-width: 100%;
-    }
-}
+    /* Journey Section */
+    .journey-section { padding: 80px 0; background-color: white; }
+    .journey-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .journey-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+    .journey-item { position: relative; padding-left: 70px; margin-bottom: 40px; }
+    .journey-number { position: absolute; left: 0; top: 0; width: 50px; height: 50px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; }
+    .journey-content h3 { color: var(--dark-primary); margin-bottom: 15px; font-size: 1.4rem; }
+    .journey-content p { color: #666; margin-bottom: 15px; }
 
-@media (max-width: 576px) {
-    .top-bar-content {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    .contact-info {
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .hero-title {
-        font-size: 1.8rem;
-    }
-    
-    .section-title h2 {
-        font-size: 1.8rem;
-    }
-    
-    .features-grid,
-    .services-grid,
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .stat-item {
-        width: 100%;
-    }
-    
-    .journey-item {
-        padding-left: 60px;
-    }
-    
-    .journey-number {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-    
-    .modal-content {
-        margin: 20px auto;
-    }
-    
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .footer-bottom {
-        padding-top: 20px;
-    }
-}
+    /* Services Section */
+    .services-section { padding: 80px 0; background-color: #f9f9f9; }
+    .services-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .services-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px; }
+    .service-card { background-color: white; border-radius: 8px; overflow: hidden; box-shadow: var(--box-shadow); width: 350px; transition: var(--transition); }
+    .service-card:hover { transform: translateY(-10px); }
+    .service-image { height: 200px; overflow: hidden; }
+    .service-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .service-card:hover .service-image img { transform: scale(1.1); }
+    .service-content { padding: 20px; }
+    .service-content h3 { color: var(--dark-primary); margin-bottom: 10px; font-size: 1.4rem; }
+    .service-content p { color: #666; margin-bottom: 15px; }
+    .read-more { color: var(--primary-color); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; }
 
-/* Mobile menu toggle for smaller screens */
-@media (max-width: 768px) {
-    .mobile-menu-toggle {
-        display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-    }
-    
-    nav ul {
-        display: none;
-        width: 100%;
-    }
-    
-    nav ul.show {
-        display: flex;
-    }
-}
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-content" style="display: flex; justify-content: space-between; align-items: center;">
-            <nav>
-                <ul>
-                    <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
-                    <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
-                    <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
-                    <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKERS" data-fr="VOIR TRAVAILLEURS" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
-                    <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
-                    <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
-                    <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
-                </ul>
-            </nav>
-            
-           
+    /* Testimonials Section */
+    .testimonials-section { padding: 80px 0; background-color: white; }
+    .testimonials-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+    .testimonial-card { background-color: #f9f9f9; border-radius: 8px; padding: 30px; box-shadow: var(--box-shadow); transition: var(--transition); }
+    .testimonial-card:hover { transform: translateY(-10px); }
+    .testimonial-content { font-style: italic; color: #555; margin-bottom: 20px; position: relative; }
+    .testimonial-author { display: flex; align-items: center; }
+    .testimonial-avatar { width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; overflow: hidden; }
+    .testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .testimonial-info h4 { color: var(--dark-primary); margin-bottom: 5px; }
+    .testimonial-info p { color: #777; font-size: 0.9rem; }
 
-            <div class="right-section" style="display: flex; align-items: center; gap: 20px;">
-                <div class="language-selector">
-                    <select id="language-select" style="padding: 6px; background-color: #f3f4f6; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; outline: none;">
-                        <option value="rw" selected>Kin</option>
-                        <option value="en">En</option>
-                        <option value="fr">Fr</option>
-                    </select>
-                </div>
-                <a href="#" class="nav-button" id="openLoginModal" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA">KWINJIRA</a>
-            
-             <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <i class="fas fa-bars"></i>
-            </button></div>
-        </div>
-    </header>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const languageSelect = document.getElementById('language-select');
-        
-        // Set the initial selected value based on current language
-        const currentLang = document.documentElement.lang || 'rw';
-        languageSelect.value = currentLang;
-        
-        // Add change event listener
-        languageSelect.addEventListener('change', function() {
-            const selectedLang = this.value;
-            
-            // Update all elements with data-* attributes
-            const elementsWithLang = document.querySelectorAll('[data-en], [data-fr], [data-rw]');
-            elementsWithLang.forEach(element => {
-                if (element.hasAttribute(`data-${selectedLang}`)) {
-                    element.textContent = element.getAttribute(`data-${selectedLang}`);
-                }
-            });
-            
-            // Update html lang attribute
-            document.documentElement.lang = selectedLang;
-            
-            // You could also store the language preference in localStorage
-            localStorage.setItem('preferredLanguage', selectedLang);
-        });
-        
-        // Check if there's a saved language preference
-        const savedLanguage = localStorage.getItem('preferredLanguage');
-        if (savedLanguage) {
-            languageSelect.value = savedLanguage;
-            // Trigger the change event to update the page
-            const event = new Event('change');
-            languageSelect.dispatchEvent(event);
-        }
-    });
-    // Mobile menu toggle
-const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-const navMenu = document.querySelector('nav ul');
+    /* Stats Section */
+    .stats-section { background: linear-gradient(rgba(17, 159, 165, 0.9), rgba(13, 113, 118, 0.9)), url('{% static "images/nature.jpg"%}'); background-size: cover; background-position: center; padding: 80px 0; color: white; }
+    .stats-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .stats-grid { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 30px; }
+    .stat-item { text-align: center; width: 220px; }
+    .stat-icon { width: 70px; height: 70px; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 30px; }
+    .stat-number { font-size: 3rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 5px; }
+    .stat-label { font-size: 1.2rem; }
 
-if (mobileMenuToggle && navMenu) {
-    mobileMenuToggle.addEventListener('click', function() {
-        navMenu.classList.toggle('show');
-    });
-}
-    </script>
+    /* Call to Action */
+    .cta-section { padding: 80px 0; text-align: center; background-color: white; }
+    .cta-container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    .cta-container h2 { font-size: 2.5rem; color: var(--dark-primary); margin-bottom: 20px; }
+    .cta-container p { margin-bottom: 30px; color: #555; font-size: 1.1rem; }
+
+    /* Modal Form Styles */
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-weight: 600; color: #444; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="file"], input[type="number"], textarea, select { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; transition: var(--transition); }
+    input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(17, 159, 165, 0.1); }
+    .submit-button { background-color: var(--primary-color); color: white; padding: 12px 25px; border: none; border-radius: 30px; font-size: 16px; font-weight: 600; cursor: pointer; display: block; margin: 0 auto; min-width: 150px; }
+    .submit-button:hover { background-color: var(--dark-primary); transform: translateY(-3px); }
+
+    /* Animation Classes */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.active { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
     
-    
-    
-   <!-- Hero Section -->
+    @media (max-width: 768px) {
+        .hero-buttons { flex-direction: column; align-items: center; }
+        .primary-button, .outline-button { width: 100%; text-align: center; }
+        .stats-grid { flex-direction: column; align-items: center; }
+        .stat-item { width: 100%; }
+        .journey-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
 <section class="hero-section">
     <div class="hero-content">
-        <h1 class="hero-title" data-en="Welcome to JobLink Find the Perfect Job" data-fr="Bienvenue à JobLink Trouvez l'Emploi Parfait" data-rw="Ikaze muri JobLink Shaka Akazi Kakunyuze">Ikaze muri JobLink Shaka Akazi Kakunyuze</span></h1>
+        <h1 class="hero-title" data-en="Welcome to JobLink Find the Perfect Job" data-fr="Bienvenue à JobLink Trouvez l'Emploi Parfait" data-rw="Ikaze muri JobLink Shaka Akazi Kakunyuze">
+            Ikaze muri JobLink <span style="color: var(--secondary-color);">Shaka Akazi Kakunyuze</span>
+        </h1>
         
-        <p class="hero-description" data-en="At JobLink, we connect talented individuals with outstanding employers to help you find the perfect job. Explore opportunities, apply for positions, and start your career today." data-fr="Chez JobLink, nous connectons des individus talentueux avec des employeurs exceptionnels pour vous aider à trouver l'emploi parfait. Explorez les opportunités, postulez et commencez votre carrière dès aujourd'hui." data-rw="Muri JobLink, duhura abantu bafite impano n'abakoresha b'icyitegererezo kugirango tugufashe kubona akazi kanyuze. Sura amahirwe, usabe akazi, tangira umwuga wawe nanjye.">Muri JobLink, duhura abantu bafite impano n'abakoresha b'icyitegererezo kugirango tugufashe kubona akazi kanyuze. Sura amahirwe, usabe akazi, tangira umwuga wawe nanjye.</p>
+        <p class="hero-description" data-en="At JobLink, we connect talented individuals with outstanding employers to help you find the perfect job. Explore opportunities, apply for positions, and start your career today." data-fr="Chez JobLink, nous connectons des individus talentueux avec des employeurs exceptionnels pour vous aider à trouver l'emploi parfait. Explorez les opportunités, postulez et commencez votre carrière dès aujourd'hui." data-rw="Muri JobLink, duhura abantu bafite impano n'abakoresha b'icyitegererezo kugirango tugufashe kubona akazi kanyuze. Sura amahirwe, usabe akazi, tangira umwuga wawe nanjye.">
+            Muri JobLink, duhura abantu bafite impano n'abakoresha b'icyitegererezo kugirango tugufashe kubona akazi kanyuze. Sura amahirwe, usabe akazi, tangira umwuga wawe nanjye.
+        </p>
         
         <div class="hero-buttons">
-            <a href="#" class="primary-button" id="openFormModalBtn" data-en="Submit Worker Information" data-fr="Soumettre Informations du Travailleur" data-rw="Tanga Amakuru y'Umukozi">Tanga Amakuru y'Umukozi</a>
+            <button class="primary-button" id="openFormModalBtn" data-en="Submit Worker Information" data-fr="Soumettre Informations du Travailleur" data-rw="Tanga Amakuru y'Umukozi">Tanga Amakuru y'Umukozi</button>
             <a href="{% url 'view_employers' %}" class="outline-button" data-en="View Employers" data-fr="Voir les Employeurs" data-rw="Reba Abakoresha">Reba Abakoresha</a>
         </div>
     </div>
 </section>
 
-<!-- Feature Cards Section -->
 <section class="features-section">
     <div class="section-title">
         <h2 data-en="What You Need As a Job Seeker" data-fr="Ce Dont Vous Avez Besoin En Tant Que Demandeur d'Emploi" data-rw="Ibyo Ukeneye Nk'umushakakazi">Ibyo Ukeneye Nk'umushakakazi</h2>
@@ -1210,7 +226,6 @@ if (mobileMenuToggle && navMenu) {
     </div>
 </section>
 
-   <!-- Journey Section -->
 <section class="journey-section">
     <div class="journey-container">
         <div class="section-title">
@@ -1254,7 +269,6 @@ if (mobileMenuToggle && navMenu) {
     </div>
 </section>
 
-<!-- Services Section -->
 <section class="services-section">
     <div class="services-container">
         <div class="section-title">
@@ -1299,7 +313,6 @@ if (mobileMenuToggle && navMenu) {
     </div>
 </section>
 
-<!-- Testimonials Section -->
 <section class="testimonials-section">
     <div class="testimonials-container">
         <div class="section-title">
@@ -1356,7 +369,6 @@ if (mobileMenuToggle && navMenu) {
     </div>
 </section>
 
-   <!-- Stats Section -->
 <section class="stats-section">
     <div class="stats-container">
         <div class="stats-grid">
@@ -1395,52 +407,20 @@ if (mobileMenuToggle && navMenu) {
     </div>
 </section>
 
-<!-- Call to Action -->
 <section class="cta-section">
     <div class="cta-container">
         <h2 data-en="Start Your Job Search Today" data-fr="Commencez Votre Recherche d'Emploi Aujourd'hui" data-rw="Witabire Gushaka Akazi Vuba">Witabire Gushaka Akazi Vuba</h2>
         <p data-en="Choose JobLink to help you find a job that matches your skills and aligns with your vision. Start now." data-fr="Choisissez JobLink pour vous aider à trouver un emploi qui correspond à vos compétences et s'aligne sur votre vision. Commencez maintenant." data-rw="Hitamo JobLink kugira ngo ufashwe kubona akazi gakwiye ubumenyi bwawe kandi gahuje n'icyerekezo cyawe. Tangira nonaha.">Hitamo JobLink kugira ngo ufashwe kubona akazi gakwiye ubumenyi bwawe kandi gahuje n'icyerekezo cyawe. Tangira nonaha.</p>
-        <a href="#" class="primary-button" id="ctaFormBtn" data-en="Submit Your Information" data-fr="Soumettez Vos Informations" data-rw="Tanga Amakuru Yawe">Tanga Amakuru Yawe</a>
+        <button class="primary-button" id="ctaFormBtn" data-en="Submit Your Information" data-fr="Soumettez Vos Informations" data-rw="Tanga Amakuru Yawe">Tanga Amakuru Yawe</button>
     </div>
 </section>
 
-<!-- Login Modal -->
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" id="closeLoginModal">&times;</span>
-        <h2 class="modal-title" data-en="Login" data-fr="Connexion" data-rw="Login">Login</h2>
-        
-        {% if messages %}
-            {% for message in messages %}
-                <div class="message">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        
-        <form method="POST">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="id_email" data-en="Email:" data-fr="Email:" data-rw="Email:">Email:</label>
-                <input type="email" id="id_email" name="email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="id_password" data-en="Password:" data-fr="Mot de passe:" data-rw="Ijambo ryibanga:">Ijambo ryibanga:</label>
-                <input type="password" id="id_password" name="password" required>
-            </div>
-            
-            <button type="submit" class="submit-button" data-en="Sign In" data-fr="Se Connecter" data-rw="Injira">Injira</button>
-        </form>
-    </div>
-</div>
-
-<!-- Worker Information Form Modal -->
 <div id="workerFormModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" id="closeFormModal">&times;</span>
         <h2 class="modal-title" data-en="Submit Worker Information" data-fr="Soumettre les Informations du Travailleur" data-rw="Tanga Amakuru y'Umukozi">Tanga Amakuru y'Umukozi</h2>
         
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" action="{% url 'worker' %}" enctype="multipart/form-data">
             {% csrf_token %}
             
             <div class="form-group">
@@ -1483,232 +463,41 @@ if (mobileMenuToggle && navMenu) {
         </form>
     </div>
 </div>
-    
-   <!-- Footer -->
-<footer>
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h3>Kutwiga</h3>
-                <div class="footer-contact-item">
-                    <i class="fas fa-phone"></i>
-                    <div>
-                        <p>+250793487065</p>
-                    </div>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <p>murenzicharles24@gmail.com</p>
-                    </div>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <p>Kigali, Rwanda</p>
-                    </div>
-                </div>
-                <div class="footer-social">
-                    <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Ahukulile</h3>
-                <ul class="footer-links">
-                    <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="home">AHABANZA</span></a></li>
-                    <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="workers">ABAKOZI</span></a></li>
-                    <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="employers">ABAKORESHA</span></a></li>
-                    <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="view_worker">REBA UMUKOZI</span></a></li>
-                    <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="view_employers">REBA ABAKORESHA</span></a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3><span class="translate" data-translate="services">Serivisi</span></h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="find_workers">Gushaka Abakozi</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="train_workers">Guhugura Abakozi</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="talent_matching">Guhuza Impano</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="candidate_screening">Gusuzuma Abakandida</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="job_advertising">Kwamamaza Akazi</span></a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3><span class="translate" data-translate="other">Ibindi</span></h3>
-                <ul class="footer-links">
-                    <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="what_we_do">IBYO DUKORA</span></a></li>
-                    <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="announcements">AMATANGAZO</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="privacy_policy">Politiki yo Kubungabunga Amakuru</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="terms">Amabwiriza</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translate" data-translate="faqs">FAQs</span></a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2024 JobLink - All Rights Reserved</p>
-        </div>
-        
-        <!-- Language Selector -->
-        <div class="language-selector">
-            <select id="language-select" onchange="changeLanguage(this.value)">
-                <option value="rw">Kinyarwanda</option>
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-            </select>
-        </div>
-    </div>
-</footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+{% endblock %}
+
+{% block scripts %}
 <script>
-    // Language translations
-    const translations = {
-        "en": {
-            "home": "HOME",
-            "workers": "WORKERS",
-            "employers": "EMPLOYERS",
-            "view_worker": "VIEW WORKER",
-            "view_employers": "VIEW EMPLOYERS",
-            "services": "Services",
-            "find_workers": "Find Workers",
-            "train_workers": "Train Workers",
-            "talent_matching": "Talent Matching",
-            "candidate_screening": "Candidate Screening",
-            "job_advertising": "Job Advertising",
-            "other": "Other",
-            "what_we_do": "WHAT WE DO",
-            "announcements": "ANNOUNCEMENTS",
-            "privacy_policy": "Privacy Policy",
-            "terms": "Terms & Conditions",
-            "faqs": "FAQs"
-        },
-        "fr": {
-            "home": "ACCUEIL",
-            "workers": "TRAVAILLEURS",
-            "employers": "EMPLOYEURS",
-            "view_worker": "VOIR TRAVAILLEUR",
-            "view_employers": "VOIR EMPLOYEURS",
-            "services": "Services",
-            "find_workers": "Trouver des Travailleurs",
-            "train_workers": "Former des Travailleurs",
-            "talent_matching": "Mise en relation des talents",
-            "candidate_screening": "Évaluation des candidats",
-            "job_advertising": "Publicité d'emploi",
-            "other": "Autre",
-            "what_we_do": "CE QUE NOUS FAISONS",
-            "announcements": "ANNONCES",
-            "privacy_policy": "Politique de confidentialité",
-            "terms": "Termes et conditions",
-            "faqs": "FAQs"
-        },
-        "rw": {
-            "home": "AHABANZA",
-            "workers": "ABAKOZI",
-            "employers": "ABAKORESHA",
-            "view_worker": "REBA UMUKOZI",
-            "view_employers": "REBA ABAKORESHA",
-            "services": "Serivisi",
-            "find_workers": "Gushaka Abakozi",
-            "train_workers": "Guhugura Abakozi",
-            "talent_matching": "Guhuza Impano",
-            "candidate_screening": "Gusuzuma Abakandida",
-            "job_advertising": "Kwamamaza Akazi",
-            "other": "Ibindi",
-            "what_we_do": "IBYO DUKORA",
-            "announcements": "AMATANGAZO",
-            "privacy_policy": "Politiki yo Kubungabunga Amakuru",
-            "terms": "Amabwiriza",
-            "faqs": "FAQs"
-        }
-    };
-
-    // Function to change language
-    function changeLanguage(lang) {
-        localStorage.setItem('selectedLanguage', lang);
-        document.querySelectorAll('.translate').forEach(element => {
-            const key = element.getAttribute('data-translate');
-            if (translations[lang] && translations[lang][key]) {
-                element.textContent = translations[lang][key];
-            }
-        });
-    }
-
-    // Apply selected language on page load
     document.addEventListener('DOMContentLoaded', function() {
-        const savedLanguage = localStorage.getItem('selectedLanguage') || 'rw';
-        document.getElementById('language-select').value = savedLanguage;
-        changeLanguage(savedLanguage);
-    });
+        // Modal Logic specific to this page
+        const formModal = document.getElementById("workerFormModal");
+        const openFormBtns = document.querySelectorAll("#openFormModalBtn, #ctaFormBtn");
+        const closeFormBtn = document.getElementById("closeFormModal");
 
-    // Login Modal functionality
-    const loginModal = document.getElementById("loginModal");
-    const openLoginBtn = document.getElementById("openLoginModal");
-    const closeLoginModal = document.getElementById("closeLoginModal");
-    
-    // Worker Form Modal functionality
-    const workerFormModal = document.getElementById("workerFormModal");
-    const openFormBtn = document.getElementById("openFormModalBtn");
-    const ctaFormBtn = document.getElementById("ctaFormBtn");
-    const closeFormModal = document.getElementById("closeFormModal");
-    
-    // Open login modal
-    if (openLoginBtn) {
-        openLoginBtn.addEventListener("click", function(e) {
-            e.preventDefault();
-            loginModal.style.display = "block";
-        });
-    }
-    
-    // Close login modal
-    if (closeLoginModal) {
-        closeLoginModal.addEventListener("click", function() {
-            loginModal.style.display = "none";
-        });
-    }
-    
-    // Open worker form modal
-    if (openFormBtn) {
-        openFormBtn.addEventListener("click", function(e) {
-            e.preventDefault();
-            workerFormModal.style.display = "block";
-        });
-    }
-    
-    // Open worker form modal from CTA
-    if (ctaFormBtn) {
-        ctaFormBtn.addEventListener("click", function(e) {
-            e.preventDefault();
-            workerFormModal.style.display = "block";
-        });
-    }
-    
-    // Close worker form modal
-    if (closeFormModal) {
-        closeFormModal.addEventListener("click", function() {
-            workerFormModal.style.display = "none";
-        });
-    }
-    
-    // Close any modal when clicking outside
-    window.addEventListener("click", function(event) {
-        if (loginModal && event.target == loginModal) {
-            loginModal.style.display = "none";
+        if(formModal) {
+            openFormBtns.forEach(btn => {
+                if(btn) btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    formModal.style.display = "block";
+                });
+            });
+
+            if(closeFormBtn) {
+                closeFormBtn.addEventListener("click", () => {
+                    formModal.style.display = "none";
+                });
+            }
+
+            // Close on outside click
+            window.addEventListener("click", function(event) {
+                if (event.target == formModal) {
+                    formModal.style.display = "none";
+                }
+            });
         }
-        if (workerFormModal && event.target == workerFormModal) {
-            workerFormModal.style.display = "none";
-        }
-    });
-    
-    // Fade-in animation
-    document.addEventListener("DOMContentLoaded", function() {
-        const fadeElements = document.querySelectorAll('.fade-in');
         
+        // Fade In Animation Logic
+        const fadeElements = document.querySelectorAll('.fade-in');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1717,8 +506,7 @@ if (mobileMenuToggle && navMenu) {
             });
         }, { threshold: 0.1 });
         
-        fadeElements.forEach(element => {
-            observer.observe(element);
-        });
+        fadeElements.forEach(el => observer.observe(el));
     });
 </script>
+{% endblock %}

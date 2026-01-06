@@ -1,889 +1,209 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobLink - Ibyo Dukora</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #119fa5;
-            --secondary-color: #ef8f20;
-            --accent-color: #0d7176;
-            --dark-primary: #194e4f;
-            --text-color: #333;
-            --light-text: #f8f9fa;
-            --light-bg: #f9f9f9;
-            --border-radius: 30px;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: white;
-            padding: 12px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        
-        .language-selector {
-            padding: 6px; 
-            background-color: #f3f4f6;
-             border-radius: 8px;
-              border: none;
-               cursor: pointer; 
-               font-size: 14px; 
-               outline: none;
-        }
-        
-        .lang-btn {
-            
-            background: none;
-            padding: 8px;
-            font-size: 14px;
-            
-            cursor: pointer;
-            
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            color: #6b7280;
-        }
-        
-        .lang-btn.active {
-            background-color: #3b82f6;
-            color: white;
-           
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 10px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 15px;
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-button {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .nav-button:hover {
-            background-color: #d97c18;
-            transform: translateY(-2px);
-        }
-       
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 8px;
-            margin-left: 10px;
-        }
-        /* Hero Banner */
-        .hero-banner {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/nature.jpg"%}');
-            background-size: cover;
-            background-position: center;
-            padding: 120px 0;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .hero-description {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
-        .primary-button {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .primary-button:hover {
-            background-color: var(--dark-primary);
-            transform: translateY(-3px);
-        }
-
-        .secondary-button {
-            background-color: transparent;
-            color: white;
-            padding: 12px 30px;
-            border: 2px solid white;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .secondary-button:hover {
-            background-color: white;
-            color: var(--primary-color);
-            transform: translateY(-3px);
-        }
-
-        /* Stats Section */
-        .stats-section {
-            background-color: white;
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .stats-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .stats-heading {
-            font-size: 1.8rem;
-            color: var(--dark-primary);
-            margin-bottom: 40px;
-        }
-
-        .stats-info {
-            font-size: 1.1rem;
-            color: #666;
-            max-width: 800px;
-            margin: 0 auto 40px;
-        }
-
-        .stats-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .stat-card {
-            background-color: var(--light-bg);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: var(--box-shadow);
-            min-width: 200px;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        /* Services Section */
-        .services-section {
-            background-color: var(--light-bg);
-            padding: 80px 0;
-        }
-
-        .services-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            color: var(--dark-primary);
-            margin-bottom: 15px;
-            text-align: center;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title:after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--secondary-color);
-        }
-
-        .section-subtitle {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            text-align: center;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .service-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .service-image {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .service-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .service-card:hover .service-image img {
-            transform: scale(1.1);
-        }
-
-        .service-content {
-            padding: 25px;
-        }
-
-        .service-title {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--dark-primary);
-        }
-
-        .service-description {
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .service-icon {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        /* About Section */
-        .about-section {
-            padding: 80px 0;
-            background-color: white;
-        }
-
-        .about-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-
-        .about-image {
-            flex: 1;
-            min-width: 300px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .about-content {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .about-title {
-            font-size: 2.2rem;
-            color: var(--dark-primary);
-            margin-bottom: 20px;
-        }
-
-        .about-description {
-            color: #666;
-            margin-bottom: 25px;
-            line-height: 1.8;
-        }
-
-        .about-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-
-        .about-button:hover {
-            background-color: var(--dark-primary);
-            transform: translateY(-3px);
-        }
-
-        /* Contact Section */
-        .contact-section {
-            background-color: var(--light-bg);
-            padding: 80px 0;
-        }
-
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .contact-card {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: var(--box-shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .contact-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .contact-title {
-            font-size: 1.3rem;
-            color: var(--dark-primary);
-            margin-bottom: 15px;
-        }
-
-        .contact-info {
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: #ddd;
-            padding: 60px 0 20px;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .footer-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .footer-column h3 {
-            color: white;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--secondary-color);
-        }
-
-        .footer-contact-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .footer-contact-item i {
-            color: var(--secondary-color);
-            margin-right: 10px;
-            margin-top: 5px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: #ddd;
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-        }
-
-        .footer-links a i {
-            margin-right: 8px;
-            font-size: 12px;
-            color: var(--secondary-color);
-        }
-
-        .footer-links a:hover {
-            color: var(--secondary-color);
-            padding-left: 5px;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-
-        .footer-social a:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #333;
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        /* Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .fade-in.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-
-        /* Responsive adjustments */
-        @media (max-width: 992px) {
-            .about-container {
-                flex-direction: column;
-            }
-            
-            .about-image, .about-content {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .stats-grid {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-/* Responsive Header */
-@media (max-width: 992px) {
-    .header-content {
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 10px 15px;
+{% block title %}JobLink - Ibyo Dukora{% endblock %}
+
+{% block style %}
+<style>
+    /* --- PAGE SPECIFIC STYLES --- */
+    
+    /* Hero Banner */
+    .hero-banner {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/nature.jpg"%}');
+        background-size: cover;
+        background-position: center;
+        padding: 120px 0;
+        text-align: center;
+        color: white;
+        position: relative;
     }
 
-    .mobile-menu-toggle {
-        display: block;
-        order: 1;
-    }
-
-    nav {
-        order: 3;
-        width: 100%;
-        display: none;
-    }
-
-    nav.show {
-        display: block;
-        animation: slideDown 0.3s ease-out;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 5px;
-        padding: 10px 0;
-    }
-
-    nav ul li a {
-        display: block;
-        padding: 10px 15px;
-    }
-
-    .right-elements {
-        order: 2;
-        margin-left: auto;
-        display: flex;
+    .hero-content { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    .hero-title { font-size: 3.5rem; margin-bottom: 20px; font-weight: 700; line-height: 1.2; }
+    .hero-description { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    
+    .hero-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 30px; }
+    
+    .primary-button {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
         align-items: center;
-        gap: 15px;
+        gap: 8px;
     }
-}
+    .primary-button:hover { background-color: var(--dark-primary); transform: translateY(-3px); }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
+    .secondary-button {
+        background-color: transparent;
+        color: white;
+        padding: 12px 30px;
+        border: 2px solid white;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-    </style>
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <nav id="mainNav">
-               <ul id="navigation-menu">
-    <li><a href="{% url 'home' %}" data-kinyarwanda="AHABANZA" data-english="HOME" data-french="ACCUEIL">AHABANZA</a></li>
-    <li><a href="{% url 'worker' %}" data-kinyarwanda="ABAKOZI" data-english="WORKERS" data-french="TRAVAILLEURS">ABAKOZI</a></li>
-    <li><a href="{% url 'employer' %}" data-kinyarwanda="ABAKORESHA" data-english="EMPLOYERS" data-french="EMPLOYEURS">ABAKORESHA</a></li>
-    <li><a href="{% url 'view_worker' %}" data-kinyarwanda="REBA UMUKOZI" data-english="VIEW WORKER" data-french="VOIR EMPLOYÉ">REBA UMUKOZI</a></li>
-    <li><a href="{% url 'view_employers' %}" data-kinyarwanda="REBA ABAKORESHA" data-english="VIEW EMPLOYERS" data-french="VOIR EMPLOYEURS">REBA ABAKORESHA</a></li>
-    <li><a href="{% url 'what_we_do' %}" data-kinyarwanda="IBYO DUKORA" data-english="WHAT WE DO" data-french="NOS SERVICES">IBYO DUKORA</a></li>
-    <li><a href="{% url 'announcements' %}" data-kinyarwanda="AMATANGAZO" data-english="ANNOUNCEMENTS" data-french="ANNONCES">AMATANGAZO</a></li>
-</ul>
-            </nav>
+    .secondary-button:hover { background-color: white; color: var(--primary-color); transform: translateY(-3px); }
+
+    /* Stats Section */
+    .stats-section { background-color: white; padding: 80px 0; text-align: center; }
+    .stats-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .stats-heading { font-size: 1.8rem; color: var(--dark-primary); margin-bottom: 40px; }
+    .stats-info { font-size: 1.1rem; color: #666; max-width: 800px; margin: 0 auto 40px; }
+    .stats-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
     
-            <div class="right-elements">
-                <div class="language-selector">
-                    <select id="language-select">
-                        <option value="kinyarwanda" selected>Kin</option>
-                        <option value="english">En</option>
-                        <option value="french">Fr</option>
-                    </select>
-                </div>
-               
-            </div>
-             <a href="#" class="nav-button" data-kinyarwanda="KWINJIRA" data-english="LOGIN" data-french="CONNEXION">KWINJIRA</a>
-        </div>
-    </header>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const languageSelect = document.getElementById('language-select');
-        
-        // Function to change language
-        function changeLanguage(language) {
-            // Update all elements with data-* attributes
-            document.querySelectorAll('[data-kinyarwanda], [data-english], [data-french]').forEach(element => {
-                if (element.hasAttribute(`data-${language}`)) {
-                    element.textContent = element.getAttribute(`data-${language}`);
-                }
-            });
-            
-            // Store language preference in local storage
-            localStorage.setItem('preferredLanguage', language);
-        }
-        
-        // Event listener for language select change
-        languageSelect.addEventListener('change', function() {
-            changeLanguage(this.value);
-        });
-        
-        // Check for saved language preference or apply default
-        const savedLanguage = localStorage.getItem('preferredLanguage');
-        if (savedLanguage) {
-            languageSelect.value = savedLanguage;
-            changeLanguage(savedLanguage);
-        } else {
-            changeLanguage('kinyarwanda');
-        }
-    });
-     // Mobile menu toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const mainNav = document.getElementById('mainNav');
-    const navIcon = mobileMenuToggle.querySelector('i');
-    
-    if (mobileMenuToggle && mainNav) {
-        mobileMenuToggle.addEventListener('click', function() {
-            mainNav.classList.toggle('show');
-            navIcon.classList.toggle('fa-bars');
-            navIcon.classList.toggle('fa-times');
-        });
-        
-        // Close menu when clicking on a link
-        const navLinks = mainNav.querySelectorAll('a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 992) {
-                    mainNav.classList.remove('show');
-                    navIcon.classList.remove('fa-times');
-                    navIcon.classList.add('fa-bars');
-                }
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!mainNav.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
-                mainNav.classList.remove('show');
-                navIcon.classList.remove('fa-times');
-                navIcon.classList.add('fa-bars');
-            }
-        });
+    .stat-card {
+        background-color: var(--light-bg);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: var(--box-shadow);
+        min-width: 200px;
+        transition: var(--transition);
     }
-});
-</script>
+    .stat-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+    .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px; }
+    .stat-label { font-size: 1rem; color: #666; }
 
-    <!-- Hero Banner -->
+    /* Services Section */
+    .services-section { background-color: var(--light-bg); padding: 80px 0; }
+    .services-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section-title { font-size: 2.2rem; color: var(--dark-primary); margin-bottom: 15px; text-align: center; position: relative; display: inline-block; width: 100%; }
+    .section-subtitle { color: #666; max-width: 700px; margin: 0 auto 40px; text-align: center; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+    
+    .service-card { background-color: white; border-radius: 10px; overflow: hidden; box-shadow: var(--box-shadow); transition: var(--transition); }
+    .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+    .service-content { padding: 25px; }
+    .service-title { font-size: 1.3rem; margin-bottom: 15px; color: var(--dark-primary); }
+    .service-description { color: #666; margin-bottom: 20px; }
+    .service-icon { color: var(--primary-color); font-size: 2.5rem; margin-bottom: 15px; }
+
+    /* About Section */
+    .about-section { padding: 80px 0; background-color: white; }
+    .about-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+    .about-image { flex: 1; min-width: 300px; border-radius: 10px; overflow: hidden; box-shadow: var(--box-shadow); }
+    .about-image img { width: 100%; height: auto; display: block; }
+    .about-content { flex: 1; min-width: 300px; }
+    .about-title { font-size: 2.2rem; color: var(--dark-primary); margin-bottom: 20px; }
+    .about-description { color: #666; margin-bottom: 25px; line-height: 1.8; }
+    
+    .about-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+    }
+    .about-button:hover { background-color: var(--dark-primary); transform: translateY(-3px); }
+
+    /* Contact Section (Mini) */
+    .contact-section { background-color: var(--light-bg); padding: 80px 0; }
+    .contact-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .contact-card { background-color: white; padding: 30px; border-radius: 10px; box-shadow: var(--box-shadow); text-align: center; transition: var(--transition); }
+    .contact-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+    .contact-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 20px; }
+    .contact-title { font-size: 1.3rem; color: var(--dark-primary); margin-bottom: 15px; }
+    .contact-info { color: #666; margin-bottom: 15px; }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .about-container { flex-direction: column; }
+        .about-image, .about-content { width: 100%; }
+    }
+    @media (max-width: 576px) {
+        .hero-buttons { flex-direction: column; align-items: center; }
+        .stats-grid { flex-direction: column; align-items: center; }
+        .contact-grid { grid-template-columns: 1fr; }
+        .primary-button, .secondary-button { width: 100%; justify-content: center; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
 <section class="hero-banner">
     <div class="hero-content">
         <h1 class="hero-title fade-in">
-            <span data-kinyarwanda="IBYO" data-english="WHAT WE" data-french="CE QUE NOUS">IBYO</span> 
-            <span style="color: var(--secondary-color);" data-kinyarwanda="DUKORA" data-english="DO" data-french="FAISONS">DUKORA</span>
+            <span data-rw="IBYO" data-en="WHAT WE" data-fr="CE QUE NOUS">IBYO</span> 
+            <span style="color: var(--secondary-color);" data-rw="DUKORA" data-en="DO" data-fr="FAISONS">DUKORA</span>
         </h1>
         <p class="hero-description fade-in delay-1" 
-           data-kinyarwanda="Dufasha ibigo no kubona abakozi, tunafasha abashaka akazi kubona umwanya ubereye." 
-           data-english="We help companies find employees and job seekers find suitable positions." 
-           data-french="Nous aidons les entreprises à trouver des employés et les chercheurs d'emploi à trouver des postes adaptés.">
+           data-rw="Dufasha ibigo no kubona abakozi, tunafasha abashaka akazi kubona umwanya ubereye." 
+           data-en="We help companies find employees and job seekers find suitable positions." 
+           data-fr="Nous aidons les entreprises à trouver des employés et les chercheurs d'emploi à trouver des postes adaptés.">
             Dufasha ibigo no kubona abakozi, tunafasha abashaka akazi kubona umwanya ubereye.
         </p>
         <div class="hero-buttons">
             <a href="{% url 'employer' %}" class="primary-button fade-in delay-2">
                 <i class="fas fa-building"></i> 
-                <span data-kinyarwanda="Ku Bakoresha" data-english="For Employers" data-french="Pour les Employeurs">Ku Bakoresha</span>
+                <span data-rw="Ku Bakoresha" data-en="For Employers" data-fr="Pour les Employeurs">Ku Bakoresha</span>
             </a>
             <a href="{% url 'worker' %}" class="secondary-button fade-in delay-3">
                 <i class="fas fa-user"></i> 
-                <span data-kinyarwanda="Ku Bashaka Akazi" data-english="For Job Seekers" data-french="Pour les Chercheurs d'Emploi">Ku Bashaka Akazi</span>
+                <span data-rw="Ku Bashaka Akazi" data-en="For Job Seekers" data-fr="Pour les Chercheurs d'Emploi">Ku Bashaka Akazi</span>
             </a>
         </div>
     </div>
 </section>
 
-<!-- Stats Section -->
 <section class="stats-section">
     <div class="stats-container">
         <h2 class="stats-heading" 
-            data-kinyarwanda="Turashaka kugufasha gukora itandukaniro" 
-            data-english="We want to help you make a difference" 
-            data-french="Nous voulons vous aider à faire la différence">
+            data-rw="Turashaka kugufasha gukora itandukaniro" 
+            data-en="We want to help you make a difference" 
+            data-fr="Nous voulons vous aider à faire la différence">
             Turashaka kugufasha gukora itandukaniro
         </h2>
         <p class="stats-info" 
-           data-kinyarwanda="Kuri JobLink, dufasha ibigo kubona abakozi b'abahanga kandi dufasha abantu kubona akazi kajyanye n'ubumenyi bwabo" 
-           data-english="At JobLink, we help companies find talented employees and help people find jobs that match their skills" 
-           data-french="Chez JobLink, nous aidons les entreprises à trouver des employés talentueux et aidons les personnes à trouver des emplois correspondant à leurs compétences">
+           data-rw="Kuri JobLink, dufasha ibigo kubona abakozi b'abahanga kandi dufasha abantu kubona akazi kajyanye n'ubumenyi bwabo" 
+           data-en="At JobLink, we help companies find talented employees and help people find jobs that match their skills" 
+           data-fr="Chez JobLink, nous aidons les entreprises à trouver des employés talentueux et aidons les personnes à trouver des emplois correspondant à leurs compétences">
             Kuri JobLink, dufasha ibigo kubona abakozi b'abahanga kandi dufasha abantu kubona akazi kajyanye n'ubumenyi bwabo
         </p>
         <div class="stats-grid">
             <div class="stat-card fade-in">
                 <div class="stat-number">80+</div>
                 <div class="stat-label" 
-                     data-kinyarwanda="Abanyakazi bashya buri kwezi" 
-                     data-english="New employees each month" 
-                     data-french="Nouveaux employés chaque mois">
+                     data-rw="Abanyakazi bashya buri kwezi" 
+                     data-en="New employees each month" 
+                     data-fr="Nouveaux employés chaque mois">
                     Abanyakazi bashya buri kwezi
                 </div>
             </div>
             <div class="stat-card fade-in delay-1">
                 <div class="stat-number">500+</div>
                 <div class="stat-label" 
-                     data-kinyarwanda="Akazi kabonetse" 
-                     data-english="Jobs found" 
-                     data-french="Emplois trouvés">
+                     data-rw="Akazi kabonetse" 
+                     data-en="Jobs found" 
+                     data-fr="Emplois trouvés">
                     Akazi kabonetse
                 </div>
             </div>
             <div class="stat-card fade-in delay-2">
                 <div class="stat-number">2K+</div>
                 <div class="stat-label" 
-                     data-kinyarwanda="Abakozi bashimwe" 
-                     data-english="Satisfied employees" 
-                     data-french="Employés satisfaits">
+                     data-rw="Abakozi bashimwe" 
+                     data-en="Satisfied employees" 
+                     data-fr="Employés satisfaits">
                     Abakozi bashimwe
                 </div>
             </div>
@@ -891,19 +211,18 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
-<!-- Services Section -->
 <section class="services-section">
     <div class="services-container">
         <h2 class="section-title" 
-            data-kinyarwanda="Serivisi Dutanga" 
-            data-english="Our Services" 
-            data-french="Nos Services">
+            data-rw="Serivisi Dutanga" 
+            data-en="Our Services" 
+            data-fr="Nos Services">
             Serivisi Dutanga
         </h2>
         <p class="section-subtitle" 
-           data-kinyarwanda="Izo ni serivisi nyamukuru dutanga kugira ngo tugufashe gukora neza" 
-           data-english="These are the main services we provide to help you succeed" 
-           data-french="Voici les principaux services que nous proposons pour vous aider à réussir">
+           data-rw="Izo ni serivisi nyamukuru dutanga kugira ngo tugufashe gukora neza" 
+           data-en="These are the main services we provide to help you succeed" 
+           data-fr="Voici les principaux services que nous proposons pour vous aider à réussir">
             Izo ni serivisi nyamukuru dutanga kugira ngo tugufashe gukora neza
         </p>
         <div class="services-grid">
@@ -913,15 +232,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <i class="fas fa-handshake"></i>
                     </div>
                     <h3 class="service-title" 
-                        data-kinyarwanda="Guhuza Abakozi n'Akazi" 
-                        data-english="Employee-Job Matching" 
-                        data-french="Mise en Relation Employés-Emplois">
+                        data-rw="Guhuza Abakozi n'Akazi" 
+                        data-en="Employee-Job Matching" 
+                        data-fr="Mise en Relation Employés-Emplois">
                         Guhuza Abakozi n'Akazi
                     </h3>
                     <p class="service-description" 
-                       data-kinyarwanda="Dukoresha ikoranabuhanga ry'igihe kugira ngo guhuza ubushobozi n'ibyifuzo by'ibigo bitandukanye, dutanga imyanya ku bushake." 
-                       data-english="We use modern technology to match skills with company requirements, providing opportunities for all." 
-                       data-french="Nous utilisons des technologies modernes pour faire correspondre les compétences aux exigences des entreprises, offrant des opportunités pour tous.">
+                       data-rw="Dukoresha ikoranabuhanga ry'igihe kugira ngo guhuza ubushobozi n'ibyifuzo by'ibigo bitandukanye, dutanga imyanya ku bushake." 
+                       data-en="We use modern technology to match skills with company requirements, providing opportunities for all." 
+                       data-fr="Nous utilisons des technologies modernes pour faire correspondre les compétences aux exigences des entreprises, offrant des opportunités pour tous.">
                         Dukoresha ikoranabuhanga ry'igihe kugira ngo guhuza ubushobozi n'ibyifuzo by'ibigo bitandukanye, dutanga imyanya ku bushake.
                     </p>
                 </div>
@@ -932,15 +251,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <i class="fas fa-file-alt"></i>
                     </div>
                     <h3 class="service-title" 
-                        data-kinyarwanda="Gutunganya CVs" 
-                        data-english="CV Preparation" 
-                        data-french="Préparation de CV">
+                        data-rw="Gutunganya CVs" 
+                        data-en="CV Preparation" 
+                        data-fr="Préparation de CV">
                         Gutunganya CVs
                     </h3>
                     <p class="service-description" 
-                       data-kinyarwanda="Tugufasha gutunganya CV yawe kugira ngo werekane ubumenyi n'ubushobozi bwawe ku buryo bunoze." 
-                       data-english="We help you prepare your CV to effectively showcase your knowledge and skills." 
-                       data-french="Nous vous aidons à préparer votre CV pour mettre en valeur efficacement vos connaissances et compétences.">
+                       data-rw="Tugufasha gutunganya CV yawe kugira ngo werekane ubumenyi n'ubushobozi bwawe ku buryo bunoze." 
+                       data-en="We help you prepare your CV to effectively showcase your knowledge and skills." 
+                       data-fr="Nous vous aidons à préparer votre CV pour mettre en valeur efficacement vos connaissances et compétences.">
                         Tugufasha gutunganya CV yawe kugira ngo werekane ubumenyi n'ubushobozi bwawe ku buryo bunoze.
                     </p>
                 </div>
@@ -951,15 +270,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <i class="fas fa-users"></i>
                     </div>
                     <h3 class="service-title" 
-                        data-kinyarwanda="Gushaka Abakozi" 
-                        data-english="Recruitment Services" 
-                        data-french="Services de Recrutement">
+                        data-rw="Gushaka Abakozi" 
+                        data-en="Recruitment Services" 
+                        data-fr="Services de Recrutement">
                         Gushaka Abakozi
                     </h3>
                     <p class="service-description" 
-                       data-kinyarwanda="Dufasha ibigo gushaka abakozi babereye kandi bafite ubumenyi bukenewe. Turamenya neza ko buri mukozi ajyanye n'umwanya ukenewe." 
-                       data-english="We help companies recruit suitable employees with the necessary skills. We ensure that each employee matches the required position." 
-                       data-french="Nous aidons les entreprises à recruter des employés qualifiés ayant les compétences nécessaires. Nous veillons à ce que chaque employé corresponde au poste requis.">
+                       data-rw="Dufasha ibigo gushaka abakozi babereye kandi bafite ubumenyi bukenewe. Turamenya neza ko buri mukozi ajyanye n'umwanya ukenewe." 
+                       data-en="We help companies recruit suitable employees with the necessary skills. We ensure that each employee matches the required position." 
+                       data-fr="Nous aidons les entreprises à recruter des employés qualifiés ayant les compétences nécessaires. Nous veillons à ce que chaque employé corresponde au poste requis.">
                         Dufasha ibigo gushaka abakozi babereye kandi bafite ubumenyi bukenewe. Turamenya neza ko buri mukozi ajyanye n'umwanya ukenewe.
                     </p>
                 </div>
@@ -968,7 +287,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
-<!-- About Section -->
 <section class="about-section">
     <div class="about-container">
         <div class="about-image fade-in">
@@ -976,84 +294,49 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="about-content fade-in delay-1">
             <h2 class="about-title" 
-                data-kinyarwanda="IBYO DUKORA" 
-                data-english="WHAT WE DO" 
-                data-french="CE QUE NOUS FAISONS">
+                data-rw="IBYO DUKORA" 
+                data-en="WHAT WE DO" 
+                data-fr="CE QUE NOUS FAISONS">
                 IBYO DUKORA
             </h2>
             <p class="about-description" 
-               data-kinyarwanda="Kuri JobLink, duhuza ibigo n'abakozi b'abahanga kandi tugafasha abashaka akazi kubona umwuga wuzuye ubuzima. Urubuga rwacu rworoshya uburyo bwo gushaka abakozi, rutanga serivisi zigenewe abatanga akazi ndetse n'abashaka akazi." 
-               data-english="At JobLink, we connect companies with talented employees and help job seekers find fulfilling careers. Our platform streamlines the recruitment process, providing tailored services for both employers and job seekers." 
-               data-french="Chez JobLink, nous mettons en relation les entreprises avec des employés talentueux et aidons les chercheurs d'emploi à trouver des carrières épanouissantes. Notre plateforme simplifie le processus de recrutement, en offrant des services adaptés aux employeurs et aux chercheurs d'emploi.">
+               data-rw="Kuri JobLink, duhuza ibigo n'abakozi b'abahanga kandi tugafasha abashaka akazi kubona umwuga wuzuye ubuzima. Urubuga rwacu rworoshya uburyo bwo gushaka abakozi, rutanga serivisi zigenewe abatanga akazi ndetse n'abashaka akazi." 
+               data-en="At JobLink, we connect companies with talented employees and help job seekers find fulfilling careers. Our platform streamlines the recruitment process, providing tailored services for both employers and job seekers." 
+               data-fr="Chez JobLink, nous mettons en relation les entreprises avec des employés talentueux et aidons les chercheurs d'emploi à trouver des carrières épanouissantes. Notre plateforme simplifie le processus de recrutement, en offrant des services adaptés aux employeurs et aux chercheurs d'emploi.">
                 Kuri JobLink, duhuza ibigo n'abakozi b'abahanga kandi tugafasha abashaka akazi kubona umwuga wuzuye ubuzima. Urubuga rwacu rworoshya uburyo bwo gushaka abakozi, rutanga serivisi zigenewe abatanga akazi ndetse n'abashaka akazi.
             </p>
             <p class="about-description" 
-               data-kinyarwanda="Abatanga akazi bashobora gushyiraho ibyifuzo by'akazi, kwinjiza abakozi bashoboye, no kubona ibisubizo byihuse mu guhitamo abakozi, mu gihe abashaka akazi bashobora gushaka ibyifuzo by'akazi, kohereza ubusabe bw'akazi, no kwakira inama ku mwuga." 
-               data-english="Employers can post job requirements, onboard qualified employees, and get quick solutions in selecting staff, while job seekers can search for job postings, submit applications, and receive career advice." 
-               data-french="Les employeurs peuvent publier des offres d'emploi, intégrer des employés qualifiés et obtenir des solutions rapides pour la sélection du personnel, tandis que les chercheurs d'emploi peuvent rechercher des offres d'emploi, soumettre des candidatures et recevoir des conseils de carrière.">
+               data-rw="Abatanga akazi bashobora gushyiraho ibyifuzo by'akazi, kwinjiza abakozi bashoboye, no kubona ibisubizo byihuse mu guhitamo abakozi, mu gihe abashaka akazi bashobora gushaka ibyifuzo by'akazi, kohereza ubusabe bw'akazi, no kwakira inama ku mwuga." 
+               data-en="Employers can post job requirements, onboard qualified employees, and get quick solutions in selecting staff, while job seekers can search for job postings, submit applications, and receive career advice." 
+               data-fr="Les employeurs peuvent publier des offres d'emploi, intégrer des employés qualifiés et obtenir des solutions rapides pour la sélection du personnel, tandis que les chercheurs d'emploi peuvent rechercher des offres d'emploi, soumettre des candidatures et recevoir des conseils de carrière.">
                 Abatanga akazi bashobora gushyiraho ibyifuzo by'akazi, kwinjiza abakozi bashoboye, no kubona ibisubizo byihuse mu guhitamo abakozi, mu gihe abashaka akazi bashobora gushaka ibyifuzo by'akazi, kohereza ubusabe bw'akazi, no kwakira inama ku mwuga.
             </p>
             <p class="about-description" 
-               data-kinyarwanda="Twiyemeje guteza imbere intsinzi y'impande zombi, twizeza ko ibigo n'abakozi bazahigira imbere. Twiyunge natwe none, maze twubake umusingi hagati y'ubushobozi n'amahirwe!" 
-               data-english="We are committed to fostering win-win success, ensuring that both companies and employees thrive. Join us today, and let's build a bridge between talent and opportunity!" 
-               data-french="Nous nous engageons à favoriser un succès gagnant-gagnant, en veillant à ce que les entreprises et les employés prospèrent. Rejoignez-nous dès aujourd'hui, et construisons un pont entre talent et opportunité !">
+               data-rw="Twiyemeje guteza imbere intsinzi y'impande zombi, twizeza ko ibigo n'abakozi bazahigira imbere. Twiyunge natwe none, maze twubake umusingi hagati y'ubushobozi n'amahirwe!" 
+               data-en="We are committed to fostering win-win success, ensuring that both companies and employees thrive. Join us today, and let's build a bridge between talent and opportunity!" 
+               data-fr="Nous nous engageons à favoriser un succès gagnant-gagnant, en veillant à ce que les entreprises et les employés prospèrent. Rejoignez-nous dès aujourd'hui, et construisons un pont entre talent et opportunité !">
                 Twiyemeje guteza imbere intsinzi y'impande zombi, twizeza ko ibigo n'abakozi bazahigira imbere. Twiyunge natwe none, maze twubake umusingi hagati y'ubushobozi n'amahirwe!
             </p>
             <a href="{% url 'contact' %}" class="about-button">
                 <i class="fas fa-envelope"></i> 
-                <span data-kinyarwanda="Twandikire" data-english="Contact Us" data-french="Contactez-nous">Twandikire</span>
+                <span data-rw="Twandikire" data-en="Contact Us" data-fr="Contactez-nous">Twandikire</span>
             </a>
         </div>
     </div>
 </section>
 
-<!-- Include this JavaScript to make it functional -->
-<script>
-    // This function should already be defined in your header script
-    // Make sure to include this if not already present
-    function changeLanguage(language) {
-        currentLanguage = language;
-        
-        // Update all elements with data language attributes
-        document.querySelectorAll('[data-' + language + ']').forEach(element => {
-            element.textContent = element.getAttribute('data-' + language);
-        });
-        
-        // Update language buttons active state
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.getElementById(language + '-btn').classList.add('active');
-        
-        // Store language preference
-        localStorage.setItem('preferredLanguage', language);
-    }
-    
-    // Initialize language on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const savedLanguage = localStorage.getItem('preferredLanguage');
-        if (savedLanguage) {
-            changeLanguage(savedLanguage);
-        }
-    });
-    
-       
-        
-</script>
-
-   <!-- Contact Section -->
 <section class="contact-section">
     <div class="contact-container">
         <h2 class="section-title" 
-            data-kinyarwanda="Twandikire" 
-            data-english="Contact Us" 
-            data-french="Contactez-nous">
+            data-rw="Twandikire" 
+            data-en="Contact Us" 
+            data-fr="Contactez-nous">
             Twandikire
         </h2>
         <p class="section-subtitle" 
-           data-kinyarwanda="Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara." 
-           data-english="Do you have a question or need help? You can write to us or call us." 
-           data-french="Vous avez une question ou besoin d'aide ? Vous pouvez nous écrire ou nous appeler.">
+           data-rw="Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara." 
+           data-en="Do you have a question or need help? You can write to us or call us." 
+           data-fr="Vous avez une question ou besoin d'aide ? Vous pouvez nous écrire ou nous appeler.">
             Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.
         </p>
         <div class="contact-grid">
@@ -1062,9 +345,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     <i class="fas fa-phone"></i>
                 </div>
                 <h3 class="contact-title" 
-                    data-kinyarwanda="Telefoni" 
-                    data-english="Phone" 
-                    data-french="Téléphone">
+                    data-rw="Telefoni" 
+                    data-en="Phone" 
+                    data-fr="Téléphone">
                     Telefoni
                 </h3>
                 <p class="contact-info">+250793487065</p>
@@ -1074,9 +357,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     <i class="fas fa-envelope"></i>
                 </div>
                 <h3 class="contact-title" 
-                    data-kinyarwanda="Imeyili" 
-                    data-english="Email" 
-                    data-french="E-mail">
+                    data-rw="Imeyili" 
+                    data-en="Email" 
+                    data-fr="E-mail">
                     Imeyili
                 </h3>
                 <p class="contact-info">murenzicharles24@gmail.com</p>
@@ -1086,15 +369,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     <i class="fas fa-map-marker-alt"></i>
                 </div>
                 <h3 class="contact-title" 
-                    data-kinyarwanda="Ahantu" 
-                    data-english="Location" 
-                    data-french="Emplacement">
+                    data-rw="Ahantu" 
+                    data-en="Location" 
+                    data-fr="Emplacement">
                     Ahantu
                 </h3>
                 <p class="contact-info" 
-                   data-kinyarwanda="Kigali, Rwanda" 
-                   data-english="Kigali, Rwanda" 
-                   data-french="Kigali, Rwanda">
+                   data-rw="Kigali, Rwanda" 
+                   data-en="Kigali, Rwanda" 
+                   data-fr="Kigali, Rwanda">
                     Kigali, Rwanda
                 </p>
             </div>
@@ -1102,283 +385,4 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
-<!-- Footer -->
-<footer>
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h3 data-kinyarwanda="Kutwiga" 
-                    data-english="About Us" 
-                    data-french="À Propos">
-                    Kutwiga
-                </h3>
-                <div class="footer-contact-item">
-                    <i class="fas fa-phone"></i>
-                    <div>
-                        <p>+250793487065</p>
-                    </div>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <p>murenzicharles24@gmail.com</p>
-                    </div>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <p data-kinyarwanda="Kigali, Rwanda" 
-                           data-english="Kigali, Rwanda" 
-                           data-french="Kigali, Rwanda">
-                            Kigali, Rwanda
-                        </p>
-                    </div>
-                </div>
-                <div class="footer-social">
-                    <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-column">
-                <h3 data-kinyarwanda="Ahukulile" 
-                    data-english="Quick Links" 
-                    data-french="Liens Rapides">
-                    Ahukulile
-                </h3>
-                <ul class="footer-links">
-                    <li>
-                        <a href="{% url 'home' %}">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="AHABANZA" 
-                                  data-english="HOME" 
-                                  data-french="ACCUEIL">
-                                AHABANZA
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'worker' %}">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="ABAKOZI" 
-                                  data-english="WORKERS" 
-                                  data-french="TRAVAILLEURS">
-                                ABAKOZI
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'employer' %}">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="ABAKORESHA" 
-                                  data-english="EMPLOYERS" 
-                                  data-french="EMPLOYEURS">
-                                ABAKORESHA
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'view_worker' %}">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="REBA UMUKOZI" 
-                                  data-english="VIEW WORKER" 
-                                  data-french="VOIR TRAVAILLEUR">
-                                REBA UMUKOZI
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'view_employers' %}">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="REBA ABAKORESHA" 
-                                  data-english="VIEW EMPLOYERS" 
-                                  data-french="VOIR EMPLOYEURS">
-                                REBA ABAKORESHA
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3 data-kinyarwanda="Serivisi" 
-                    data-english="Services" 
-                    data-french="Services">
-                    Serivisi
-                </h3>
-                <ul class="footer-links">
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="Gushaka Abakozi" 
-                                  data-english="Recruitment" 
-                                  data-french="Recrutement">
-                                Gushaka Abakozi
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="Guhugura Abakozi" 
-                                  data-english="Employee Training" 
-                                  data-french="Formation des Employés">
-                                Guhugura Abakozi
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="Guhuza Impano" 
-                                  data-english="Talent Matching" 
-                                  data-french="Appariement de Talents">
-                                Guhuza Impano
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="Gusuzuma Abakandida" 
-                                  data-english="Candidate Assessment" 
-                                  data-french="Évaluation des Candidats">
-                                Gusuzuma Abakandida
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="Kwamamaza Akazi" 
-                                  data-english="Job Advertising" 
-                                  data-french="Publicité d'Emploi">
-                                Kwamamaza Akazi
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3 data-kinyarwanda="Ibindi" 
-                    data-english="Others" 
-                    data-french="Autres">
-                    Ibindi
-                </h3>
-                <ul class="footer-links">
-                    <li>
-                        <a href="{% url 'what_we_do' %}">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="IBYO DUKORA" 
-                                  data-english="WHAT WE DO" 
-                                  data-french="CE QUE NOUS FAISONS">
-                                IBYO DUKORA
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'announcements' %}">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="AMATANGAZO" 
-                                  data-english="ANNOUNCEMENTS" 
-                                  data-french="ANNONCES">
-                                AMATANGAZO
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="Politiki yo Kubungabunga Amakuru" 
-                                  data-english="Privacy Policy" 
-                                  data-french="Politique de Confidentialité">
-                                Politiki yo Kubungabunga Amakuru
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="Amabwiriza" 
-                                  data-english="Terms & Conditions" 
-                                  data-french="Termes et Conditions">
-                                Amabwiriza
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-chevron-right"></i> 
-                            <span data-kinyarwanda="FAQs" 
-                                  data-english="FAQs" 
-                                  data-french="FAQs">
-                                FAQs
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p data-kinyarwanda="&copy; 2024 JobLink - Uburenganzira Bwose Bwihariwe" 
-               data-english="&copy; 2024 JobLink - All Rights Reserved" 
-               data-french="&copy; 2024 JobLink - Tous Droits Réservés">
-                &copy; 2024 JobLink - All Rights Reserved
-            </p>
-        </div>
-    </div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-<script>
-    // Fade-in animation
-    document.addEventListener("DOMContentLoaded", function() {
-        const fadeElements = document.querySelectorAll('.fade-in');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        fadeElements.forEach(element => {
-            observer.observe(element);
-        });
-        
-        // Check for saved language preference and apply it
-        const savedLanguage = localStorage.getItem('preferredLanguage');
-        if (savedLanguage) {
-            changeLanguage(savedLanguage);
-        }
-    });
-    
-    // Language switching function (if not already defined in the header)
-    // Only include this if it's not already defined elsewhere
-    if (typeof changeLanguage !== 'function') {
-        function changeLanguage(language) {
-            // Update all elements with data language attributes
-            document.querySelectorAll('[data-' + language + ']').forEach(element => {
-                element.textContent = element.getAttribute('data-' + language);
-            });
-            
-            // Update language buttons active state if they exist
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            const langBtn = document.getElementById(language + '-btn');
-            if (langBtn) {
-                langBtn.classList.add('active');
-            }
-            
-            // Store language preference
-            localStorage.setItem('preferredLanguage', language);
-        }
-    }
-</script>
+{% endblock %}

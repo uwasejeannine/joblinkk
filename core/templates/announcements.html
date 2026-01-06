@@ -1,911 +1,353 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobLink - AMATANGAZO</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #119fa5;
-            --secondary-color: #ef8f20;
-            --accent-color: #0d7176;
-            --dark-primary: #194e4f;
-            --text-color: #333;
-            --light-text: #f8f9fa;
-            --light-bg: #f9f9f9;
-            --border-radius: 30px;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+{% block title %}JobLink - AMATANGAZO{% endblock %}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: white;
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 10px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 15px;
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-button {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .nav-button:hover {
-            background-color: #d97c18;
-            transform: translateY(-2px);
-        }
-        /* Mobile Menu Toggle */
-.mobile-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #333;
-}
-
-        /* Hero Banner */
-        .hero-banner {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/nature.jpg"%}');
-            background-size: cover;
-            background-position: center;
-            padding: 100px 0;
-            text-align: center;
-            color: white;
-        }
-
-        .hero-title {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        /* Announcements Grid */
-        .announcements-section {
-            padding: 60px 0;
-            background-color: white;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .announcements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .announcement-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-        }
-
-        .announcement-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .announcement-image {
-            height: 200px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .announcement-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .announcement-card:hover .announcement-image img {
-            transform: scale(1.1);
-        }
-
-        .announcement-date {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .announcement-author {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .announcement-author i {
-            margin-right: 5px;
-            color: var(--primary-color);
-        }
-
-        .announcement-content {
-            padding: 20px;
-        }
-
-        .announcement-title {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-            color: var(--dark-primary);
-        }
-
-        .announcement-excerpt {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-
-        .read-more {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .read-more i {
-            margin-left: 5px;
-            transition: var(--transition);
-        }
-
-        .read-more:hover {
-            color: var(--secondary-color);
-        }
-
-        .read-more:hover i {
-            transform: translateX(5px);
-        }
-
-        /* Subscribe Section */
-        .subscribe-section {
-            background-color: #1a1a1a;
-            padding: 50px 0;
-            color: white;
-        }
-
-        .subscribe-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .subscribe-content {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .subscribe-icon {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-        }
-
-        .subscribe-text h3 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        .subscribe-text p {
-            color: #aaa;
-        }
-
-        .subscribe-form {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            max-width: 450px;
-        }
-
-        .subscribe-input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #333;
-            background-color: #333;
-            color: white;
-            border-radius: 4px;
-        }
-
-        .subscribe-input::placeholder {
-            color: #999;
-        }
-
-        .subscribe-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .subscribe-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .subscribe-button:hover {
-            background-color: var(--dark-primary);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: #ddd;
-            padding: 60px 0 20px;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .footer-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .footer-column h3 {
-            color: white;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--secondary-color);
-        }
-
-        .footer-contact-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .footer-contact-item i {
-            color: var(--secondary-color);
-            margin-right: 10px;
-            margin-top: 5px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: #ddd;
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-        }
-
-        .footer-links a i {
-            margin-right: 8px;
-            font-size: 12px;
-            color: var(--secondary-color);
-        }
-
-        .footer-links a:hover {
-            color: var(--secondary-color);
-            padding-left: 5px;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-
-        .footer-social a:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #333;
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .pagination a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: white;
-            color: var(--text-color);
-            text-decoration: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-        }
-
-        .pagination a:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .pagination a.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 50px auto;
-            padding: 30px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 700px;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
-            animation: modalfade 0.3s;
-        }
-
-        @keyframes modalfade {
-            from {opacity: 0; transform: translateY(-30px);}
-            to {opacity: 1; transform: translateY(0);}
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #666;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        /* Contact Section */
-        .contact-section {
-            padding: 80px 0;
-            background-color: #fff;
-        }
-
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 2.2rem;
-            color: var(--dark-primary);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2:after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--secondary-color);
-        }
-
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .contact-info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .contact-info-card {
-            background-color: var(--light-bg);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: var(--box-shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .contact-info-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            background-color: rgba(17, 159, 165, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-size: 28px;
-        }
-
-        .contact-info-title {
-            font-size: 1.3rem;
-            color: var(--dark-primary);
-            margin-bottom: 10px;
-        }
-
-        .contact-info-text {
-            color: #666;
-        }
-
-        .contact-form-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: var(--box-shadow);
-            padding: 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .form-title {
-            font-size: 1.5rem;
-            color: var(--dark-primary);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .contact-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-
-
-        .close-modal:hover {
-            color: #000;
-        }
-
-        .modal-title {
-            color: var(--dark-primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--secondary-color);
-        }
-
-        /* Form Group */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #444;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="password"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: var(--transition);
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(17, 159, 165, 0.1);
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .subscribe-container {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
-            }
-            
-            .subscribe-form {
-                max-width: 100%;
-            }
-            
-            .announcements-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-            
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .subscribe-content {
-                flex-direction: column;
-            }
-            
-            .announcements-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .subscribe-form {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .hero-title {
-                font-size: 2rem;
-            }
-        }
-        /* Responsive Styles */
-@media (max-width: 992px) {
-    .mobile-menu-toggle {
-        display: block;
-        order: 1;
-    }
+{% block style %}
+<style>
+    /* --- PAGE SPECIFIC STYLES --- */
     
-    .header-content {
-        flex-direction: row;
-        flex-wrap: wrap;
+    /* Hero Banner */
+    .hero-banner {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/nature.jpg"%}');
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: white;
     }
-    
-    nav {
-        order: 3;
-        width: 100%;
-        display: none;
-    }
-    
-    nav.show {
-        display: block;
-        animation: slideDown 0.3s ease-out;
-    }
-    
-    #navigation-menu {
-        flex-direction: column;
-        gap: 10px;
-        padding: 10px 0;
-    }
-    
-    #navigation-menu li {
-        margin: 0;
-    }
-    
-    #navigation-menu li a {
-        display: block;
-        padding: 10px 0;
-        border-bottom: 1px solid #eee;
-    }
-    
-    .right-nav {
-        order: 2;
-        margin-left: auto;
-    }
-    
-    .announcements-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
 
-@media (max-width: 768px) {
-    .announcements-grid {
-        grid-template-columns: 1fr;
-    }
-    
     .hero-title {
-        font-size: 2rem;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        font-weight: 700;
     }
-}
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
+    /* Announcements Grid */
+    .announcements-section {
+        padding: 60px 0;
+        background-color: white;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
     }
-}
-    </style>
-</head>
-<body>
-  
 
-  <!-- Header with Language Selector -->
-<header>
-    <div class="header-content">
-        <nav>
-            <ul id="navigation-menu">
-                <li><a href="{% url 'home' %}" class="nav-link" id="nav-home">AHABANZA</a></li>
-                <li><a href="{% url 'worker' %}" class="nav-link" id="nav-worker">ABAKOZI</a></li>
-                <li><a href="{% url 'employer' %}" class="nav-link" id="nav-employer">ABAKORESHA</a></li>
-                <li><a href="{% url 'view_worker' %}" class="nav-link" id="nav-view-worker">REBA UMUKOZI</a></li>
-                <li><a href="{% url 'view_employers' %}" class="nav-link" id="nav-view-employers">REBA ABAKORESHA</a></li>
-                <li><a href="{% url 'what_we_do' %}" class="nav-link" id="nav-what-we-do">IBYO DUKORA</a></li>
-                <li><a href="{% url 'announcements' %}" class="nav-link" id="nav-announcements">AMATANGAZO</a></li>
-            </ul>
-        </nav>
-        <div class="right-nav">
-            <div class="language-selector">
-                <select id="language-select">
-                    <option value="default">Kin</option>
-                    <option value="en">En</option>
-                    <option value="fr">Fr</option>
-                </select>
-            </div>
-            <a href="#" class="nav-button" id="openFormButton">login</a>
-        </div>
-    </div>
-</header>
+    .announcements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
 
-<!-- Hero Banner -->
+    .announcement-card {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+    }
+
+    .announcement-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .announcement-image {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .announcement-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .announcement-card:hover .announcement-image img {
+        transform: scale(1.1);
+    }
+
+    .announcement-date {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .announcement-author {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: flex;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }
+
+    .announcement-author i {
+        margin-right: 5px;
+        color: var(--primary-color);
+    }
+
+    .announcement-content {
+        padding: 20px;
+    }
+
+    .announcement-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: var(--dark-primary);
+    }
+
+    .announcement-excerpt {
+        color: #666;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .read-more {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.9rem;
+        transition: var(--transition);
+    }
+
+    .read-more i {
+        margin-left: 5px;
+        transition: var(--transition);
+    }
+
+    .read-more:hover {
+        color: var(--secondary-color);
+    }
+
+    .read-more:hover i {
+        transform: translateX(5px);
+    }
+
+    /* Contact Info Section (Mini) */
+    .contact-section-mini {
+        padding: 80px 0;
+        background-color: #f9f9f9;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+        font-size: 2.2rem;
+        color: var(--dark-primary);
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title h2:after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: var(--secondary-color);
+    }
+
+    .contact-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    .contact-info-card {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: var(--box-shadow);
+        text-align: center;
+        transition: var(--transition);
+    }
+
+    .contact-info-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+        background-color: rgba(17, 159, 165, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+        font-size: 28px;
+    }
+
+    .contact-info-title {
+        font-size: 1.3rem;
+        color: var(--dark-primary);
+        margin-bottom: 10px;
+    }
+
+    .contact-info-text {
+        color: #666;
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 40px;
+    }
+
+    .pagination a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: white;
+        color: var(--text-color);
+        text-decoration: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+    }
+
+    .pagination a:hover, .pagination a.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    /* Animation */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.active { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+
+    @media (max-width: 992px) {
+        .announcements-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+        .announcements-grid { grid-template-columns: 1fr; }
+        .hero-title { font-size: 2rem; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
 <section class="hero-banner">
     <div class="container">
-        <h1 class="hero-title" id="hero-title">Amatangazo</h1>
+        <h1 class="hero-title" id="hero-title" data-en="Announcements" data-fr="Annonces" data-rw="Amatangazo">Amatangazo</h1>
     </div>
 </section>
 
-<!-- Announcements Grid -->
 <section class="announcements-section">
     <div class="container">
         <div class="announcements-grid">
-            <!-- Announcement Card 1 -->
-            <div class="announcement-card">
+            <div class="announcement-card fade-in">
                 <div class="announcement-image">
                     <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
                     <div class="announcement-date">20 Dec, 2023</div>
                     <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
                 </div>
                 <div class="announcement-content">
-                    <h3 class="announcement-title" id="announcement-title-1">Igihugu cy'u Rwanda giteguye gahunda yo gushyiraho abakozi bashya</h3>
-                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <h3 class="announcement-title" id="announcement-title-1" data-en="Rwanda prepares program to hire new workers" data-fr="Le Rwanda prépare un programme pour embaucher" data-rw="Igihugu cy'u Rwanda giteguye gahunda yo gushyiraho abakozi bashya">Igihugu cy'u Rwanda giteguye gahunda yo gushyiraho abakozi bashya</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do...</p>
                     <a href="#" class="read-more" id="read-more-1">READ MORE <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
-            <!-- Announcement Card 2 -->
-            <div class="announcement-card">
+            <div class="announcement-card fade-in delay-1">
                 <div class="announcement-image">
                     <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
                     <div class="announcement-date">20 Dec, 2023</div>
                     <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
                 </div>
                 <div class="announcement-content">
-                    <h3 class="announcement-title" id="announcement-title-2">Imyanya y'akazi mishya iratangazwa mu rwego rw'ubuhinzi</h3>
-                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <h3 class="announcement-title" id="announcement-title-2" data-en="New job positions announced in agricultural sector" data-fr="Nouveaux postes annoncés dans le secteur agricole" data-rw="Imyanya y'akazi mishya iratangazwa mu rwego rw'ubuhinzi">Imyanya y'akazi mishya iratangazwa mu rwego rw'ubuhinzi</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do...</p>
                     <a href="#" class="read-more" id="read-more-2">READ MORE <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
-            <!-- Announcement Card 3 -->
-            <div class="announcement-card">
+            <div class="announcement-card fade-in delay-2">
                 <div class="announcement-image">
                     <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
                     <div class="announcement-date">20 Dec, 2023</div>
                     <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
                 </div>
                 <div class="announcement-content">
-                    <h3 class="announcement-title" id="announcement-title-3">Amahugurwa y'ubuntu ku bashaka akazi mu rwego rwa IT</h3>
-                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <h3 class="announcement-title" id="announcement-title-3" data-en="Free IT training for job seekers" data-fr="Formation IT gratuite pour les chercheurs d'emploi" data-rw="Amahugurwa y'ubuntu ku bashaka akazi mu rwego rwa IT">Amahugurwa y'ubuntu ku bashaka akazi mu rwego rwa IT</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do...</p>
                     <a href="#" class="read-more" id="read-more-3">READ MORE <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
-            <!-- Announcement Card 4 -->
-            <div class="announcement-card">
+            <div class="announcement-card fade-in">
                 <div class="announcement-image">
                     <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
                     <div class="announcement-date">20 Dec, 2023</div>
                     <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
                 </div>
                 <div class="announcement-content">
-                    <h3 class="announcement-title" id="announcement-title-4">Imyanya y'akazi mu bukerarurugendo iratangazwa</h3>
-                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <h3 class="announcement-title" id="announcement-title-4" data-en="Tourism jobs announced" data-fr="Postes dans le tourisme annoncés" data-rw="Imyanya y'akazi mu bukerarurugendo iratangazwa">Imyanya y'akazi mu bukerarurugendo iratangazwa</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do...</p>
                     <a href="#" class="read-more" id="read-more-4">READ MORE <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
-
-            <!-- Announcement Card 5 -->
-            <div class="announcement-card">
+            
+             <div class="announcement-card fade-in delay-1">
                 <div class="announcement-image">
                     <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
                     <div class="announcement-date">20 Dec, 2023</div>
                     <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
                 </div>
                 <div class="announcement-content">
-                    <h3 class="announcement-title" id="announcement-title-5">Uburyo bushya bwo kwandikisha CV yawe online</h3>
-                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <h3 class="announcement-title" id="announcement-title-5" data-en="Register CV online" data-fr="Enregistrer CV en ligne" data-rw="Uburyo bushya bwo kwandikisha CV yawe online">Uburyo bushya bwo kwandikisha CV yawe online</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do...</p>
                     <a href="#" class="read-more" id="read-more-5">READ MORE <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
-            <!-- Announcement Card 6 -->
-            <div class="announcement-card">
+             <div class="announcement-card fade-in delay-2">
                 <div class="announcement-image">
                     <img src="{% static 'images/nature.jpg' %}" alt="Announcement Image">
                     <div class="announcement-date">20 Dec, 2023</div>
                     <div class="announcement-author"><i class="fas fa-user"></i> <span class="by-admin">By Admin</span></div>
                 </div>
                 <div class="announcement-content">
-                    <h3 class="announcement-title" id="announcement-title-6">Inama zo kwishakira akazi gahoraho mu Rwanda</h3>
-                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do. Lorem ipsum dolor sit amet, consetetur...</p>
+                    <h3 class="announcement-title" id="announcement-title-6" data-en="Tips for permanent employment" data-fr="Conseils pour un emploi permanent" data-rw="Inama zo kwishakira akazi gahoraho mu Rwanda">Inama zo kwishakira akazi gahoraho mu Rwanda</h3>
+                    <p class="announcement-excerpt">Lorem ipsum dolor sit amet, consetetur noste elit sed do. Consetetur noste elit sed do...</p>
                     <a href="#" class="read-more" id="read-more-6">READ MORE <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
 
-        <!-- Pagination -->
         <div class="pagination">
             <a href="#" class="active">1</a>
             <a href="#">2</a>
@@ -916,12 +358,11 @@
     </div>
 </section>
 
-<!-- Contact Info Section -->
-<section class="contact-section">
-    <div class="contact-container">
+<section class="contact-section-mini">
+    <div class="container">
         <div class="section-title">
-            <h2 id="contact-heading">Twandikire</h2>
-            <p id="contact-subheading">Ntuzuyaze kubaza ikibazo cyangwa gutanga igitekerezo cyawe. Dufite iterambere ry'akazi kawe k'ubuzima!</p>
+            <h2 id="contact-heading" data-en="Contact Us" data-fr="Contactez-nous" data-rw="Twandikire">Twandikire</h2>
+            <p id="contact-subheading" data-en="Don't hesitate to ask. We are here for your career!" data-fr="N'hésitez pas à demander. Nous sommes là pour votre carrière!" data-rw="Ntuzuyaze kubaza ikibazo cyangwa gutanga igitekerezo cyawe. Dufite iterambere ry'akazi kawe k'ubuzima!">Ntuzuyaze kubaza ikibazo cyangwa gutanga igitekerezo cyawe. Dufite iterambere ry'akazi kawe k'ubuzima!</p>
         </div>
         
         <div class="contact-info-grid">
@@ -929,7 +370,7 @@
                 <div class="contact-icon">
                     <i class="fas fa-phone"></i>
                 </div>
-                <h3 class="contact-info-title" id="call-us">Duhamagare</h3>
+                <h3 class="contact-info-title" id="call-us" data-en="Call Us" data-fr="Appelez-nous" data-rw="Duhamagare">Duhamagare</h3>
                 <p class="contact-info-text">+250793487065</p>
             </div>
             
@@ -937,7 +378,7 @@
                 <div class="contact-icon">
                     <i class="fas fa-envelope"></i>
                 </div>
-                <h3 class="contact-info-title" id="email-us">Twandikire Imeyili</h3>
+                <h3 class="contact-info-title" id="email-us" data-en="Email Us" data-fr="Envoyez-nous un email" data-rw="Twandikire Imeyili">Twandikire Imeyili</h3>
                 <p class="contact-info-text">murenzicharles24@gmail.com</p>
             </div>
             
@@ -945,471 +386,31 @@
                 <div class="contact-icon">
                     <i class="fas fa-map-marker-alt"></i>
                 </div>
-                <h3 class="contact-info-title" id="our-location">Aho Duherereye</h3>
+                <h3 class="contact-info-title" id="our-location" data-en="Location" data-fr="Emplacement" data-rw="Aho Duherereye">Aho Duherereye</h3>
                 <p class="contact-info-text">Kigali, Rwanda</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Login Modal -->
-<div id="formModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" id="closeModal">&times;</span>
-        <h2 class="modal-title" id="login-title">Login</h2>
-        
-        {% if messages %}
-            {% for message in messages %}
-                <div class="message">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        
-        <form method="POST">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="id_email" id="email-label">Email:</label>
-                <input type="email" id="id_email" name="email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="id_password" id="password-label">Ijambo ryibanga:</label>
-                <input type="password" id="id_password" name="password" required>
-            </div>
-            
-            <button type="submit" class="nav-button" id="login-button">Injira</button>
-        </form>
-    </div>
-</div>
+{% endblock %}
 
-<!-- Footer -->
-<footer>
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h3 id="about-us-footer">Kutwiga</h3>
-                <div class="footer-contact-item">
-                    <i class="fas fa-phone"></i>
-                    <div>
-                        <p>+250793487065</p>
-                    </div>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <p>murenzicharles24@gmail.com</p>
-                    </div>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <p>Kigali, Rwanda</p>
-                    </div>
-                </div>
-                <div class="footer-social">
-                    <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-column">
-                <h3 id="quick-links">Ahukulile</h3>
-                <ul class="footer-links">
-                    <li><a href="{% url 'home' %}" class="footer-nav-link" id="footer-home"><i class="fas fa-chevron-right"></i> AHABANZA</a></li>
-                    <li><a href="{% url 'worker' %}" class="footer-nav-link" id="footer-worker"><i class="fas fa-chevron-right"></i> ABAKOZI</a></li>
-                    <li><a href="{% url 'employer' %}" class="footer-nav-link" id="footer-employer"><i class="fas fa-chevron-right"></i> ABAKORESHA</a></li>
-                    <li><a href="{% url 'view_worker' %}" class="footer-nav-link" id="footer-view-worker"><i class="fas fa-chevron-right"></i> REBA UMUKOZI</a></li>
-                    <li><a href="{% url 'view_employers' %}" class="footer-nav-link" id="footer-view-employers"><i class="fas fa-chevron-right"></i> REBA ABAKORESHA</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3 id="services">Serivisi</h3>
-                <ul class="footer-links">
-                    <li><a href="#" id="service-1"><i class="fas fa-chevron-right"></i> Gushaka Abakozi</a></li>
-                    <li><a href="#" id="service-2"><i class="fas fa-chevron-right"></i> Guhugura Abakozi</a></li>
-                    <li><a href="#" id="service-3"><i class="fas fa-chevron-right"></i> Guhuza Impano</a></li>
-                    <li><a href="#" id="service-4"><i class="fas fa-chevron-right"></i> Gusuzuma Abakandida</a></li>
-                    <li><a href="#" id="service-5"><i class="fas fa-chevron-right"></i> Kwamamaza Akazi</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3 id="other-links">Ibindi</h3>
-                <ul class="footer-links">
-                    <li><a href="{% url 'what_we_do' %}" class="footer-nav-link" id="footer-what-we-do"><i class="fas fa-chevron-right"></i> IBYO DUKORA</a></li>
-                    <li><a href="{% url 'announcements' %}" class="footer-nav-link" id="footer-announcements"><i class="fas fa-chevron-right"></i> AMATANGAZO</a></li>
-                    <li><a href="#" id="privacy-policy"><i class="fas fa-chevron-right"></i> Politiki yo Kubungabunga Amakuru</a></li>
-                    <li><a href="#" id="terms"><i class="fas fa-chevron-right"></i> Amabwiriza</a></li>
-                    <li><a href="#" id="faqs"><i class="fas fa-chevron-right"></i> FAQs</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2024 JobLink - All Rights Reserved</p>
-        </div>
-    </div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+{% block scripts %}
 <script>
-    // Modal functionality
-    const modal = document.getElementById("formModal");
-    const openFormBtn = document.getElementById("openFormButton");
-    const closeModal = document.getElementById("closeModal");
-    
-    // Open modal
-    openFormBtn.addEventListener("click", function(e) {
-        e.preventDefault();
-        modal.style.display = "block";
-    });
-    
-    // Close modal
-    closeModal.addEventListener("click", function() {
-        modal.style.display = "none";
-    });
-    
-    window.addEventListener("click", function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    });
-
-    // Define translations
-    const translations = {
-        default: {
-            // Navigation
-            'nav-home': 'AHABANZA',
-            'nav-worker': 'ABAKOZI',
-            'nav-employer': 'ABAKORESHA',
-            'nav-view-worker': 'REBA UMUKOZI',
-            'nav-view-employers': 'REBA ABAKORESHA',
-            'nav-what-we-do': 'IBYO DUKORA',
-            'nav-announcements': 'AMATANGAZO',
-            'openFormButton': 'login',
-            'hero-title': 'Amatangazo',
-            
-            // Announcements
-            'announcement-title-1': 'Igihugu cy\'u Rwanda giteguye gahunda yo gushyiraho abakozi bashya',
-            'announcement-title-2': 'Imyanya y\'akazi mishya iratangazwa mu rwego rw\'ubuhinzi',
-            'announcement-title-3': 'Amahugurwa y\'ubuntu ku bashaka akazi mu rwego rwa IT',
-            'announcement-title-4': 'Imyanya y\'akazi mu bukerarurugendo iratangazwa',
-            'announcement-title-5': 'Uburyo bushya bwo kwandikisha CV yawe online',
-            'announcement-title-6': 'Inama zo kwishakira akazi gahoraho mu Rwanda',
-            'read-more-1': 'READ MORE',
-            'read-more-2': 'READ MORE',
-            'read-more-3': 'READ MORE',
-            'read-more-4': 'READ MORE',
-            'read-more-5': 'READ MORE',
-            'read-more-6': 'READ MORE',
-            'by-admin': 'By Admin',
-            
-            // Contact section
-            'contact-heading': 'Twandikire',
-            'contact-subheading': 'Ntuzuyaze kubaza ikibazo cyangwa gutanga igitekerezo cyawe. Dufite iterambere ry\'akazi kawe k\'ubuzima!',
-            'call-us': 'Duhamagare',
-            'email-us': 'Twandikire Imeyili',
-            'our-location': 'Aho Duherereye',
-            
-            // Login Modal
-            'login-title': 'Login',
-            'email-label': 'Email:',
-            'password-label': 'Ijambo ryibanga:',
-            'login-button': 'Injira',
-            
-            // Footer
-            'about-us-footer': 'Kutwiga',
-            'quick-links': 'Ahukulile',
-            'services': 'Serivisi',
-            'other-links': 'Ibindi',
-            'footer-home': 'AHABANZA',
-            'footer-worker': 'ABAKOZI',
-            'footer-employer': 'ABAKORESHA',
-            'footer-view-worker': 'REBA UMUKOZI',
-            'footer-view-employers': 'REBA ABAKORESHA',
-            'footer-what-we-do': 'IBYO DUKORA',
-            'footer-announcements': 'AMATANGAZO',
-            'service-1': 'Gushaka Abakozi',
-            'service-2': 'Guhugura Abakozi',
-            'service-3': 'Guhuza Impano',
-            'service-4': 'Gusuzuma Abakandida',
-            'service-5': 'Kwamamaza Akazi',
-            'privacy-policy': 'Politiki yo Kubungabunga Amakuru',
-            'terms': 'Amabwiriza',
-            'faqs': 'FAQs'
-        },
-        en: {
-            // Navigation
-            'nav-home': 'HOME',
-            'nav-worker': 'WORKERS',
-            'nav-employer': 'EMPLOYERS',
-            'nav-view-worker': 'VIEW WORKERS',
-            'nav-view-employers': 'VIEW EMPLOYERS',
-            'nav-what-we-do': 'WHAT WE DO',
-            'nav-announcements': 'ANNOUNCEMENTS',
-            'openFormButton': 'login',
-            'hero-title': 'Announcements',
-            
-            // Announcements
-            'announcement-title-1': 'Rwanda prepares program to hire new workers',
-            'announcement-title-2': 'New job positions announced in the agricultural sector',
-            'announcement-title-3': 'Free training for job seekers in the IT sector',
-            'announcement-title-4': 'Job positions in tourism sector announced',
-            'announcement-title-5': 'New way to register your CV online',
-            'announcement-title-6': 'Tips for finding permanent employment in Rwanda',
-            'read-more-1': 'READ MORE',
-            'read-more-2': 'READ MORE',
-            'read-more-3': 'READ MORE',
-            'read-more-4': 'READ MORE',
-            'read-more-5': 'READ MORE',
-            'read-more-6': 'READ MORE',
-            'by-admin': 'By Admin',
-            
-            // Contact section
-            'contact-heading': 'Contact Us',
-            'contact-subheading': 'Don\'t hesitate to ask a question or send your feedback. We have your career development at heart!',
-            'call-us': 'Call Us',
-            'email-us': 'Email Us',
-            'our-location': 'Our Location',
-            
-            // Login Modal
-            'login-title': 'Login',
-            'email-label': 'Email:',
-            'password-label': 'Password:',
-            'login-button': 'Login',
-            
-            // Footer
-            'about-us-footer': 'About Us',
-            'quick-links': 'Quick Links',
-            'services': 'Services',
-            'other-links': 'Other Links',
-            'footer-home': 'HOME',
-            'footer-worker': 'WORKERS',
-            'footer-employer': 'EMPLOYERS',
-            'footer-view-worker': 'VIEW WORKERS',
-            'footer-view-employers': 'VIEW EMPLOYERS',
-            'footer-what-we-do': 'WHAT WE DO',
-            'footer-announcements': 'ANNOUNCEMENTS',
-            'service-1': 'Worker Recruitment',
-            'service-2': 'Worker Training',
-            'service-3': 'Talent Matching',
-            'service-4': 'Candidate Assessment',
-            'service-5': 'Job Advertising',
-            'privacy-policy': 'Privacy Policy',
-            'terms': 'Terms & Conditions',
-            'faqs': 'FAQs'
-        },
-        fr: {
-            // Navigation
-            'nav-home': 'ACCUEIL',
-            'nav-worker': 'TRAVAILLEURS',
-            'nav-employer': 'EMPLOYEURS',
-            'nav-view-worker': 'VOIR TRAVAILLEURS',
-            'nav-view-employers': 'VOIR EMPLOYEURS',
-            'nav-what-we-do': 'NOS SERVICES',
-            'nav-announcements': 'ANNONCES',
-            'openFormButton': 'connexion',
-            'hero-title': 'Annonces',
-            
-            // Announcements
-            'announcement-title-1': 'Le Rwanda prépare un programme pour embaucher de nouveaux travailleurs',
-            'announcement-title-2': 'Nouveaux postes annoncés dans le secteur agricole',
-            'announcement-title-3': 'Formation gratuite pour les chercheurs d\'emploi dans le secteur IT',
-            'announcement-title-4': 'Postes dans le secteur du tourisme annoncés',
-            'announcement-title-5': 'Nouvelle façon d\'enregistrer votre CV en ligne',
-            'announcement-title-6': 'Conseils pour trouver un emploi permanent au Rwanda',
-            'read-more-1': 'LIRE PLUS',
-            'read-more-2': 'LIRE PLUS',
-            'read-more-3': 'LIRE PLUS',
-            'read-more-4': 'LIRE PLUS',
-            'read-more-5': 'LIRE PLUS',
-            'read-more-6': 'LIRE PLUS',
-            'by-admin': 'Par Admin',
-            
-            // Contact section
-            'contact-heading': 'Contactez-nous',
-            'contact-subheading': 'N\'hésitez pas à poser une question ou à envoyer vos commentaires. Nous avons à cœur le développement de votre carrière!',
-            'call-us': 'Appelez-nous',
-            'email-us': 'Envoyez-nous un Email',
-            'our-location': 'Notre Emplacement',
-            
-            // Login Modal
-            'login-title': 'Connexion',
-            'email-label': 'Email:',
-            'password-label': 'Mot de passe:',
-            'login-button': 'Connexion',
-            
-            // Footer
-            'about-us-footer': 'À Propos',
-            'quick-links': 'Liens Rapides',
-            'services': 'Services',
-            'other-links': 'Autres Liens',
-            'footer-home': 'ACCUEIL',
-            'footer-worker': 'TRAVAILLEURS',
-            'footer-employer': 'EMPLOYEURS',
-            'footer-view-worker': 'VOIR TRAVAILLEURS',
-            'footer-view-employers': 'VOIR EMPLOYEURS',
-            'footer-what-we-do': 'NOS SERVICES',
-            'footer-announcements': 'ANNONCES',
-            'service-1': 'Recrutement de Travailleurs',
-            'service-2': 'Formation de Travailleurs',
-            'service-3': 'Mise en Relation de Talents',
-            'service-4': 'Évaluation de Candidats',
-            'service-5': 'Publicité d\'Emploi',
-            'privacy-policy': 'Politique de Confidentialité',
-            'terms': 'Conditions Générales',
-            'faqs': 'FAQs'
-        }
-    };
-
-    // Function to change language
-    function changeLanguage(lang) {
-        // Get all translatable elements
-        const elements = document.querySelectorAll('[id]');
+    document.addEventListener("DOMContentLoaded", function() {
+        const fadeElements = document.querySelectorAll('.fade-in');
         
-        elements.forEach(element => {
-            const id = element.id;
-            if (translations[lang] && translations[lang][id]) {
-                // Handle elements with icons (like read more buttons)
-                if (id.startsWith('read-more')) {
-                    const icon = element.querySelector('i');
-                    if (icon) {
-                        element.innerHTML = translations[lang][id] + ' ';
-                        element.appendChild(icon);
-                    } else {
-                        element.textContent = translations[lang][id];
-                    }
-                } 
-                // Handle elements with icons in footer navigation
-                else if (element.classList.contains('footer-nav-link') || 
-                         element.id.startsWith('service-') || 
-                         element.id === 'privacy-policy' || 
-                         element.id === 'terms' || 
-                         element.id === 'faqs') {
-                    const icon = element.querySelector('i');
-                    if (icon) {
-                        const span = document.createElement('span');
-                        span.innerHTML = ' ' + translations[lang][id];
-                        element.innerHTML = '';
-                        element.appendChild(icon);
-                        element.appendChild(span);
-                    } else {
-                        element.textContent = translations[lang][id];
-                    }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
                 }
-                // For all other elements, simply set the text content
-                else {
-                    element.textContent = translations[lang][id];
-                }
-            }
-        });
+            });
+        }, { threshold: 0.1 });
         
-        // Handle special case for "By Admin" spans
-        const adminSpans = document.querySelectorAll('.by-admin');
-        adminSpans.forEach(span => {
-            if (translations[lang] && translations[lang]['by-admin']) {
-                span.textContent = translations[lang]['by-admin'];
-            }
-        });
-        
-        // Save language preference
-        localStorage.setItem('selectedLanguage', lang);
-    }
-    
-    // Initialize language selector
-    document.addEventListener('DOMContentLoaded', function() {
-        const languageSelect = document.getElementById('language-select');
-        
-        // Set up event listener
-        languageSelect.addEventListener('change', function() {
-            changeLanguage(this.value);
-        });
-        
-        // Load saved language preference
-        const savedLanguage = localStorage.getItem('selectedLanguage');
-        if (savedLanguage) {
-            languageSelect.value = savedLanguage;
-            changeLanguage(savedLanguage);
-        }
-    });
-    // Mobile menu toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // Create mobile menu toggle button
-    const headerContent = document.querySelector('.header-content');
-    const navigation = document.querySelector('nav');
-    
-    // Create mobile menu toggle button if it doesn't exist
-    if (!document.querySelector('.mobile-menu-toggle')) {
-        const mobileMenuToggle = document.createElement('button');
-        mobileMenuToggle.className = 'mobile-menu-toggle';
-        mobileMenuToggle.id = 'mobileMenuToggle';
-        mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-        
-        // Insert the toggle button at the beginning of header content
-        headerContent.insertBefore(mobileMenuToggle, headerContent.firstChild);
-    }
-    
-    // Get the toggle button (whether it was just created or already existed)
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const navIcon = mobileMenuToggle.querySelector('i');
-    
-    // Add toggle functionality
-    mobileMenuToggle.addEventListener('click', function(e) {
-        e.stopPropagation(); // Prevent event from bubbling up
-        navigation.classList.toggle('show');
-        navIcon.classList.toggle('fa-bars');
-        navIcon.classList.toggle('fa-times');
-    });
-    
-    // Close menu when clicking on a link
-    const navLinks = navigation.querySelectorAll('a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            if (window.innerWidth <= 992) {
-                navigation.classList.remove('show');
-                navIcon.classList.remove('fa-times');
-                navIcon.classList.add('fa-bars');
-            }
+        fadeElements.forEach(element => {
+            observer.observe(element);
         });
     });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (navigation.classList.contains('show') && 
-            !navigation.contains(event.target) && 
-            !mobileMenuToggle.contains(event.target)) {
-            navigation.classList.remove('show');
-            navIcon.classList.remove('fa-times');
-            navIcon.classList.add('fa-bars');
-        }
-    });
-    
-    // Responsive adjustments on window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 992 && navigation.classList.contains('show')) {
-            navigation.classList.remove('show');
-            navIcon.classList.remove('fa-times');
-            navIcon.classList.add('fa-bars');
-        }
-    });
-});
 </script>
-
-<style>
-    .right-nav {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-    
-    .language-selector select {
-        padding: 5px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        background-color: white;
-        cursor: pointer;
-    }
-</style>
+{% endblock %}

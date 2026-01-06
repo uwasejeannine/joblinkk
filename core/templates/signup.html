@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iyandikishe - JobLink</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #119fa5;
+            --secondary-color: #ef8f20;
+            --dark-primary: #194e4f;
+            --light-bg: #f9f9f9;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/nature.jpg"%}');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .auth-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .brand-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(17, 159, 165, 0.1);
+        }
+
+        .btn-auth {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-auth:hover {
+            background-color: #d97c18;
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            padding: 10px;
+            background-color: #fee2e2;
+            color: #dc2626;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <a href="{% url 'home' %}" class="brand-logo">JobLink</a>
+        <h2>Iyandikishe (Sign Up)</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Izina (Username)</label>
+                <input type="text" name="username" placeholder="Hitamo izina..." required>
+            </div>
+            
+            <div class="form-group">
+                <label>Ijambo ryibanga (Password)</label>
+                <input type="password" name="password" placeholder="********" required>
+            </div>
+
+            <div class="form-group">
+                <label>Emeza Ijambo ryibanga (Confirm)</label>
+                <input type="password" name="password_confirm" placeholder="********" required>
+            </div>
+
+            <button type="submit" class="btn-auth">Iyandikishe</button>
+        </form>
+
+        <div class="footer-links">
+            Ufite konti? <a href="{% url 'login' %}">Injira hano</a>
+            <br><br>
+            <a href="{% url 'home' %}"><i class="fas fa-arrow-left"></i> Subira Ahabanza</a>
+        </div>
+    </div>
+
+</body>
+</html>

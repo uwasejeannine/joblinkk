@@ -1,1406 +1,606 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobLink - Find Your Perfect Career Match</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #119fa5;
-            --secondary-color: #ef8f20;
-            --accent-color: #0d7176;
-            --dark-primary: #194e4f;
-            --text-color: #333;
-            --light-text: #f8f9fa;
-            --light-bg: #f9f9f9;
-            --border-radius: 30px;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-        
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        /* Improved Navbar */
-        #navbar {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            padding: 15px 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-        
-        #navbar.sticky {
-            padding: 10px 0;
-        }
-        
-        #navbar ul {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            list-style: none;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            flex-wrap: wrap;
-        }
-        
-        #navbar ul li {
-            margin: 0 5px;
-        }
-        
-        #navbar ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 15px;
-            border-radius: 4px;
-            transition: var(--transition);
-            display: block;
-        }
-        
-        #navbar ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .language-selector {
-            position: relative;
-        }
-        
-        #language-select {
-            appearance: none;
-            background-color: #f3f4f6;
-            border: none;
-            padding: 8px 32px 8px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: 500;
-            color: #4b5563;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
-        
-        #login-btn {
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
-        }
-        
-        #mobile-menu-btn {
-            display: none;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 10px;
-            margin-right: auto;
-        }
-        
-        /* Hero Section */
-        .hero {
-            position: relative;
-            height: 100vh;
-            min-height: 600px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 20px;
-            overflow: hidden;
-            margin-top: 0;
-        }
-        
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('{% static "images/nature.jpg"%}');
-            background-size: cover;
-            background-position: center;
-            z-index: -2;
-            animation: zoomEffect 20s infinite alternate;
-        }
-        
-        .hero::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.627);
-            z-index: -1;
-        }
-        
-        @keyframes zoomEffect {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-        
-        .hero-content {
-            text-align: center;
-            color: white;
-            max-width: 900px;
-            z-index: 1;
-            padding: 40px;
-            border-radius: 10px;
-        }
-        
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        
-        .hero-content p {
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-        }
-        
-        .button {
-            display: inline-block;
-            padding: 14px 30px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .button:hover {
-            background-color: #d97c18;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .button-outline {
-            background-color: transparent;
-            border: 2px solid white;
-        }
-        
-        .button-outline:hover {
-            background-color: white;
-            color: var(--primary-color);
-        }
-        
-        /* Sections */
-        section {
-            padding: 100px 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 70px;
-        }
-        
-        .section-header h2 {
-            font-size: 2.8rem;
-            color: var(--dark-primary);
-            margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-header h2:after {
-            content: "";
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--secondary-color);
-        }
-        
-        .section-header p {
-            font-size: 1.2rem;
-            color: #666;
-            max-width: 800px;
-            margin: 20px auto 0;
-        }
-        
-        /* Feature Boxes Section */
-        .feature-boxes {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-        }
-        
-        .feature-box {
-            background-color: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            width: 350px;
-            transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .feature-box:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .feature-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .feature-icon {
-            background-color: var(--primary-color);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-right: 15px;
-            flex-shrink: 0;
-            box-shadow: 0 8px 20px rgba(17, 159, 165, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .feature-box:hover .feature-icon {
-            background-color: var(--secondary-color);
-            transform: scale(1.1);
-        }
-        
-        .feature-title {
-            font-size: 1.6rem;
-            color: var(--dark-primary);
-            margin: 0;
-        }
-        
-        .feature-description {
-            color: #666;
-            margin-bottom: 25px;
-            line-height: 1.7;
-        }
-        
-        .feature-image {
-            height: 200px;
-            overflow: hidden;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-        
-        .feature-image::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
-        }
-        
-        .feature-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-        
-        .feature-box:hover .feature-image img {
-            transform: scale(1.1);
-        }
-        
-        /* Services Section */
-        .services {
-            background-color: var(--light-bg);
-        }
-        
-        /* Employers Section */
-        .employers {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: white;
-            position: relative;
-        }
-        
-        .employers::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,160L48,170.7C96,181,192,203,288,202.7C384,203,480,181,576,186.7C672,192,768,224,864,240C960,256,1056,256,1152,234.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.1;
-        }
-        
-        .employers .section-header h2 {
-            color: white;
-        }
-        
-        .employers .section-header p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .employers .feature-box {
-            background-color: white;
-        }
-        
-        .employers .feature-title {
-            color: var(--dark-primary);
-        }
-        
-        .employers .feature-description {
-            color: #666;
-        }
-        
-        .employers .button {
-            background-color: var(--secondary-color);
-        }
-        
-        /* Employees Section */
-        .employees {
-            background-color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .employees::before {
-            content: '';
-            position: absolute;
-            top: -150px;
-            right: -150px;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background-color: rgba(17, 159, 165, 0.05);
-            z-index: 0;
-        }
-        
-        .employees::after {
-            content: '';
-            position: absolute;
-            bottom: -150px;
-            left: -150px;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background-color: rgba(239, 143, 32, 0.05);
-            z-index: 0;
-        }
-        
-        /* Statistics Section */
-        .statistics {
-            background-color: var(--light-bg);
-            text-align: center;
-        }
-        
-        .stat-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-        }
-        
-        .stat-item {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: var(--box-shadow);
-            padding: 40px 30px;
-            width: 250px;
-            transition: var(--transition);
-        }
-        
-        .stat-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .stat-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        .stat-count {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--dark-primary);
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
-            font-size: 1.2rem;
-            color: #666;
-        }
-        
-        /* Contact Section */
-        .contact-section {
-            background-color: var(--light-bg);
-            padding: 80px 0;
-        }
-        
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .section-title {
-            font-size: 2.2rem;
-            color: var(--dark-primary);
-            margin-bottom: 15px;
-            text-align: center;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .section-title:after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--secondary-color);
-        }
-        
-        .section-subtitle {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            text-align: center;
-        }
-        
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .contact-card {
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: var(--box-shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-        
-        .contact-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .contact-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        .contact-title {
-            font-size: 1.3rem;
-            color: var(--dark-primary);
-            margin-bottom: 15px;
-        }
-        
-        .contact-info {
-            color: #666;
-            margin-bottom: 15px;
-        }
-        
-        /* Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        
-        .fade-in.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        
-        /* Footer */
-        footer {
-            background: linear-gradient(to right, #119fa5, #0d7176);
-            color: #ddd;
-            padding: 80px 20px 20px;
-        }
-        
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .footer-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-        
-        .footer-column {
-            flex: 1;
-            min-width: 250px;
-        }
-        
-        .footer-column h3 {
-            color: white;
-            font-size: 1.4rem;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .footer-column h3:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: var(--secondary-color);
-        }
-        
-        .footer-contact-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-        
-        .footer-contact-item i {
-            color: var(--secondary-color);
-            margin-right: 15px;
-            margin-top: 5px;
-            font-size: 1.2rem;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 15px;
-        }
-        
-        .footer-links a {
-            color: #ddd;
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            font-size: 1.05rem;
-        }
-        
-        .footer-links a i {
-            margin-right: 10px;
-            font-size: 0.8rem;
-            color: var(--secondary-color);
-        }
-        
-        .footer-links a:hover {
-            color: var(--secondary-color);
-            padding-left: 8px;
-        }
-        
-        .footer-social {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-        
-        .footer-social a {
-            width: 45px;
-            height: 45px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: var(--transition);
-            text-decoration: none;
-            font-size: 1.2rem;
-        }
-        
-        .footer-social a:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-5px);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .hero-content h1 {
-                font-size: 3rem;
-            }
-            
-            .section-header h2 {
-                font-size: 2.5rem;
-            }
-            
-            .feature-box {
-                width: calc(50% - 20px);
-            }
-            
-            .stat-container {
-                gap: 20px;
-            }
-            
-            .stat-item {
-                width: calc(50% - 20px);
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-content p {
-                font-size: 1.1rem;
-            }
-            
-            .section-header h2 {
-                font-size: 2.2rem;
-            }
-            
-            .footer-column {
-                flex: 0 0 calc(50% - 20px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            #mobile-menu-btn {
-                display: block;
-            }
-            
-            #navbar ul {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                background-color: var(--primary-color);
-                position: absolute;
-                top: 100%;
-                left: 0;
-                padding: 20px;
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-            }
-            
-            #navbar ul.show {
-                display: flex;
-            }
-            
-            #navbar ul li {
-                margin: 10px 0;
-                width: 100%;
-            }
-            
-            #navbar ul li a {
-                padding: 10px;
-                width: 100%;
-            }
-            
-            .navbar-right {
-                width: 100%;
-                justify-content: space-between;
-                padding: 10px 20px;
-            }
-            
-            #login-btn {
-                margin-top: 0;
-                width: auto;
-            }
-            
-            .hero {
-                padding: 100px 20px;
-                height: auto;
-                min-height: 100vh;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .button {
-                width: 100%;
-            }
-            
-            section {
-                padding: 60px 20px;
-            }
-            
-            .feature-box {
-                width: 100%;
-                max-width: 400px;
-                margin: 0 auto;
-            }
-            
-            .feature-boxes {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .stat-item {
-                width: 100%;
-                max-width: 250px;
-            }
-            
-            a, button {
-                min-width: 44px;
-                min-height: 44px;
-            }
-            
-            .button {
-                padding: 16px 30px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero-content h1 {
-                font-size: 1.8rem;
-            }
-            
-            .hero-content {
-                padding: 20px;
-            }
-            
-            .section-header h2 {
-                font-size: 1.8rem;
-            }
-            
-            .section-header p {
-                font-size: 1rem;
-            }
-            
-            .feature-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .feature-icon {
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-            
-            .feature-title {
-                font-size: 1.5rem;
-            }
-            
-            section {
-                padding: 50px 15px;
-            }
-            
-            .container, .contact-container {
-                padding: 0 15px;
-            }
-            
-            .footer-column {
-                flex: 0 0 100%;
-            }
-            
-            .footer-grid {
-                gap: 30px;
-            }
-            
-            .language-selector {
-                margin-right: 10px;
-            }
-            
-            #login-btn {
-                padding: 8px 15px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 1.6rem;
-            }
-            
-            .hero-content p {
-                font-size: 1rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
-</head>
 
-    <body>
-        <!-- Navigation -->
-        <nav id="navbar" style="display: flex; justify-content: flex-end; align-items: center; background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); position: sticky; top: 0; z-index: 100;">
-            <ul>
-                <li><a href="{% url 'home' %}" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</a></li>
-                <li><a href="{% url 'worker' %}" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</a></li>
-                <li><a href="{% url 'employer' %}" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</a></li>
-                <li><a href="{% url 'view_worker' %}" data-en="VIEW WORKERS" data-fr="VOIR TRAVAILLEURS" data-rw="REBA UMUKOZI">REBA UMUKOZI</a></li>
-                <li><a href="{% url 'view_employers' %}" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</a></li>
-                <li><a href="{% url 'what_we_do' %}" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a></li>
-                <li><a href="{% url 'announcements' %}" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</a></li>
-            </ul>
-            
-            <div class="navbar-right" style="display: flex; align-items: center; gap: 16px;">
-                <div class="language-selector" style="position: relative;">
-                    <select id="language-select" style="appearance: none; background-color: #f3f4f6; border: none; padding: 8px 32px 5px 16px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500; color: #4b5563; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-                        <option value="en">Eng</option>
-                        <option value="fr">Fr</option>
-                        <option value="rw" selected>Kin</option>
-                    </select>
-                    
-                </div>
-            </div>
-            
-            <button id="login-btn" data-en="LOGIN" data-fr="CONNEXION" data-rw="KWINJIRA" style="background-color: #3b82f6; color: white; border: none; padding: 8px 13px; border-radius: 10px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);">KWINJIRA</button>
-        </nav>
-    
-        <!-- Hero Section with improved transparency -->
-        <div class="hero">
-            <div class="hero-content">
-                <h1 class="translatable" data-en="Find a Job or <span style='color: #d97c18;'>Qualified Employees</span>" data-fr="Recherchez un Emploi ou <span style='color: #d97c18;'>des Employés Qualifiés</span>" data-rw="Shakisha Akazi cyangwa <span style='color: #d97c18;'>Abakozi Babereye</span>">Shakisha Akazi cyangwa <span style="color: #d97c18;">Abakozi Babereye</span></h1>
-                <p class="translatable" data-en="JobLink is revolutionizing how people search for jobs and how employers find diverse talent. We use efficient and technology-driven methods to help everyone find what they need quickly and efficiently." data-fr="JobLink révolutionne la façon dont les gens recherchent un emploi et dont les employeurs trouvent des talents diversifiés. Nous utilisons des méthodes efficaces et technologiques pour aider chacun à trouver rapidement et efficacement ce dont il a besoin." data-rw="JobLink irimo guhindura byimbitse uko abantu bashaka akazi n'uko abakoresha bashaka impano zitandukanye. Turakoresha uburyo bunoze kandi bukoresha ikoranabuhanga kugira ngo dufashe buri wese kubona icyo akeneye mu buryo bwihuse kandi bunoze.">JobLink irimo guhindura byimbitse uko abantu bashaka akazi n'uko abakoresha bashaka impano zitandukanye. Turakoresha uburyo bunoze kandi bukoresha ikoranabuhanga kugira ngo dufashe buri wese kubona icyo akeneye mu buryo bwihuse kandi bunoze.</p>
-                <div class="hero-buttons">
-                    <a href="{% url 'worker' %}" class="button translatable" data-en="START NOW" data-fr="COMMENCER MAINTENANT" data-rw="TANGIRA NONAHA">TANGIRA NONAHA</a>
-                    <a href="{% url 'what_we_do' %}" class="button button-outline translatable" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Services Section -->
-        <section class="services">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="translatable" data-en="Our Services" data-fr="Nos Services" data-rw="Serivisi Zacu">Serivisi Zacu</h2>
-                    <p class="translatable" data-en="We provide all kinds of services to help employees and employers find the perfect match in positions and talent." data-fr="Nous fournissons toutes sortes de services pour aider les employés et les employeurs à trouver la correspondance parfaite entre les postes et les talents." data-rw="Dutanga serivisi z'ubwoko bwose zo gufasha abakozi n'abakoresha guhura n'imyanya n'abakozi b'inyabutatu.">Dutanga serivisi z'ubwoko bwose zo gufasha abakozi n'abakoresha guhura n'imyanya n'abakozi b'inyabutatu.</p>
-                </div>
-                <div class="feature-boxes">
-                    <div class="feature-box">
-                        <div class="feature-header">
-                            <div class="feature-icon">
-                                <i class="fas fa-search"></i>
-                            </div>
-                            <h3 class="feature-title translatable" data-en="Jobs" data-fr="Emplois" data-rw="Akazi">Akazi</h3>
-                        </div>
-                        <p class="feature-description translatable" data-en="Browse our extensive list of job opportunities, updated daily across different industries." data-fr="Parcourez notre vaste liste d'opportunités d'emploi, mise à jour quotidiennement dans différentes industries." data-rw="Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye.">Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye.</p>
-                        <a href="{% url 'view_employers' %}" class="button translatable" data-en="View Jobs" data-fr="Voir les Emplois" data-rw="Reba Akazi">Reba Akazi</a>
-                    </div>
-                    <div class="feature-box">
-                        <div class="feature-header">
-                            <div class="feature-icon">
-                                <i class="fas fa-file-alt"></i>
-                            </div>
-                            <h3 class="feature-title translatable" data-en="Create CV (Resume)" data-fr="Créer un CV" data-rw="Gukora CV (Resume)">Gukora CV (Resume)</h3>
-                        </div>
-                        <p class="feature-description translatable" data-en="We help you create an impressive profile that will help you get a job." data-fr="Nous vous aidons à créer un profil impressionnant qui vous aidera à obtenir un emploi." data-rw="Turagufasha gukora umwirondoro ushimishije uzatuma ubona akazi.">Turagufasha gukora umwirondoro ushimishije uzatuma ubona akazi.</p>
-                        <a href="{% url 'worker' %}" class="button translatable" data-en="Start Now" data-fr="Commencer Maintenant" data-rw="Tangira Nonaha">Tangira Nonaha</a>
-                    </div>
-                    <div class="feature-box">
-                        <div class="feature-header">
-                            <div class="feature-icon">
-                                <i class="fas fa-comments"></i>
-                            </div>
-                            <h3 class="feature-title translatable" data-en="Job Interview" data-fr="Entretien d'Embauche" data-rw="Ikiganiro cy'akazi">Ikiganiro cy'akazi</h3>
-                        </div>
-                        <p class="feature-description translatable" data-en="Prepare for job interviews through specialized training, and get the job you want." data-fr="Préparez-vous aux entretiens d'embauche grâce à une formation spécialisée et obtenez l'emploi que vous souhaitez." data-rw="Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza.">Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza.</p>
-                        <a href="{% url 'what_we_do' %}" class="button translatable" data-en="Learn More" data-fr="En Savoir Plus" data-rw="Iga Birenzeho">Iga Birenzeho</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    
-        <!-- Employer Information Section -->
-        <section class="employers">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="translatable" data-en="Employers" data-fr="Employeurs" data-rw="Abakoresha">Abakoresha</h2>
-                    <p class="translatable" data-en="Search for suitable candidates for your jobs through our trusted and exclusive recruitment process. We help employers find talented employees who match their company culture and goals." data-fr="Recherchez des candidats appropriés pour vos emplois grâce à notre processus de recrutement fiable et exclusif. Nous aidons les employeurs à trouver des employés talentueux qui correspondent à la culture et aux objectifs de leur entreprise." data-rw="Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi. Dufasha abakoresha kubona impano z'abakozi bashoboye kandi bahuje n'umuco w'ikigo cyabo n'intego zabo.">Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi. Dufasha abakoresha kubona impano z'abakozi bashoboye kandi bahuje n'umuco w'ikigo cyabo n'intego zabo.</p>
-                </div>
-                <div class="feature-boxes">
-                    <div class="feature-box">
-                        <div class="feature-header">
-                            <div class="feature-icon">
-                                <i class="fas fa-bullhorn"></i>
-                            </div>
-                            <h3 class="feature-title translatable" data-en="Post Job Announcements" data-fr="Publier des Offres d'Emploi" data-rw="Tangaza Amatangazo y'Imirimo">Tangaza Amatangazo y'Imirimo</h3>
-                        </div>
-                        <p class="feature-description translatable" data-en="Post your job positions to reach thousands of qualified candidates." data-fr="Publiez vos postes pour atteindre des milliers de candidats qualifiés." data-rw="Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi.">Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi.</p>
-                        <a href="{% url 'employer' %}" class="button translatable" data-en="Post Now" data-fr="Publier Maintenant" data-rw="Tangaza Ubu">Tangaza Ubu</a>
-                    </div>
-                    <div class="feature-box">
-                        <div class="feature-header">
-                            <div class="feature-icon">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                            <h3 class="feature-title translatable" data-en="Screen Candidates" data-fr="Sélectionner les Candidats" data-rw="Gusuzuma Abakandida">Gusuzuma Abakandida</h3>
-                        </div>
-                        <p class="feature-description translatable" data-en="We pre-screen candidates so you only meet with qualified candidates who match your needs." data-fr="Nous présélectionnons les candidats afin que vous ne rencontriez que des candidats qualifiés qui répondent à vos besoins." data-rw="Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.">Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.</p>
-                        <a href="{% url 'employer' %}" class="button translatable" data-en="Learn More" data-fr="En Savoir Plus" data-rw="Menya Birenzeho">Menya Birenzeho</a>
-                    </div>
-                    <div class="feature-box">
-                        <div class="feature-header">
-                            <div class="feature-icon">
-                                <i class="fas fa-cogs"></i>
-                            </div>
-                            <h3 class="feature-title translatable" data-en="Flexible Employment Solutions" data-fr="Solutions d'Emploi Flexibles" data-rw="Ibisubizo by'Ubukoresha Bihinduka">Ibisubizo by'Ubukoresha Bihinduka</h3>
-                        </div>
-                        <p class="feature-description translatable" data-en="Whether you need full-time, part-time, or contract workers, we provide flexible employment solutions tailored to your business needs." data-fr="Que vous ayez besoin de travailleurs à temps plein, à temps partiel ou contractuels, nous proposons des solutions d'emploi flexibles adaptées aux besoins de votre entreprise." data-rw="Niba ukeneye abakozi b'igihe cyose, ab'igihe gito, cyangwa abakozi b'amasezerano, dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.">Niba ukeneye abakozi b'igihe cyose, ab'igihe gito, cyangwa abakozi b'amasezerano, dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.</p>
-                        <a href="{% url 'employer' %}" class="button translatable" data-en="Start Now" data-fr="Commencer Maintenant" data-rw="Tangira Nonaha">Tangira Nonaha</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    
-        <!-- Employee Information Section -->
-        <section class="employees">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="translatable" data-en="Employees" data-fr="Employés" data-rw="Abakozi">Abakozi</h2>
-                    <p class="translatable" data-en="Looking for a job? We're here to help you find a job that matches your skills and goals. Explore opportunities, apply for jobs, start your career, and strive to reach your aspirations with us." data-fr="Vous cherchez un emploi? Nous sommes là pour vous aider à trouver un emploi qui correspond à vos compétences et à vos objectifs. Explorez les opportunités, postulez, démarrez votre carrière et efforcez-vous d'atteindre vos aspirations avec nous." data-rw="Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe. Sura ibyo amahirwe, usabe akazi, tangira umwuga wawe, kandi ugerageze kugera ku byo wizeye ubu natwe.">Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe. Sura ibyo amahirwe, usabe akazi, tangira umwuga wawe, kandi ugerageze kugera ku byo wizeye ubu natwe.</p>
-                </div>
-                <div class="feature-boxes">
-                    <div class="feature-box">
-                        <div class="feature-image">
-                            <img src="{% static 'images/nature.jpg' %}" alt="Job Search">
-                        </div>
-                        <div class="feature-header">
-                            <h3 class="feature-title translatable" data-en="Search for Jobs" data-fr="Rechercher des Emplois" data-rw="Shakisha Imyanya y'Akazi">Shakisha Imyanya y'Akazi</h3>
-                        </div>
-                        <p class="feature-description translatable" data-en="Use our search platform to find thousands of job positions offered by exemplary employers." data-fr="Utilisez notre plateforme de recherche pour trouver des milliers de postes proposés par des employeurs exemplaires." data-rw="Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.">Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi itangwa n'abakoresha b'icyitegererezo.</p>
-                        <a href="{% url 'view_employers' %}" class="button translatable" data-en="Search" data-fr="Rechercher" data-rw="Shakisha">Shakisha</a>
-                    </div>
-                    <div class="feature-box">
-                        <div class="feature-image">
-                            <img src="{% static 'images/nature.jpg' %}" alt="Profile Upload">
-                        </div>
-                        <div class="feature-header">
-                            <h3 class="feature-title translatable" data-en="Submit Your Profile" data-fr="Soumettre Votre Profil" data-rw="Tanga Umwirondoro Wawe">Tanga Umwirondoro Wawe</h3>
-                        </div>
-                        <p class="feature-description translatable" data-en="Submit your profile to our database and be visible to potential employers." data-fr="Soumettez votre profil à notre base de données et soyez visible pour les employeurs potentiels." data-rw="Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka.">Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha bashoboka.</p>
-                        <a href="{% url 'worker' %}" class="button translatable" data-en="Submit" data-fr="Soumettre" data-rw="Tanga">Tanga</a>
-                    </div>
-                    <div class="feature-box">
-                        <div class="feature-image">
-                            <img src="{% static 'images/nature.jpg' %}" alt="Career Advice">
-                        </div>
-                        <div class="feature-header">
-                            <h3 class="feature-title translatable" data-en="Career Advice" data-fr="Conseils de Carrière" data-rw="Inama ku Mwuga">Inama ku Mwuga</h3>
-                        </div>
-                        <p class="feature-description translatable" data-en="Get expert advice on your career to enhance your job search performance and career development." data-fr="Obtenez des conseils d'experts sur votre carrière pour améliorer vos performances de recherche d'emploi et votre développement professionnel." data-rw="Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe.">Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi n'iterambere ry'umwuga wawe.</p>
-                        <a href="{% url 'what_we_do' %}" class="button translatable" data-en="Advice" data-fr="Conseils" data-rw="Inama">Inama</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const languageSelect = document.getElementById('language-select');
-            const navLinks = document.querySelectorAll('#navbar a');
-            const loginBtn = document.getElementById('login-btn');
-            const translatableElements = document.querySelectorAll('.translatable');
-            
-            // Function to change language
-            function changeLanguage(lang) {
-                // Update navigation links
-                navLinks.forEach(link => {
-                    if (link.dataset[lang]) {
-                        link.textContent = link.dataset[lang];
-                    }
-                });
-                
-                // Update login button
-                if (loginBtn.dataset[lang]) {
-                    loginBtn.textContent = loginBtn.dataset[lang];
-                }
-                
-                // Update all other translatable elements
-                translatableElements.forEach(element => {
-                    if (element.dataset[lang]) {
-                        // Handle elements with HTML content (like spans with styling)
-                        element.innerHTML = element.dataset[lang];
-                    }
-                });
-                
-                // Update the dropdown selection
-                languageSelect.value = lang;
-                
-                // Save language preference
-                localStorage.setItem('preferredLanguage', lang);
-            }
-            
-            // Event listener for language dropdown
-            languageSelect.addEventListener('change', function() {
-                const selectedLang = this.value;
-                changeLanguage(selectedLang);
-            });
-            
-            // Check for saved language preference
-            const savedLang = localStorage.getItem('preferredLanguage');
-            if (savedLang) {
-                changeLanguage(savedLang);
-            }
-        });
-        // Add this to your existing JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const mobileMenuBtn = document.createElement('button');
-    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-    mobileMenuBtn.id = 'mobile-menu-btn';
-    mobileMenuBtn.style.display = 'none';
-    mobileMenuBtn.style.background = 'transparent';
-    mobileMenuBtn.style.border = 'none';
-    mobileMenuBtn.style.color = 'white';
-    mobileMenuBtn.style.fontSize = '1.5rem';
-    mobileMenuBtn.style.cursor = 'pointer';
-    mobileMenuBtn.style.padding = '10px';
-    
-    const navbar = document.getElementById('navbar');
-    navbar.insertBefore(mobileMenuBtn, navbar.firstChild);
-    
-    const navUl = document.querySelector('#navbar ul');
-    
-    // Toggle mobile menu
-    mobileMenuBtn.addEventListener('click', function() {
-        navUl.style.display = navUl.style.display === 'flex' ? 'none' : 'flex';
-    });
-    
-    // Show/hide mobile menu button based on screen size
-    function handleMobileMenu() {
-        if (window.innerWidth <= 768) {
-            mobileMenuBtn.style.display = 'block';
-            navUl.style.display = 'none';
-        } else {
-            mobileMenuBtn.style.display = 'none';
-            navUl.style.display = 'flex';
-        }
+{% block title %}JobLink - Find Your Perfect Career Match{% endblock %}
+
+{% block style %}
+<style>
+    /* --- HERO & SECTIONS CSS --- */
+    .hero {
+        position: relative;
+        height: 100vh;
+        min-height: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+        overflow: hidden;
+        margin-top: 0;
     }
     
-    // Initial check
-    handleMobileMenu();
+    .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('{% static "images/nature.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        z-index: -2;
+        animation: zoomEffect 20s infinite alternate;
+    }
     
-    // Check on resize
-    window.addEventListener('resize', handleMobileMenu);
-});
-    </script>
+    .hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.627);
+        z-index: -1;
+    }
+    
+    @keyframes zoomEffect {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+    }
+    
+    .hero-content {
+        text-align: center;
+        color: white;
+        max-width: 900px;
+        z-index: 1;
+        padding: 40px;
+        border-radius: 10px;
+    }
+    
+    .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+    
+    .hero-content p {
+        font-size: 1.3rem;
+        margin-bottom: 30px;
+        opacity: 0.9;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 40px;
+    }
+    
+    .button {
+        display: inline-block;
+        padding: 14px 30px;
+        background-color: var(--secondary-color);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .button:hover {
+        background-color: #d97c18;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .button-outline {
+        background-color: transparent;
+        border: 2px solid white;
+    }
+    
+    .button-outline:hover {
+        background-color: white;
+        color: var(--primary-color);
+    }
+    
+    /* Sections General */
+    section { padding: 100px 20px; }
+    
+    .container { max-width: 1200px; margin: 0 auto; }
+    
+    .section-header { text-align: center; margin-bottom: 70px; }
+    
+    .section-header h2 {
+        font-size: 2.8rem;
+        color: var(--dark-primary);
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .section-header h2:after {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: var(--secondary-color);
+    }
+    
+    .section-header p {
+        font-size: 1.2rem;
+        color: #666;
+        max-width: 800px;
+        margin: 20px auto 0;
+    }
+    
+    /* Feature Boxes */
+    .feature-boxes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 40px;
+    }
+    
+    .feature-box {
+        background-color: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        transition: all 0.4s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .feature-box:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .feature-icon {
+        background-color: var(--primary-color);
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        flex-shrink: 0;
+        box-shadow: 0 8px 20px rgba(17, 159, 165, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .feature-box:hover .feature-icon {
+        background-color: var(--secondary-color);
+        transform: scale(1.1);
+    }
+    
+    .feature-title {
+        font-size: 1.6rem;
+        color: var(--dark-primary);
+        margin: 0;
+    }
+    
+    .feature-description {
+        color: #666;
+        margin-bottom: 25px;
+        line-height: 1.7;
+    }
+    
+    .feature-image {
+        height: 200px;
+        overflow: hidden;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    
+    .feature-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+    
+    .feature-box:hover .feature-image img {
+        transform: scale(1.1);
+    }
+    
+    /* Services & Employers */
+    .services { background-color: var(--light-bg); }
+    .employers { background: linear-gradient(to right, #119fa5, #0d7176); color: white; position: relative; }
+    .employers .section-header h2 { color: white; }
+    .employers .section-header p { color: rgba(255, 255, 255, 0.8); }
+    .employers .feature-box { background-color: white; }
+    .employers .feature-title { color: var(--dark-primary); }
+    .employers .feature-description { color: #666; }
+    .employers .button { background-color: var(--secondary-color); }
+    
+    /* Employees Section */
+    .employees { background-color: white; position: relative; overflow: hidden; }
+    
+    /* Statistics Section */
+    .statistics { background-color: var(--light-bg); text-align: center; }
+    .stat-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+    .stat-item { background-color: white; border-radius: 15px; box-shadow: var(--box-shadow); padding: 40px 30px; width: 250px; transition: var(--transition); }
+    .stat-item:hover { transform: translateY(-10px); }
+    .stat-icon { font-size: 3rem; color: var(--primary-color); margin-bottom: 20px; }
+    .stat-count { font-size: 3rem; font-weight: 700; color: var(--dark-primary); margin-bottom: 10px; }
+    .stat-label { font-size: 1.2rem; color: #666; }
+    
+    /* Contact Section */
+    .contact-section { background-color: white; padding: 80px 0; }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+    .contact-card { background-color: white; padding: 40px; border-radius: 10px; box-shadow: var(--box-shadow); text-align: center; transition: var(--transition); border: 1px solid #eee; }
+    .contact-card:hover { transform: translateY(-10px); border-color: var(--primary-color); }
+    .contact-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 20px; }
+    .contact-title { font-size: 1.3rem; color: var(--dark-primary); margin-bottom: 15px; }
+    .contact-info { color: #666; margin-bottom: 15px; font-size: 1.1rem; }
 
-    <!-- Statistics Section -->
-<section class="statistics">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="translatable" data-en="Our Statistics" data-fr="Nos Statistiques" data-rw="Imibare Yacu">Imibare Yacu</h2>
-            <p class="translatable" data-en="Statistics about what we do and how we work with people" data-fr="Statistiques sur ce que nous faisons et comment nous travaillons avec les gens" data-rw="Imibare ijyanye n'icyo dukora n'uko dukorana n'abantu">Imibare ijyanye n'icyo dukora n'uko dukorana n'abantu</p>
-        </div>
-        <div class="stat-container">
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="stat-count">1,200+</div>
-                <div class="stat-label translatable" data-en="Employees" data-fr="Employés" data-rw="Abakozi">Abakozi</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                </div>
-                <div class="stat-count">50+</div>
-                <div class="stat-label translatable" data-en="Trainers" data-fr="Formateurs" data-rw="Abahugura">Abahugura</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <i class="fas fa-book"></i>
-                </div>
-                <div class="stat-count">75+</div>
-                <div class="stat-label translatable" data-en="Courses" data-fr="Cours" data-rw="Amasomo">Amasomo</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <div class="stat-count">120+</div>
-                <div class="stat-label translatable" data-en="Events" data-fr="Événements" data-rw="Ibikorwa">Ibikorwa</div>
+    /* --- FOOTER CSS --- */
+    footer {
+        background: linear-gradient(to right, #119fa5, #0d7176);
+        color: #ddd;
+        padding: 60px 0 20px;
+    }
+    
+    .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; margin-bottom: 40px; }
+    .footer-column { flex: 1; min-width: 200px; }
+    .footer-column h3 { color: white; font-size: 1.3rem; margin-bottom: 20px; position: relative; padding-bottom: 10px; }
+    .footer-column h3:after { content: ""; position: absolute; bottom: 0; left: 0; width: 40px; height: 2px; background-color: var(--secondary-color); }
+    
+    .footer-contact-item { display: flex; align-items: flex-start; margin-bottom: 15px; }
+    .footer-contact-item i { color: var(--secondary-color); margin-right: 10px; margin-top: 5px; }
+    
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { color: #ddd; text-decoration: none; transition: all 0.3s ease; display: flex; align-items: center; }
+    .footer-links a i { margin-right: 8px; font-size: 12px; color: var(--secondary-color); }
+    .footer-links a:hover { color: var(--secondary-color); padding-left: 5px; }
+    
+    .footer-social { display: flex; gap: 15px; margin-top: 20px; }
+    .footer-social a { width: 40px; height: 40px; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; text-decoration: none; }
+    .footer-social a:hover { background-color: var(--secondary-color); transform: translateY(-3px); }
+    
+    .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: #999; }
+
+    /* Animation Classes */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.active { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    @media (max-width: 768px) {
+        .hero { height: auto; min-height: 100vh; padding: 100px 20px; }
+        .hero-buttons { flex-direction: column; }
+        .feature-box { width: 100%; max-width: 400px; margin: 0 auto; }
+        .footer-column { flex: 100%; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="translatable" data-en="Find a Job or <span style='color: #d97c18;'>Qualified Employees</span>" data-fr="Recherchez un Emploi ou <span style='color: #d97c18;'>des Employés Qualifiés</span>" data-rw="Shakisha Akazi cyangwa <span style='color: #d97c18;'>Abakozi Babereye</span>">Shakisha Akazi cyangwa <span style="color: #d97c18;">Abakozi Babereye</span></h1>
+            <p class="translatable" data-en="JobLink is revolutionizing how people search for jobs and how employers find diverse talent. We use efficient and technology-driven methods to help everyone find what they need quickly and efficiently." data-fr="JobLink révolutionne la façon dont les gens recherchent un emploi et dont les employeurs trouvent des talents diversifiés. Nous utilisons des méthodes efficaces et technologiques pour aider chacun à trouver rapidement et efficacement ce dont il a besoin." data-rw="JobLink irimo guhindura byimbitse uko abantu bashaka akazi n'uko abakoresha bashaka impano zitandukanye. Turakoresha uburyo bunoze kandi bukoresha ikoranabuhanga kugira ngo dufashe buri wese kubona icyo akeneye mu buryo bwihuse kandi bunoze.">JobLink irimo guhindura byimbitse uko abantu bashaka akazi n'uko abakoresha bashaka impano zitandukanye. Turakoresha uburyo bunoze kandi bukoresha ikoranabuhanga kugira ngo dufashe buri wese kubona icyo akeneye mu buryo bwihuse kandi bunoze.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'worker' %}" class="button translatable" data-en="START NOW" data-fr="COMMENCER MAINTENANT" data-rw="TANGIRA NONAHA">TANGIRA NONAHA</a>
+                <a href="{% url 'what_we_do' %}" class="button button-outline translatable" data-en="WHAT WE DO" data-fr="NOS SERVICES" data-rw="IBYO DUKORA">IBYO DUKORA</a>
             </div>
         </div>
     </div>
-</section>
-
-<!-- Contact Section -->
-<section class="contact-section">
-    <div class="contact-container">
-        <h2 class="section-title translatable" data-en="Contact Us" data-fr="Contactez-Nous" data-rw="Twandikire">Twandikire</h2>
-        <p class="section-subtitle translatable" data-en="Have a question or need assistance? You can write to us or call us." data-fr="Vous avez une question ou besoin d'aide? Vous pouvez nous écrire ou nous appeler." data-rw="Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.">Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.</p>
-        <div class="contact-grid">
-            <div class="contact-card fade-in">
-                <div class="contact-icon">
-                    <i class="fas fa-phone"></i>
-                </div>
-                <h3 class="contact-title translatable" data-en="Phone" data-fr="Téléphone" data-rw="Telefoni">Telefoni</h3>
-                <p class="contact-info">+250793487065</p>
+    
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="translatable" data-en="Our Services" data-fr="Nos Services" data-rw="Serivisi Zacu">Serivisi Zacu</h2>
+                <p class="translatable" data-en="We provide all kinds of services to help employees and employers find the perfect match in positions and talent." data-fr="Nous fournissons toutes sortes de services pour aider les employés et les employeurs à trouver la correspondance parfaite entre les postes et les talents." data-rw="Dutanga serivisi z'ubwoko bwose zo gufasha abakozi n'abakoresha guhura n'imyanya n'abakozi b'inyabutatu.">Dutanga serivisi z'ubwoko bwose zo gufasha abakozi n'abakoresha guhura n'imyanya n'abakozi b'inyabutatu.</p>
             </div>
-            <div class="contact-card fade-in delay-1">
-                <div class="contact-icon">
-                    <i class="fas fa-envelope"></i>
+            <div class="feature-boxes">
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon"><i class="fas fa-search"></i></div>
+                        <h3 class="feature-title translatable" data-en="Jobs" data-fr="Emplois" data-rw="Akazi">Akazi</h3>
+                    </div>
+                    <p class="feature-description translatable" data-en="Browse our extensive list of job opportunities, updated daily across different industries." data-fr="Parcourez notre vaste liste d'opportunités d'emploi, mise à jour quotidiennement dans différentes industries." data-rw="Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye.">Suzuma urutonde rwacu rwagutse rw'amahirwe y'akazi, avugururwa buri munsi mu nganda zitandukanye.</p>
+                    <a href="{% url 'view_employers' %}" class="button translatable" data-en="View Jobs" data-fr="Voir les Emplois" data-rw="Reba Akazi">Reba Akazi</a>
                 </div>
-                <h3 class="contact-title translatable" data-en="Email" data-fr="Email" data-rw="Imeyili">Imeyili</h3>
-                <p class="contact-info">murenzicharles24@gmail.com</p>
-            </div>
-            <div class="contact-card fade-in delay-2">
-                <div class="contact-icon">
-                    <i class="fas fa-map-marker-alt"></i>
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+                        <h3 class="feature-title translatable" data-en="Create CV (Resume)" data-fr="Créer un CV" data-rw="Gukora CV (Resume)">Gukora CV (Resume)</h3>
+                    </div>
+                    <p class="feature-description translatable" data-en="We help you create an impressive profile that will help you get a job." data-fr="Nous vous aidons à créer un profil impressionnant qui vous aidera à obtenir un emploi." data-rw="Turagufasha gukora umwirondoro ushimishije uzatuma ubona akazi.">Turagufasha gukora umwirondoro ushimishije uzatuma ubona akazi.</p>
+                    <a href="{% url 'worker' %}" class="button translatable" data-en="Start Now" data-fr="Commencer Maintenant" data-rw="Tangira Nonaha">Tangira Nonaha</a>
                 </div>
-                <h3 class="contact-title translatable" data-en="Location" data-fr="Emplacement" data-rw="Ahantu">Ahantu</h3>
-                <p class="contact-info">Kigali, Rwanda</p>
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                        <h3 class="feature-title translatable" data-en="Job Interview" data-fr="Entretien d'Embauche" data-rw="Ikiganiro cy'akazi">Ikiganiro cy'akazi</h3>
+                    </div>
+                    <p class="feature-description translatable" data-en="Prepare for job interviews through specialized training, and get the job you want." data-fr="Préparez-vous aux entretiens d'embauche grâce à une formation spécialisée et obtenez l'emploi que vous souhaitez." data-rw="Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza.">Witegure ibiganiro by'akazi binyuze mu myitozo yihariye, maze ubone akazi wifuza.</p>
+                    <a href="{% url 'what_we_do' %}" class="button translatable" data-en="Learn More" data-fr="En Savoir Plus" data-rw="Iga Birenzeho">Iga Birenzeho</a>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-   <!-- Footer -->
-<footer>
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h3 class="translatable" data-en="About Us" data-fr="À Propos" data-rw="Kutwiga">Kutwiga</h3>
-                <div class="footer-contact-item">
-                    <i class="fas fa-phone"></i>
-                    <div>
-                        <p>+250793487065</p>
-                    </div>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <p>murenzicharles24@gmail.com</p>
-                    </div>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <p class="translatable" data-en="Kigali, Rwanda" data-fr="Kigali, Rwanda" data-rw="Kigali, Rwanda">Kigali, Rwanda</p>
-                    </div>
-                </div>
-                <div class="footer-social">
-                    <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                </div>
+    <section class="employers">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="translatable" data-en="Employers" data-fr="Employeurs" data-rw="Abakoresha">Abakoresha</h2>
+                <p class="translatable" data-en="Search for suitable candidates for your jobs through our trusted and exclusive recruitment process." data-fr="Recherchez des candidats appropriés pour vos emplois grâce à notre processus de recrutement fiable et exclusif." data-rw="Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi.">Shakisha abakandida babereye imirimo yawe binyuze mu buryo bwacu bwizewe kandi bwihariye bwo gushaka abakozi.</p>
             </div>
-            
-            <div class="footer-column">
-                <h3 class="translatable" data-en="Quick Links" data-fr="Liens Rapides" data-rw="Ahukulile">Ahukulile</h3>
-                <ul class="footer-links">
-                    <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</span></a></li>
-                    <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</span></a></li>
-                    <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</span></a></li>
-                    <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="VIEW WORKER" data-fr="VOIR TRAVAILLEUR" data-rw="REBA UMUKOZI">REBA UMUKOZI</span></a></li>
-                    <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</span></a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3 class="translatable" data-en="Services" data-fr="Services" data-rw="Serivisi">Serivisi</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Worker Recruitment" data-fr="Recrutement de Travailleurs" data-rw="Gushaka Abakozi">Gushaka Abakozi</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Worker Training" data-fr="Formation des Travailleurs" data-rw="Guhugura Abakozi">Guhugura Abakozi</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Talent Matching" data-fr="Correspondance de Talents" data-rw="Guhuza Impano">Guhuza Impano</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Candidate Screening" data-fr="Filtrage des Candidats" data-rw="Gusuzuma Abakandida">Gusuzuma Abakandida</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Job Advertising" data-fr="Publicité d'Emploi" data-rw="Kwamamaza Akazi">Kwamamaza Akazi</span></a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3 class="translatable" data-en="More" data-fr="Plus" data-rw="Ibindi">Ibindi</h3>
-                <ul class="footer-links">
-                    <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="WHAT WE DO" data-fr="CE QUE NOUS FAISONS" data-rw="IBYO DUKORA">IBYO DUKORA</span></a></li>
-                    <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Privacy Policy" data-fr="Politique de Confidentialité" data-rw="Politiki yo Kubungabunga Amakuru">Politiki yo Kubungabunga Amakuru</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Terms & Conditions" data-fr="Termes et Conditions" data-rw="Amabwiriza">Amabwiriza</span></a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="FAQs" data-fr="FAQs" data-rw="FAQs">FAQs</span></a></li>
-                </ul>
+            <div class="feature-boxes">
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon"><i class="fas fa-bullhorn"></i></div>
+                        <h3 class="feature-title translatable" data-en="Post Job Announcements" data-fr="Publier des Offres d'Emploi" data-rw="Tangaza Amatangazo y'Imirimo">Tangaza Amatangazo y'Imirimo</h3>
+                    </div>
+                    <p class="feature-description translatable" data-en="Post your job positions to reach thousands of qualified candidates." data-fr="Publiez vos postes pour atteindre des milliers de candidats qualifiés." data-rw="Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi.">Shyiraho imyanya y'akazi yawe ugere ku bihumbi by'abakandida babifitiye ubushobozi.</p>
+                    <a href="{% url 'employer' %}" class="button translatable" data-en="Post Now" data-fr="Publier Maintenant" data-rw="Tangaza Ubu">Tangaza Ubu</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon"><i class="fas fa-user-check"></i></div>
+                        <h3 class="feature-title translatable" data-en="Screen Candidates" data-fr="Sélectionner les Candidats" data-rw="Gusuzuma Abakandida">Gusuzuma Abakandida</h3>
+                    </div>
+                    <p class="feature-description translatable" data-en="We pre-screen candidates so you only meet with qualified candidates who match your needs." data-fr="Nous présélectionnons les candidats afin que vous ne rencontriez que des candidats qualifiés qui répondent à vos besoins." data-rw="Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.">Dusuzuma abakandida mbere y'igihe kugira ngo uhure gusa n'abakandida bashoboye kandi bahuye n'ibyo ukeneye.</p>
+                    <a href="{% url 'employer' %}" class="button translatable" data-en="Learn More" data-fr="En Savoir Plus" data-rw="Menya Birenzeho">Menya Birenzeho</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-header">
+                        <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                        <h3 class="feature-title translatable" data-en="Flexible Solutions" data-fr="Solutions Flexibles" data-rw="Ibisubizo Bihinduka">Ibisubizo Bihinduka</h3>
+                    </div>
+                    <p class="feature-description translatable" data-en="We provide flexible employment solutions tailored to your business needs." data-fr="Nous proposons des solutions d'emploi flexibles adaptées aux besoins de votre entreprise." data-rw="Dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.">Dutanga ibisubizo by'ubukoresha bihinduka byahujwe n'ibikenewe by'ubucuruzi bwawe.</p>
+                    <a href="{% url 'employer' %}" class="button translatable" data-en="Start Now" data-fr="Commencer Maintenant" data-rw="Tangira Nonaha">Tangira Nonaha</a>
+                </div>
             </div>
         </div>
+    </section>
+
+    <section class="employees">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="translatable" data-en="Employees" data-fr="Employés" data-rw="Abakozi">Abakozi</h2>
+                <p class="translatable" data-en="Looking for a job? We're here to help you find a job that matches your skills and goals." data-fr="Vous cherchez un emploi? Nous sommes là pour vous aider à trouver un emploi qui correspond à vos compétences." data-rw="Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe.">Ushaka akazi? Turahari kugufasha kubona akazi gihuje n'ubushobozi bwawe n'intego zawe.</p>
+            </div>
+            <div class="feature-boxes">
+                <div class="feature-box">
+                    <div class="feature-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Job Search">
+                    </div>
+                    <div class="feature-header">
+                        <h3 class="feature-title translatable" data-en="Search for Jobs" data-fr="Rechercher des Emplois" data-rw="Shakisha Imyanya y'Akazi">Shakisha Imyanya y'Akazi</h3>
+                    </div>
+                    <p class="feature-description translatable" data-en="Find thousands of job positions offered by exemplary employers." data-fr="Trouvez des milliers de postes proposés par des employeurs exemplaires." data-rw="Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi.">Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi.</p>
+                    <a href="{% url 'view_employers' %}" class="button translatable" data-en="Search" data-fr="Rechercher" data-rw="Shakisha">Shakisha</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Profile Upload">
+                    </div>
+                    <div class="feature-header">
+                        <h3 class="feature-title translatable" data-en="Submit Your Profile" data-fr="Soumettre Votre Profil" data-rw="Tanga Umwirondoro Wawe">Tanga Umwirondoro Wawe</h3>
+                    </div>
+                    <p class="feature-description translatable" data-en="Submit your profile to our database and be visible to potential employers." data-fr="Soumettez votre profil à notre base de données et soyez visible." data-rw="Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha.">Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha.</p>
+                    <a href="{% url 'worker' %}" class="button translatable" data-en="Submit" data-fr="Soumettre" data-rw="Tanga">Tanga</a>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-image">
+                        <img src="{% static 'images/nature.jpg' %}" alt="Career Advice">
+                    </div>
+                    <div class="feature-header">
+                        <h3 class="feature-title translatable" data-en="Career Advice" data-fr="Conseils de Carrière" data-rw="Inama ku Mwuga">Inama ku Mwuga</h3>
+                    </div>
+                    <p class="feature-description translatable" data-en="Get expert advice on your career to enhance your job search." data-fr="Obtenez des conseils d'experts sur votre carrière pour améliorer votre recherche." data-rw="Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi.">Bona inama z'abahanga ku mwuga wawe kugira ngo wongere imikorere yo gushaka akazi.</p>
+                    <a href="{% url 'what_we_do' %}" class="button translatable" data-en="Advice" data-fr="Conseils" data-rw="Inama">Inama</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="statistics">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="translatable" data-en="Our Statistics" data-fr="Nos Statistiques" data-rw="Imibare Yacu">Imibare Yacu</h2>
+                <p class="translatable" data-en="Statistics about what we do and how we work with people" data-fr="Statistiques sur ce que nous faisons et comment nous travaillons avec les gens" data-rw="Imibare ijyanye n'icyo dukora n'uko dukorana n'abantu">Imibare ijyanye n'icyo dukora n'uko dukorana n'abantu</p>
+            </div>
+            <div class="stat-container">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-count">1200+</div>
+                    <div class="stat-label translatable" data-en="Employees" data-fr="Employés" data-rw="Abakozi">Abakozi</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="stat-count">50+</div>
+                    <div class="stat-label translatable" data-en="Trainers" data-fr="Formateurs" data-rw="Abahugura">Abahugura</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-book"></i></div>
+                    <div class="stat-count">75+</div>
+                    <div class="stat-label translatable" data-en="Courses" data-fr="Cours" data-rw="Amasomo">Amasomo</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="stat-count">120+</div>
+                    <div class="stat-label translatable" data-en="Events" data-fr="Événements" data-rw="Ibikorwa">Ibikorwa</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <h2 class="section-title translatable" data-en="Contact Us" data-fr="Contactez-Nous" data-rw="Twandikire">Twandikire</h2>
+            <p class="section-subtitle translatable" data-en="Have a question or need assistance? You can write to us or call us." data-fr="Vous avez une question ou besoin d'aide? Vous pouvez nous écrire ou nous appeler." data-rw="Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.">Ufite ikibazo cyangwa se ukeneye gufashwa? Watwandikira cyangwa ukaduhamagara.</p>
+            <div class="contact-grid">
+                <div class="contact-card fade-in">
+                    <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                    <h3 class="contact-title translatable" data-en="Phone" data-fr="Téléphone" data-rw="Telefoni">Telefoni</h3>
+                    <p class="contact-info">+250793487065</p>
+                </div>
+                <div class="contact-card fade-in delay-1">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <h3 class="contact-title translatable" data-en="Email" data-fr="Email" data-rw="Imeyili">Imeyili</h3>
+                    <p class="contact-info">murenzicharles24@gmail.com</p>
+                </div>
+                <div class="contact-card fade-in delay-2">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3 class="contact-title translatable" data-en="Location" data-fr="Emplacement" data-rw="Ahantu">Ahantu</h3>
+                    <p class="contact-info">Kigali, Rwanda</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3 class="translatable" data-en="About Us" data-fr="À Propos" data-rw="Kutwiga">Kutwiga</h3>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <p>+250793487065</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <p>murenzicharles24@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <p class="translatable" data-en="Kigali, Rwanda" data-fr="Kigali, Rwanda" data-rw="Kigali, Rwanda">Kigali, Rwanda</p>
+                        </div>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://youtube.com/@murenzicharles" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/murenzi893" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="translatable" data-en="Quick Links" data-fr="Liens Rapides" data-rw="Ahukulile">Ahukulile</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="HOME" data-fr="ACCUEIL" data-rw="AHABANZA">AHABANZA</span></a></li>
+                        <li><a href="{% url 'worker' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="WORKERS" data-fr="TRAVAILLEURS" data-rw="ABAKOZI">ABAKOZI</span></a></li>
+                        <li><a href="{% url 'employer' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="EMPLOYERS" data-fr="EMPLOYEURS" data-rw="ABAKORESHA">ABAKORESHA</span></a></li>
+                        <li><a href="{% url 'view_worker' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="VIEW WORKER" data-fr="VOIR TRAVAILLEUR" data-rw="REBA UMUKOZI">REBA UMUKOZI</span></a></li>
+                        <li><a href="{% url 'view_employers' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="VIEW EMPLOYERS" data-fr="VOIR EMPLOYEURS" data-rw="REBA ABAKORESHA">REBA ABAKORESHA</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="translatable" data-en="Services" data-fr="Services" data-rw="Serivisi">Serivisi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Worker Recruitment" data-fr="Recrutement de Travailleurs" data-rw="Gushaka Abakozi">Gushaka Abakozi</span></a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Worker Training" data-fr="Formation des Travailleurs" data-rw="Guhugura Abakozi">Guhugura Abakozi</span></a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Talent Matching" data-fr="Correspondance de Talents" data-rw="Guhuza Impano">Guhuza Impano</span></a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Candidate Screening" data-fr="Filtrage des Candidats" data-rw="Gusuzuma Abakandida">Gusuzuma Abakandida</span></a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Job Advertising" data-fr="Publicité d'Emploi" data-rw="Kwamamaza Akazi">Kwamamaza Akazi</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="translatable" data-en="More" data-fr="Plus" data-rw="Ibindi">Ibindi</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'what_we_do' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="WHAT WE DO" data-fr="CE QUE NOUS FAISONS" data-rw="IBYO DUKORA">IBYO DUKORA</span></a></li>
+                        <li><a href="{% url 'announcements' %}"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="ANNOUNCEMENTS" data-fr="ANNONCES" data-rw="AMATANGAZO">AMATANGAZO</span></a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Privacy Policy" data-fr="Politique de Confidentialité" data-rw="Politiki yo Kubungabunga Amakuru">Politiki yo Kubungabunga Amakuru</span></a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="Terms & Conditions" data-fr="Termes et Conditions" data-rw="Amabwiriza">Amabwiriza</span></a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> <span class="translatable" data-en="FAQs" data-fr="FAQs" data-rw="FAQs">FAQs</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="translatable" data-en="&copy; {% now 'Y' %} JobLink - All Rights Reserved" data-fr="&copy; {% now 'Y' %} JobLink - Tous Droits Réservés" data-rw="&copy; {% now 'Y' %} JobLink - Uburenganzira Bwose Bwihariwe">&copy; {% now "Y" %} JobLink - All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const fadeElements = document.querySelectorAll('.fade-in, .feature-box');
         
-        <div class="footer-bottom">
-            <p class="translatable" data-en="&copy; {% now 'Y' %} JobLink - All Rights Reserved" data-fr="&copy; {% now 'Y' %} JobLink - Tous Droits Réservés" data-rw="&copy; {% now 'Y' %} JobLink - Uburenganzira Bwose Bwihariwe">&copy; {% now "Y" %} JobLink - All Rights Reserved</p>
-        </div>
-    </div>
-</footer>
-    
-    <script>
-        // JavaScript to handle sticky navbar
-        window.onscroll = function() {stickyNavbar()};
-
-        // Get the navbar
-        var navbar = document.getElementById("navbar");
-
-        // Get the offset position of the navbar
-        var sticky = navbar.offsetTop;
-
-        function stickyNavbar() {
-            if (window.pageYOffset >= sticky) {
-                navbar.classList.add("sticky");
-            } else {
-                navbar.classList.remove("sticky");
-            }
-        }
-
-        // Animation for feature boxes on scroll
-        document.addEventListener("DOMContentLoaded", function() {
-            const boxes = document.querySelectorAll('.feature-box');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            boxes.forEach(box => {
-                box.style.opacity = 0;
-                box.style.transform = 'translateY(50px)';
-                box.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(box);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
             });
+        }, { threshold: 0.1 });
+        
+        fadeElements.forEach(element => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(element);
         });
-
-        // Counter animation for statistics
-        document.addEventListener("DOMContentLoaded", function() {
-            const counters = document.querySelectorAll('.stat-count');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = entry.target;
-                        const countTo = parseInt(target.innerText.replace(/\D/g,''));
-                        
-                        let count = 0;
-                        const updateCount = () => {
-                            const increment = countTo / 100;
-                            if(count < countTo) {
-                                count += increment;
-                                target.innerText = Math.ceil(count) + "+";
-                                setTimeout(updateCount, 20);
-                            } else {
-                                target.innerText = countTo + "+";
-                            }
-                        };
-                        
-                        updateCount();
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            counters.forEach(counter => {
-                observer.observe(counter);
+        
+        // Stat counters logic
+        const counters = document.querySelectorAll('.stat-count');
+        const countObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    // Extract number from text (e.g. "1,200+")
+                    const countTo = parseInt(target.innerText.replace(/,/g, '').replace('+', ''));
+                    if (isNaN(countTo)) return;
+                    
+                    let count = 0;
+                    const updateCount = () => {
+                        const increment = countTo / 50; 
+                        if(count < countTo) {
+                            count += increment;
+                            target.innerText = Math.ceil(count) + "+";
+                            setTimeout(updateCount, 20);
+                        } else {
+                            target.innerText = countTo + "+";
+                        }
+                    };
+                    updateCount();
+                    countObserver.unobserve(target); // Only count once
+                }
             });
+        }, { threshold: 0.5 });
+        
+        counters.forEach(counter => {
+            countObserver.observe(counter);
         });
-
-        // Animation for contact cards (fade-in effect)
-        document.addEventListener("DOMContentLoaded", function() {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            fadeElements.forEach(element => {
-                observer.observe(element);
-            });
-        });
-
-        // Login button functionality
-        document.getElementById("login-btn").addEventListener("click", function() {
-            alert("Login functionality will be implemented here");
-        });
-    </script>
-</body>
-</html>
+    });
+</script>
+{% endblock %}
