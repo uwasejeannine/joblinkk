@@ -9,16 +9,20 @@
 
     /* Contact Banner */
     .contact-banner {
-        background-color: #d3e5e5;
+        /* UPDATED: Using hero.jpg for consistency with other pages */
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{% static "images/hero.jpg"%}');
+        background-size: cover;
+        background-position: center;
         padding: 100px 0 50px;
         position: relative;
         overflow: hidden;
         text-align: center;
+        color: white; /* Changed text to white to be visible on image */
     }
 
     .contact-title {
         font-size: 3.5rem;
-        color: var(--dark-primary);
+        color: white; /* Changed to white */
         margin-bottom: 20px;
         position: relative;
         z-index: 2;
@@ -28,7 +32,7 @@
     .contact-subtitle {
         max-width: 600px;
         margin: 0 auto;
-        color: #666;
+        color: rgba(255, 255, 255, 0.9); /* Changed to light color */
         position: relative;
         z-index: 2;
         font-size: 1.1rem;
@@ -74,6 +78,7 @@
         width: 80px;
         height: 120px;
         opacity: 0.1;
+        fill: white; /* Made white for better visibility */
     }
 
     /* Partner Logos */
@@ -97,6 +102,8 @@
 
     .partner-logo {
         max-width: 150px;
+        height: 50px; /* Enforce height consistency */
+        object-fit: contain;
         opacity: 0.7;
         transition: var(--transition);
         filter: grayscale(100%);
@@ -137,7 +144,7 @@
         width: 100%;
         padding: 15px;
         border: 1px solid #ddd;
-        border-radius: 8px; /* Used specific radius from your css */
+        border-radius: 8px;
         font-size: 16px;
         transition: var(--transition);
     }
@@ -319,7 +326,7 @@
 <section class="contact-banner">
     <div class="arrow-decoration left">
         <svg viewBox="0 0 24 24">
-            <path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" fill="#119fa5"/>
+            <path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" fill="rgba(255,255,255,0.2)"/>
         </svg>
     </div>
     <h1 class="contact-title fade-in">Twandikire</h1>
@@ -331,17 +338,17 @@
     <p class="contact-subtitle fade-in delay-2">Ufite ikibazo? Cyangwa se ukeneye kubaza ikintu? Tugufasha twebwe ntituzaceceka.</p>
     <div class="arrow-decoration right">
         <svg viewBox="0 0 24 24">
-            <path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" fill="#119fa5"/>
+            <path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" fill="rgba(255,255,255,0.2)"/>
         </svg>
     </div>
 </section>
 
 <section class="partner-logos">
     <div class="partner-container">
-        <img src="{% static 'images/nature.jpg' %}" alt="Partner Logo" class="partner-logo" style="height: 50px; object-fit: contain;">
-        <img src="{% static 'images/nature.jpg' %}" alt="Partner Logo" class="partner-logo" style="height: 50px; object-fit: contain;">
-        <img src="{% static 'images/nature.jpg' %}" alt="Partner Logo" class="partner-logo" style="height: 50px; object-fit: contain;">
-        <img src="{% static 'images/nature.jpg' %}" alt="Partner Logo" class="partner-logo" style="height: 50px; object-fit: contain;">
+        <img src="{% static 'images/work.jpg' %}" alt="Partner 1" class="partner-logo">
+        <img src="{% static 'images/service.jpg' %}" alt="Partner 2" class="partner-logo">
+        <img src="{% static 'images/hero.jpg' %}" alt="Partner 3" class="partner-logo">
+        <img src="{% static 'images/work.jpg' %}" alt="Partner 4" class="partner-logo">
     </div>
 </section>
 
