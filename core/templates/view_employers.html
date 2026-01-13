@@ -12,7 +12,16 @@
     .delete-button { background-color: #dc3545; }
     .delete-button:hover { background-color: #c82333; }
     
-    .page-banner { margin-top: 0; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{% static "images/nature.jpg"%}'); background-size: cover; background-position: center; padding: 120px 0 80px; text-align: center; color: white; }
+    .page-banner { 
+        margin-top: 0; 
+        /* UPDATED: Using hero.jpg */
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{% static "images/hero.jpg"%}'); 
+        background-size: cover; 
+        background-position: center; 
+        padding: 120px 0 80px; 
+        text-align: center; 
+        color: white; 
+    }
     .page-title { font-size: 2.8rem; margin-bottom: 20px; font-weight: 700; }
     .breadcrumb { display: inline-flex; background-color: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 30px; }
     .breadcrumb a { color: white; text-decoration: none; }
@@ -91,7 +100,7 @@
                     {% if employer.logo and employer.logo.url %}
                         <img src="{{ employer.logo.url }}" alt="{{ employer.company }}">
                     {% else %}
-                        <img src="{% static 'images/nature.jpg' %}" alt="{{ employer.company }}">
+                        <img src="{% static 'images/work.jpg' %}" alt="{{ employer.company }}">
                     {% endif %}
                     <div class="employer-category">{{ employer.position }}</div>
                 </div>
@@ -104,18 +113,18 @@
                     </div>
                     
                     <div class="action-buttons">
-    <button class="view-profile-button" onclick="openEmployerModal({{ employer.id }}, '{{ employer.company|escapejs }}', '{{ employer.position|escapejs }}', '{{ employer.email|escapejs }}', '{{ employer.phone|escapejs }}', '{{ employer.location|escapejs }}', '{{ employer.job_description|escapejs }}', '{{ employer.job_requirements|escapejs }}')">
-        <i class="fas fa-edit"></i> Hindura
-    </button>
-    
-    {% if user.is_superuser %}
-    <a href="{% url 'delete_employer' employer.id %}" 
-       class="view-profile-button delete-button" 
-       onclick="return confirm('ADMIN ONLY: Are you sure you want to delete this employer?');">
-        <i class="fas fa-trash"></i> Siba
-    </a>
-    {% endif %}
-</div>
+                        <button class="view-profile-button" onclick="openEmployerModal({{ employer.id }}, '{{ employer.company|escapejs }}', '{{ employer.position|escapejs }}', '{{ employer.email|escapejs }}', '{{ employer.phone|escapejs }}', '{{ employer.location|escapejs }}', '{{ employer.job_description|escapejs }}', '{{ employer.job_requirements|escapejs }}')">
+                            <i class="fas fa-edit"></i> Hindura
+                        </button>
+                        
+                        {% if user.is_superuser %}
+                        <a href="{% url 'delete_employer' employer.id %}" 
+                           class="view-profile-button delete-button" 
+                           onclick="return confirm('ADMIN ONLY: Are you sure you want to delete this employer?');">
+                            <i class="fas fa-trash"></i> Siba
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             {% empty %}
