@@ -25,7 +25,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('{% static "images/jobs.jpg" %}');
+        /* FIXED: Using the new hero image */
+        background-image: url('{% static "images/hero.jpg" %}');
         background-size: cover;
         background-position: center;
         z-index: -2;
@@ -389,7 +390,7 @@
             <div class="feature-boxes">
                 <div class="feature-box">
                     <div class="feature-image">
-                        <img src="{% static 'images/jobs.jpg' %}" alt="Job Search">
+                        <img src="{% static 'images/work.jpg' %}" alt="Job Search">
                     </div>
                     <div class="feature-header">
                         <h3 class="feature-title translatable" data-en="Search for Jobs" data-fr="Rechercher des Emplois" data-rw="Shakisha Imyanya y'Akazi">Shakisha Imyanya y'Akazi</h3>
@@ -397,9 +398,10 @@
                     <p class="feature-description translatable" data-en="Find thousands of job positions offered by exemplary employers." data-fr="Trouvez des milliers de postes proposés par des employeurs exemplaires." data-rw="Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi.">Koresha urubuga rwacu rwo gushakisha ushake imyanya y'akazi ibihumbi.</p>
                     <a href="{% url 'view_employers' %}" class="button translatable" data-en="Search" data-fr="Rechercher" data-rw="Shakisha">Shakisha</a>
                 </div>
+                
                 <div class="feature-box">
                     <div class="feature-image">
-                        <img src="{% static 'images/jobs.jpg' %}" alt="Profile Upload">
+                        <img src="{% static 'images/service.jpg' %}" alt="Profile Upload">
                     </div>
                     <div class="feature-header">
                         <h3 class="feature-title translatable" data-en="Submit Your Profile" data-fr="Soumettre Votre Profil" data-rw="Tanga Umwirondoro Wawe">Tanga Umwirondoro Wawe</h3>
@@ -407,9 +409,10 @@
                     <p class="feature-description translatable" data-en="Submit your profile to our database and be visible to potential employers." data-fr="Soumettez votre profil à notre base de données et soyez visible." data-rw="Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha.">Tanga umwirondoro wawe muri baze yacu kandi ugaragare ku bakoresha.</p>
                     <a href="{% url 'worker' %}" class="button translatable" data-en="Submit" data-fr="Soumettre" data-rw="Tanga">Tanga</a>
                 </div>
+                
                 <div class="feature-box">
                     <div class="feature-image">
-                        <img src="{% static 'images/jobs.jpg' %}" alt="Career Advice">
+                        <img src="{% static 'images/hero.jpg' %}" alt="Career Advice">
                     </div>
                     <div class="feature-header">
                         <h3 class="feature-title translatable" data-en="Career Advice" data-fr="Conseils de Carrière" data-rw="Inama ku Mwuga">Inama ku Mwuga</h3>
