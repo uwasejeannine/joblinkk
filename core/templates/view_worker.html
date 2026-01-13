@@ -43,7 +43,16 @@
     /* ... (Keep your existing CSS for Modals, Animation, etc.) ... */
     
     /* Re-pasting the essential CSS to ensure it works */
-    .page-banner { margin-top: 0; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{% static "images/nature.jpg"%}'); background-size: cover; background-position: center; padding: 120px 0 80px; text-align: center; color: white; }
+    .page-banner { 
+        margin-top: 0; 
+        /* UPDATED: Using hero.jpg */
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{% static "images/hero.jpg"%}'); 
+        background-size: cover; 
+        background-position: center; 
+        padding: 120px 0 80px; 
+        text-align: center; 
+        color: white; 
+    }
     .page-title { font-size: 2.8rem; margin-bottom: 20px; font-weight: 700; }
     .breadcrumb { display: inline-flex; background-color: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 30px; }
     .breadcrumb a { color: white; text-decoration: none; }
@@ -122,9 +131,9 @@
             <div class="worker-card fade-in">
                 <div class="worker-image">
                     {% if employee.resume and employee.resume.url %}
-                        <img src="{% static 'images/nature.jpg' %}" alt="{{ employee.name }}">
+                        <img src="{% static 'images/service.jpg' %}" alt="{{ employee.name }}">
                     {% else %}
-                        <img src="{% static 'images/nature.jpg' %}" alt="{{ employee.name }}">
+                        <img src="{% static 'images/service.jpg' %}" alt="{{ employee.name }}">
                     {% endif %}
                     <div class="worker-category">{{ employee.position }}</div>
                 </div>
@@ -137,23 +146,26 @@
                     </div>
                     
                     <div class="action-buttons">
-    <button class="view-profile-button" onclick="openWorkerModal({{ employee.id }}, '{{ employee.name|escapejs }}', '{{ employee.position|escapejs }}', '{{ employee.email|escapejs }}', '{{ employee.phone|escapejs }}', '{{ employee.experience|escapejs }}')">
-        <i class="fas fa-edit"></i> Hindura
-    </button>
-    
-    {% if user.is_superuser %}
-    <a href="{% url 'delete_employee' employee.id %}" 
-       class="view-profile-button delete-button" 
-       onclick="return confirm('ADMIN ONLY: Are you sure you want to delete this worker?');">
-        <i class="fas fa-trash"></i> Siba
-    </a>
-    {% endif %}
-</div>
+                        <button class="view-profile-button" onclick="openWorkerModal({{ employee.id }}, '{{ employee.name|escapejs }}', '{{ employee.position|escapejs }}', '{{ employee.email|escapejs }}', '{{ employee.phone|escapejs }}', '{{ employee.experience|escapejs }}')">
+                            <i class="fas fa-edit"></i> Hindura
+                        </button>
+                        
+                        {% if user.is_superuser %}
+                        <a href="{% url 'delete_employee' employee.id %}" 
+                           class="view-profile-button delete-button" 
+                           onclick="return confirm('ADMIN ONLY: Are you sure you want to delete this worker?');">
+                            <i class="fas fa-trash"></i> Siba
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             {% empty %}
             <div class="worker-card fade-in">
-                <div class="worker-image"><img src="{% static 'images/nature.jpg' %}" alt="Sample"><div class="worker-category">Sample</div></div>
+                <div class="worker-image">
+                    <img src="{% static 'images/service.jpg' %}" alt="Sample">
+                    <div class="worker-category">Sample</div>
+                </div>
                 <div class="worker-content">
                     <h3 class="worker-name">Urugero (Sample)</h3>
                     <div class="worker-details">
