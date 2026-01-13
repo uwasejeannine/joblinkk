@@ -7,7 +7,8 @@
 <style>
     /* Hero Section */
     .hero-section {
-        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/nature.jpg"%}');
+        /* UPDATED: Using hero.jpg */
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "images/hero.jpg"%}');
         background-size: cover;
         background-position: center;
         padding: 120px 0;
@@ -97,7 +98,8 @@
     .read-more:hover i { transform: translateX(5px); }
 
     /* Stats Section */
-    .stats-section { background: linear-gradient(rgba(17, 159, 165, 0.9), rgba(13, 113, 118, 0.9)), url('{% static "images/nature.jpg"%}'); background-size: cover; background-position: center; padding: 80px 0; color: white; }
+    /* UPDATED: Using hero.jpg for consistency */
+    .stats-section { background: linear-gradient(rgba(17, 159, 165, 0.9), rgba(13, 113, 118, 0.9)), url('{% static "images/hero.jpg"%}'); background-size: cover; background-position: center; padding: 80px 0; color: white; }
     .stats-grid { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 30px; }
     .stat-item { text-align: center; width: 220px; }
     .stat-icon { width: 70px; height: 70px; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 30px; }
@@ -194,7 +196,7 @@
 <section class="about-section">
     <div class="about-container">
         <div class="about-image fade-in">
-            <img src="{% static 'images/nature.jpg' %}" alt="About JobLink">
+            <img src="{% static 'images/work.jpg' %}" alt="About JobLink">
         </div>
         <div class="about-content fade-in delay-2">
             <h2 data-en="Partnering With Us Ensures <span>Finding the Right Staff</span>" data-fr="Collaborer Avec Nous Garantit <span>Trouver le Bon Personnel</span>" data-rw="Kutwiga Biratuma Ubona <span>Abakozi Babereye</span>">Kutwiga Biratuma Ubona <span>Abakozi Babereye</span></h2>
@@ -224,7 +226,7 @@
         <div class="services-grid">
             <div class="service-card fade-in">
                 <div class="service-image">
-                    <img src="{% static 'images/nature.jpg' %}" alt="Gushaka Abakozi">
+                    <img src="{% static 'images/service.jpg' %}" alt="Gushaka Abakozi">
                 </div>
                 <div class="service-content">
                     <h3 data-en="Recruitment" data-fr="Recrutement" data-rw="Gushaka Abakozi">Gushaka Abakozi</h3>
@@ -235,7 +237,7 @@
             
             <div class="service-card fade-in delay-1">
                 <div class="service-image">
-                    <img src="{% static 'images/nature.jpg' %}" alt="Guhugura Abakozi">
+                    <img src="{% static 'images/work.jpg' %}" alt="Guhugura Abakozi">
                 </div>
                 <div class="service-content">
                     <h3 data-en="Staff Training" data-fr="Formation du Personnel" data-rw="Guhugura Abakozi">Guhugura Abakozi</h3>
@@ -246,7 +248,7 @@
             
             <div class="service-card fade-in delay-2">
                 <div class="service-image">
-                    <img src="{% static 'images/nature.jpg' %}" alt="Guhuza Impano">
+                    <img src="{% static 'images/hero.jpg' %}" alt="Guhuza Impano">
                 </div>
                 <div class="service-content">
                     <h3 data-en="Talent Matching" data-fr="Correspondance de Talents" data-rw="Guhuza Impano">Guhuza Impano</h3>
