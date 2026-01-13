@@ -7,13 +7,11 @@
 <style>
     /* --- PAGE SPECIFIC STYLES --- */
     
-    /* Hero Banner */
+    /* Hero Banner - CHANGED TO SOLID GRADIENT FOR CLARITY */
     .hero-banner {
-        /* UPDATED: Darker overlay (0.85) to make text clearer */
-        background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('{% static "images/hero.jpg"%}');
-        background-size: cover;
-        background-position: center;
-        padding: 140px 0; /* Increased padding for better spacing */
+        /* UPDATED: Removed image, used brand color gradient for perfect text visibility */
+        background: linear-gradient(135deg, #0d7176 0%, #119fa5 100%);
+        padding: 140px 0;
         text-align: center;
         color: white;
         position: relative;
@@ -28,23 +26,21 @@
     .hero-title { 
         font-size: 3.5rem; 
         margin-bottom: 25px; 
-        font-weight: 800; /* Bolder font */
+        font-weight: 800; 
         line-height: 1.2;
-        /* UPDATED: Strong text shadow for visibility */
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        /* Clean text without shadow since background is solid */
+        color: white;
     }
 
     .hero-description { 
-        font-size: 1.3rem; /* Slightly larger */
+        font-size: 1.3rem; 
         margin-bottom: 35px; 
         max-width: 700px; 
         margin-left: auto; 
         margin-right: auto;
         font-weight: 500;
         line-height: 1.6;
-        opacity: 1; /* Ensure full opacity */
-        /* UPDATED: Text shadow for visibility */
-        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+        color: rgba(255, 255, 255, 0.95); /* Very clear white */
     }
     
     .hero-buttons { 
@@ -55,8 +51,8 @@
     }
     
     .primary-button {
-        background-color: var(--primary-color);
-        color: white;
+        background-color: white; /* White button on colored background */
+        color: var(--primary-color);
         padding: 14px 35px;
         border: none;
         border-radius: 30px;
@@ -68,10 +64,10 @@
         align-items: center;
         gap: 10px;
         font-size: 1.1rem;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Button shadow */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
     .primary-button:hover { 
-        background-color: var(--dark-primary); 
+        background-color: #f0f0f0; 
         transform: translateY(-3px); 
     }
 
@@ -89,13 +85,10 @@
         align-items: center;
         gap: 10px;
         font-size: 1.1rem;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
     .secondary-button:hover { 
-        background-color: white; 
-        color: var(--primary-color); 
+        background-color: rgba(255, 255, 255, 0.1); 
         transform: translateY(-3px); 
-        text-shadow: none;
     }
 
     /* Stats Section */
