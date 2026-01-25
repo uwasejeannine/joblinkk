@@ -5,108 +5,146 @@
 
 {% block style %}
 <style>
-    /* --- HERO & SECTIONS CSS --- */
+    /* --- HERO SECTION - Fixed and Clear --- */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px 80px;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('{% static "images/hero.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+    animation: zoomEffect 20s infinite alternate;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: -1;
+}
+
+@keyframes zoomEffect {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.hero-content {
+    text-align: center;
+    color: white;
+    max-width: 900px;
+    z-index: 1;
+    padding: 40px 20px;
+    margin-top: 80px;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9),
+                 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    opacity: 1;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9),
+                 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.button {
+    display: inline-block;
+    padding: 14px 30px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #d97c18;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(248, 149, 32, 0.4);
+}
+
+.button-outline {
+    background-color: transparent;
+    border: 2px solid white;
+}
+
+.button-outline:hover {
+    background-color: white;
+    color: var(--primary-color);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
     .hero {
-        position: relative;
-        height: 100vh;
-        min-height: 600px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 20px;
-        overflow: hidden;
-        margin-top: 0;
-    }
-    
-    .hero::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        /* FIXED: Using the new hero image */
-        background-image: url('{% static "images/hero.jpg" %}');
-        background-size: cover;
-        background-position: center;
-        z-index: -2;
-        animation: zoomEffect 20s infinite alternate;
-    }
-    
-    .hero::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.627);
-        z-index: -1;
-    }
-    
-    @keyframes zoomEffect {
-        from { transform: scale(1); }
-        to { transform: scale(1.1); }
+        min-height: 100vh;
+        padding: 120px 20px 60px;
     }
     
     .hero-content {
-        text-align: center;
-        color: white;
-        max-width: 900px;
-        z-index: 1;
-        padding: 40px;
-        border-radius: 10px;
-    }
-    
-    .hero-content h1 {
-        font-size: 3.5rem;
-        margin-bottom: 20px;
-        font-weight: 700;
-    }
-    
-    .hero-content p {
-        font-size: 1.3rem;
-        margin-bottom: 30px;
-        opacity: 0.9;
-    }
-    
-    .hero-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
         margin-top: 40px;
     }
     
-    .button {
-        display: inline-block;
-        padding: 14px 30px;
-        background-color: var(--secondary-color);
-        color: white;
-        border: none;
-        border-radius: 30px;
-        font-weight: 600;
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content p {
         font-size: 1.1rem;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        cursor: pointer;
     }
     
-    .button:hover {
-        background-color: #d97c18;
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
     }
     
-    .button-outline {
-        background-color: transparent;
-        border: 2px solid white;
+    .button {
+        width: 100%;
+        max-width: 280px;
     }
-    
-    .button-outline:hover {
-        background-color: white;
-        color: var(--primary-color);
-    }
-    
+}
     /* Sections General */
     section { padding: 100px 20px; }
     
